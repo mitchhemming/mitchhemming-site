@@ -1,0 +1,12 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "mitchhemming.com.au" }], "destination": "https://mitchhemming.com/:path*", "permanent": true },
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.mitchhemming.com.au" }], "destination": "https://mitchhemming.com/:path*", "permanent": true },
+    { "source": "/:path*", "has": [{ "type": "host", "value": "www.mitchhemming.com" }], "destination": "https://mitchhemming.com/:path*", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/(.*)\\.(jpg|png)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}
