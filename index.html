@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mitch Hemming</title>
+<meta name="description" content="Mitch Hemming. Photographer, videographer and founder of Aventus Media and Consistent Creative. South East Queensland.">
+<meta name="theme-color" content="#0f0f10">
+
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://mitchhemming.com/">
+<meta property="og:title" content="Mitch Hemming">
+<meta property="og:description" content="Photographer, videographer and founder of Aventus Media and Consistent Creative.">
+<meta property="og:image" content="https://mitchhemming.com/mitch.jpg">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:    #0f0f10;
+  --s1:    #17171a;
+  --s2:    #1f1f23;
+  --line:  #2a2a2f;
+  --line2: #3a3a41;
+  --w:     #ECECE8;
+  --w70:   rgba(236,236,232,.72);
+  --w45:   rgba(236,236,232,.45);
+  --fh:    'Barlow Condensed', sans-serif;
+  --fb:    'Barlow', sans-serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--bg); color: var(--w); font-family: var(--fb); line-height: 1.5; -webkit-font-smoothing: antialiased; min-height: 100svh; display: flex; flex-direction: column; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; flex: 1; }
+@media (min-width: 600px) { main { padding-top: 80px; } }
+
+/* profile */
+.profile { text-align: center; }
+.avatar { width: 128px; height: 128px; border-radius: 50%; overflow: hidden; margin: 0 auto 20px; border: 1px solid var(--line2); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--line); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
+@media (min-width: 600px) { .avatar { width: 144px; height: 144px; } }
+.name { font-family: var(--fh); font-weight: 700; font-size: 34px; letter-spacing: .02em; line-height: 1; }
+.role { margin-top: 8px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--w45); font-weight: 600; }
+.bio { margin: 18px auto 0; max-width: 400px; color: var(--w70); font-size: 15.5px; line-height: 1.6; }
+
+/* companies */
+.cards { margin-top: 40px; display: grid; gap: 12px; }
+.card { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 18px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 20px 20px; transition: border-color .2s, background .2s, transform .15s; }
+.card:hover { border-color: var(--line2); background: var(--s2); transform: translateY(-1px); }
+.card .logo { display: flex; align-items: center; justify-content: center; height: 40px; }
+.card .logo img { max-height: 30px; width: auto; }
+.card .logo img.one { max-height: 15px; }
+.card .txt { min-width: 0; }
+.card .txt strong { display: block; font-weight: 600; font-size: 15px; line-height: 1.2; }
+.card .txt span { display: block; color: var(--w45); font-size: 13.5px; margin-top: 3px; line-height: 1.4; }
+.card .arrow { color: var(--w45); font-size: 18px; transition: transform .2s, color .2s; }
+.card:hover .arrow { transform: translateX(3px); color: var(--w); }
+@media (max-width: 420px) {
+  .card { grid-template-columns: 1fr auto; row-gap: 10px; }
+  .card .logo { grid-column: 1 / -1; justify-content: flex-start; height: auto; }
+}
+
+/* socials */
+.socials { margin-top: 32px; display: flex; justify-content: center; gap: 12px; }
+.socials a { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; transition: border-color .2s, background .2s; }
+.socials a:hover { border-color: var(--line2); background: var(--s1); }
+.socials img { width: 18px; height: 18px; opacity: .85; filter: invert(1) brightness(.92); }
+
+footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: var(--w45); letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<main>
+  <section class="profile">
+    <div class="avatar"><img src="mitch.jpg" alt="Mitch Hemming" width="800" height="800"></div>
+    <h1 class="name">Mitch Hemming</h1>
+    <div class="role">Photographer · Videographer · Founder</div>
+    <p class="bio">15 years shooting automotive and real estate in South East Queensland. Built a media company from freelancing. Now teaching photographers and videographers how to do the same.</p>
+  </section>
+
+  <section class="cards">
+    <a class="card" href="https://aventus.au" target="_blank" rel="noopener">
+      <div class="logo"><img class="one" src="aventus-wordmark.png" alt="Aventus Media" width="1200" height="194"></div>
+      <div class="txt"><strong>Aventus Media</strong><span>Photo and video production for car dealerships and real estate agencies.</span></div>
+      <span class="arrow">→</span>
+    </a>
+    <a class="card" href="https://consistentcreative.com" target="_blank" rel="noopener">
+      <div class="logo"><img src="cc-wordmark.png" alt="Consistent Creative" width="1200" height="331"></div>
+      <div class="txt"><strong>Consistent Creative</strong><span>Business education for photographers and videographers.</span></div>
+      <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <section class="socials" aria-label="Social links">
+    <a href="https://www.instagram.com/mitchhemming" target="_blank" rel="noopener" aria-label="Instagram"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/instagram.svg" alt="" width="18" height="18"></a>
+    <a href="https://www.youtube.com/@mitchhemming" target="_blank" rel="noopener" aria-label="YouTube"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/youtube.svg" alt="" width="18" height="18"></a>
+    <a href="https://www.linkedin.com/in/mitch-hemming-683b6779" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/linkedin.svg" alt="" width="18" height="18"></a>
+  </section>
+</main>
+<footer>© 2026 Mitch Hemming</footer>
+</body>
+</html>
