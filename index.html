@@ -30,10 +30,10 @@
 <style>
 :root {
   --bg:    #0f0f10;
-  --s1:    #17171a;
-  --s2:    #1f1f23;
-  --line:  #2a2a2f;
-  --line2: #3a3a41;
+  --s1:    #1b1b20;
+  --s2:    #22222a;
+  --line:  #33333b;
+  --line2: #46464f;
   --w:     #ECECE8;
   --w70:   rgba(236,236,232,.72);
   --w45:   rgba(236,236,232,.45);
@@ -60,7 +60,7 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 
 /* companies */
 .cards { margin-top: 40px; display: grid; gap: 12px; }
-.card { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 18px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 20px 20px; transition: border-color .2s, background .2s, transform .15s; }
+.card { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 18px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 20px 20px; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.35); transition: border-color .2s, background .2s, transform .15s; }
 .card:hover { border-color: var(--line2); background: var(--s2); transform: translateY(-1px); }
 .card .logo { display: flex; align-items: center; justify-content: center; height: 40px; }
 .card .logo img { max-height: 30px; width: auto; }
@@ -82,7 +82,7 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 .socials img { width: 18px; height: 18px; opacity: .85; filter: invert(1) brightness(.92); }
 
 /* newsletter */
-.news { margin-top: 12px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 24px 20px 20px; text-align: center; }
+.news { margin-top: 12px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 24px 20px 20px; text-align: center; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.35); }
 .news-tag { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--w45); font-weight: 600; margin-bottom: 8px; }
 .news h2 { font-family: var(--fh); font-weight: 700; font-size: 24px; letter-spacing: .03em; line-height: 1; }
 .news p { margin-top: 8px; color: var(--w70); font-size: 14.5px; line-height: 1.5; }
@@ -110,25 +110,25 @@ footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: va
   </section>
 
   <section class="cards">
-    <a class="card" href="https://aventus.au" target="_blank" rel="noopener">
-      <div class="logo"><img class="one" src="aventus-wordmark.png" alt="Aventus Media" width="1200" height="194"></div>
-      <div class="txt"><strong>Aventus Media</strong><span>Photo and video production for car dealerships and real estate agencies.</span></div>
-      <span class="arrow">→</span>
-    </a>
     <a class="card" href="https://consistentcreative.com" target="_blank" rel="noopener">
       <div class="logo"><img src="cc-wordmark.png" alt="Consistent Creative" width="1200" height="331"></div>
       <div class="txt"><strong>Consistent Creative</strong><span>Business education for photographers and videographers.</span></div>
       <span class="arrow">→</span>
     </a>
+    <a class="card" href="https://aventus.au" target="_blank" rel="noopener">
+      <div class="logo"><img class="one" src="aventus-wordmark.png" alt="Aventus Media" width="1200" height="194"></div>
+      <div class="txt"><strong>Aventus Media</strong><span>Photo and video production for car dealerships and real estate agencies.</span></div>
+      <span class="arrow">→</span>
+    </a>
   </section>
 
   <section class="news" id="newsletter">
-    <div class="news-tag">Free newsletter</div>
+    <div class="news-tag">Free weekly newsletter</div>
     <h2>The Creative Standard</h2>
-    <p>One idea every Tuesday on building a photo or video business that pays you properly.</p>
+    <p>One idea every Tuesday on building a photo or video business that pays you properly. No fluff, no pitch, unsubscribe any time.</p>
     <form id="ck-form" data-form="10070921" novalidate>
       <input type="email" name="email_address" placeholder="Your email" autocomplete="email" required aria-label="Email address">
-      <button type="submit">Subscribe</button>
+      <button type="submit">Join free</button>
     </form>
     <div class="msg" id="ck-msg" aria-live="polite"></div>
   </section>
