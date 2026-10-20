@@ -75,6 +75,21 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 .socials a:hover { border-color: var(--line2); background: var(--s1); }
 .socials img { width: 18px; height: 18px; opacity: .85; filter: invert(1) brightness(.92); }
 
+/* newsletter */
+.news { margin-top: 32px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 24px 20px; text-align: center; }
+.news h2 { font-family: var(--fh); font-weight: 700; font-size: 24px; letter-spacing: .03em; line-height: 1; }
+.news p { margin-top: 8px; color: var(--w70); font-size: 14.5px; line-height: 1.5; }
+.news form { margin-top: 16px; display: flex; gap: 8px; }
+.news input { flex: 1; min-width: 0; background: var(--bg); border: 1px solid var(--line2); border-radius: 8px; padding: 12px 14px; color: var(--w); font: inherit; font-size: 15px; }
+.news input::placeholder { color: var(--w45); }
+.news input:focus { outline: none; border-color: var(--w45); }
+.news button { background: var(--w); color: var(--bg); border: 0; border-radius: 8px; padding: 12px 18px; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; white-space: nowrap; transition: opacity .2s; }
+.news button:hover { opacity: .9; }
+.news button:disabled { opacity: .5; cursor: default; }
+.news .msg { margin-top: 12px; font-size: 14px; color: var(--w70); min-height: 1.2em; }
+.news .msg.ok { color: var(--w); }
+@media (max-width: 420px) { .news form { flex-direction: column; } }
+
 footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: var(--w45); letter-spacing: .04em; }
 </style>
 </head>
@@ -99,6 +114,16 @@ footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: va
     </a>
   </section>
 
+  <section class="news" id="newsletter">
+    <h2>The Creative Standard</h2>
+    <p>One idea a week on building a photo or video business that pays you properly. Every Tuesday.</p>
+    <form id="ck-form" data-form="KIT_FORM_ID" novalidate>
+      <input type="email" name="email_address" placeholder="Your email" autocomplete="email" required aria-label="Email address">
+      <button type="submit">Subscribe</button>
+    </form>
+    <div class="msg" id="ck-msg" aria-live="polite"></div>
+  </section>
+
   <section class="socials" aria-label="Social links">
     <a href="https://www.instagram.com/mitchhemming" target="_blank" rel="noopener" aria-label="Instagram"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/instagram.svg" alt="" width="18" height="18"></a>
     <a href="https://www.youtube.com/@mitchhemming" target="_blank" rel="noopener" aria-label="YouTube"><img src="https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/youtube.svg" alt="" width="18" height="18"></a>
@@ -106,5 +131,25 @@ footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: va
   </section>
 </main>
 <footer>© 2026 Mitch Hemming</footer>
+<script>
+(function(){
+  var f=document.getElementById('ck-form'),m=document.getElementById('ck-msg');
+  if(!f)return;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var email=f.email_address.value.trim(),btn=f.querySelector('button');
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){m.className='msg';m.textContent='Enter a valid email.';return;}
+    btn.disabled=true;m.className='msg';m.textContent='One sec…';
+    fetch('https://app.kit.com/forms/'+f.dataset.form+'/subscriptions',{
+      method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({email_address:email})
+    }).then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
+    .then(function(x){
+      if(x.ok){m.className='msg ok';m.textContent="You're in. Check your inbox to confirm.";f.reset();}
+      else{m.className='msg';m.textContent=(x.j&&x.j.errors&&x.j.errors[0])||'Something went wrong. Try again.';btn.disabled=false;}
+    }).catch(function(){m.className='msg';m.textContent='Something went wrong. Try again.';btn.disabled=false;});
+  });
+})();
+</script>
 </body>
 </html>
