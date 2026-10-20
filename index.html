@@ -77,6 +77,7 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 
 /* newsletter */
 .news { margin-top: 32px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 24px 20px; text-align: center; }
+.news-tag { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--w45); font-weight: 600; margin-bottom: 8px; }
 .news h2 { font-family: var(--fh); font-weight: 700; font-size: 24px; letter-spacing: .03em; line-height: 1; }
 .news p { margin-top: 8px; color: var(--w70); font-size: 14.5px; line-height: 1.5; }
 .news form { margin-top: 16px; display: flex; gap: 8px; }
@@ -115,8 +116,9 @@ footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: va
   </section>
 
   <section class="news" id="newsletter">
+    <div class="news-tag">Free newsletter</div>
     <h2>The Creative Standard</h2>
-    <p>One idea a week on building a photo or video business that pays you properly. Every Tuesday.</p>
+    <p>One idea every Tuesday on building a photo or video business that pays you properly.</p>
     <form id="ck-form" data-form="10070921" novalidate>
       <input type="email" name="email_address" placeholder="Your email" autocomplete="email" required aria-label="Email address">
       <button type="submit">Subscribe</button>
