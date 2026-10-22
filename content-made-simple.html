@@ -176,6 +176,7 @@
   .shot { font-size: 20px; font-weight: 700; line-height: 1.3; }
   .howto { background: var(--card); border-radius: 18px; padding: 14px 16px; font-size: 16px; color: var(--muted); box-shadow: inset 0 0 0 2px var(--line); }
   .howto b { color: var(--ink); }
+  .cta.inline { margin-top: 4px; }
   .custom { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
   .jobchip { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; cursor: pointer; text-align: left;
     background: var(--ink); color: #fff; border-radius: 18px; padding: 14px 16px; transition: transform .12s var(--ease); }
@@ -339,6 +340,29 @@
     cta.onclick = () => { if (cta.disabled) return; buzz(); onTap(); };
   }
 
+  function inlineCta(parent, label, onTap, disabled) {
+    setCta(null);
+    const b = document.createElement("button");
+    b.className = "cta inline";
+    b.textContent = label;
+    b.disabled = !!disabled;
+    // keep the keyboard open: stop the tap from blurring the input first
+    b.addEventListener("mousedown", (e) => e.preventDefault());
+    b.onclick = () => { if (b.disabled) return; buzz(); onTap(); };
+    parent.appendChild(b);
+    return b;
+  }
+  // When the keyboard opens, scroll so the Next button under the box stays visible.
+  document.addEventListener("focusin", (e) => {
+    if (!/INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    const b = stage.querySelector(".cta.inline");
+    if (!b) return;
+    [300, 650].forEach((t) => setTimeout(() => {
+      const vv = window.visualViewport, bottom = vv ? vv.height + vv.offsetTop : window.innerHeight;
+      const r = b.getBoundingClientRect();
+      if (r.bottom > bottom - 12) window.scrollBy({ top: r.bottom - bottom + 24, behavior: "smooth" });
+    }, t));
+  });
   const setupTotal = () => 2 + Math.max(S.questions.length, 3);
 
   // ---------- screens ----------
@@ -353,8 +377,8 @@
     inp.value = S.name || "";
     const ok = () => inp.value.trim().length > 0;
     const next = () => { if (!ok()) return; S.name = inp.value.trim(); save(); go(BizScreen); };
-    setCta("Next", next, { disabled: !ok() });
-    inp.oninput = () => { cta.disabled = !ok(); };
+    const btn = inlineCta(el, "Next", next, !ok());
+    inp.oninput = () => { btn.disabled = !ok(); };
     inp.onkeydown = (e) => { if (e.key === "Enter") next(); };
     setTimeout(() => inp.focus(), 350);
   }
@@ -365,13 +389,15 @@
       '<span class="eyebrow">Nice to meet you, ' + esc(first()) + "</span>" +
       "<h1>What does your business do?</h1>" +
       '<p class="sub">Say it like you would to a customer.</p>' +
-      '<textarea class="field" id="bizIn" rows="3" enterkeyhint="done" placeholder="We detail cars and do window tint"></textarea>' +
-      '<div class="chips" id="eg"></div>';
+      '<textarea class="field" id="bizIn" rows="2" enterkeyhint="next" placeholder="We detail cars and do window tint"></textarea>' +
+      '<div id="bizBtn"></div>' +
+      '<div class="lab" style="margin-top:6px">Or tap one</div><div class="chips" id="eg"></div>';
     const ta = el.querySelector("#bizIn");
+    let btn = { disabled: true };
     ta.value = S.business || "";
     ["Car detailing", "Hair salon", "Cafe", "Personal trainer", "Plumber"].forEach((t) => {
       const c = document.createElement("button"); c.className = "chip"; c.textContent = t;
-      c.onclick = () => { buzz(); ta.value = t; cta.disabled = false; ta.focus(); };
+      c.onclick = () => { buzz(); ta.value = t; btn.disabled = false; };
       el.querySelector("#eg").appendChild(c);
     });
     const ok = () => ta.value.trim().length > 2;
@@ -382,8 +408,8 @@
       save();
       if (S.questions.length) go(qScreen(0)); else loadQuestions();
     };
-    setCta("Next", next, { disabled: !ok() });
-    ta.oninput = () => { cta.disabled = !ok(); };
+    btn = inlineCta(el.querySelector("#bizBtn"), "Next", next, !ok());
+    ta.oninput = () => { btn.disabled = !ok(); };
     ta.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); next(); } };
   }
 
@@ -455,12 +481,12 @@
         const prev = S.answers[q.text];
         if (prev && !q.options.includes(prev)) ci.value = prev;
         const useTyped = () => { const v = ci.value.trim(); if (!v) return; picked.clear(); picked.add(v); advance(); };
+        const cbtn = inlineCta(wrap, "Next", useTyped, !ci.value.trim());
         ci.oninput = () => {
-          if (ci.value.trim()) { picked.clear(); box.querySelectorAll(".opt").forEach((x) => x.classList.remove("on")); setCta("Next", useTyped); }
-          else setCta(null);
+          cbtn.disabled = !ci.value.trim();
+          if (ci.value.trim()) { picked.clear(); box.querySelectorAll(".opt").forEach((x) => x.classList.remove("on")); }
         };
-        ci.onkeydown = (e) => { if (e.key === "Enter") useTyped(); };
-        if (ci.value.trim()) setCta("Next", useTyped); else setCta(null);
+        ci.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); useTyped(); } };
       } else if (q.multi) setCta("Next", advance, { disabled: picked.size === 0 });
       else setCta(null);
     };
