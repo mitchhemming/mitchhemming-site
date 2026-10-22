@@ -241,6 +241,14 @@
   .sc.done .got { background: var(--good); box-shadow: none; }
   .sc-end h1 { font-size: 32px; }
   .sc-end .cta { margin-top: auto; }
+  .pop { position: fixed; z-index: 50; display: flex; align-items: center; gap: 8px; border: 0; cursor: pointer;
+    background: var(--ink); color: #fff; font-size: 17px; font-weight: 700; padding: 13px 16px; border-radius: 16px;
+    box-shadow: 0 12px 30px -10px rgba(21,23,46,.6); opacity: 0; transform: translateY(-6px) scale(.96); transform-origin: top right;
+    transition: opacity .18s var(--ease), transform .18s var(--ease); }
+  .pop.show { opacity: 1; transform: none; }
+  .pop::before { content: ""; position: absolute; top: -6px; right: 16px; width: 12px; height: 12px; background: var(--ink); transform: rotate(45deg); border-radius: 2px; }
+  .pop svg { width: 18px; height: 18px; color: var(--sun); }
+  .pop:active { transform: scale(.96); }
   :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
@@ -305,13 +313,23 @@
     fn(el);
   }
   $("backBtn").onclick = () => { buzz(); const prev = history.pop(); if (prev) go(prev, { back: true, noHistory: true }); };
-  let armed = 0;
-  $("menuBtn").onclick = () => {
-    buzz();
-    if (Date.now() - armed < 2500) { armed = 0; restart(); return; }
-    armed = Date.now();
-    toast("Tap again to start over");
+  const pop = document.createElement("button");
+  pop.className = "pop"; pop.id = "startOver"; pop.hidden = true;
+  pop.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>Tap to start over';
+  document.body.appendChild(pop);
+  const closePop = () => { pop.hidden = true; pop.classList.remove("show"); };
+  $("menuBtn").onclick = (e) => {
+    e.stopPropagation(); buzz();
+    if (!pop.hidden) return closePop();
+    const r = $("menuBtn").getBoundingClientRect();
+    pop.style.top = (r.bottom + 10) + "px";
+    pop.style.right = (window.innerWidth - r.right) + "px";
+    pop.hidden = false;
+    requestAnimationFrame(() => pop.classList.add("show"));
   };
+  pop.onclick = (e) => { e.stopPropagation(); buzz(12); closePop(); restart(); };
+  document.addEventListener("click", (e) => { if (!pop.hidden && e.target !== pop) closePop(); });
+  window.addEventListener("scroll", closePop, { passive: true });
   function restart() {
     try { localStorage.removeItem(KEY); } catch {}
     S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {} };

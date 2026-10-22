@@ -71,6 +71,7 @@ Rules for the questions:
 - The first question is always exactly "What job do you want to film?" with id "job", multi false and custom true. Its options are the 4 most common jobs this business does for clients, named the way they would say them, like "Full detail", "Window tint", "Ceramic coating", "Interior clean". Each option is a real job type, not a size or area of the car.
 - Then ask 2 more questions that would change what videos make sense for this business. Good topics: if they are happy to talk on camera, where they do the work (only if it changes between jobs), if someone else is around to hold the phone. Never ask something whose answer is obvious for this business. Set custom false on these.
 - Every answer must be a real option for this business. Never list a place or setup this business would not use.
+- Each answer must read like a natural reply to its question, said by the owner. For "Can someone hold the phone?" say "Yes, usually" and "No, I work alone", not "You can hold".
 - Set multi to true whenever more than one answer could be true at once. Set it to false only when just one answer can be true.
 
 Rules for the answers:
