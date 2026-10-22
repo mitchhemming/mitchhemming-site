@@ -416,14 +416,13 @@
     el.innerHTML =
       '<span class="eyebrow">Nice to meet you, ' + esc(first()) + "</span>" +
       "<h1>What does your business do?</h1>" +
-      '<p class="sub">Say it like you would to a customer.</p>' +
-      '<textarea class="field" id="bizIn" rows="2" enterkeyhint="next" placeholder="We detail cars and do window tint"></textarea>' +
+      '<textarea class="field" id="bizIn" rows="2" enterkeyhint="next" placeholder="Explain it like you would to a customer"></textarea>' +
       '<div id="bizBtn"></div>' +
       '<div class="lab" style="margin-top:6px">Or tap one</div><div class="chips" id="eg"></div>';
     const ta = el.querySelector("#bizIn");
     let btn = { disabled: true };
     ta.value = S.business || "";
-    ["Car detailing", "Hair salon", "Cafe", "Personal trainer", "Plumber"].forEach((t) => {
+    ["Car Detailing", "Hair Salon", "Cafe", "Real Estate Agent", "Personal Trainer"].forEach((t) => {
       const c = document.createElement("button"); c.className = "chip"; c.textContent = t;
       c.onclick = () => { buzz(); ta.value = t; btn.disabled = false; };
       el.querySelector("#eg").appendChild(c);
