@@ -212,9 +212,9 @@
 
 
   /* Shot cards: one shot per screen, snap as you scroll */
-  html.snap { scroll-snap-type: y proximity; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); }
-  .screen.shots { gap: 16px; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
-  .sc { scroll-snap-align: start; min-height: calc(100svh - 96px - env(safe-area-inset-top, 0px)); background: var(--card); border-radius: 18px; padding: 22px 20px;
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); }
+  .screen.shots { gap: 20px; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .sc { background: var(--card); border-radius: 18px; padding: 22px 20px;
     display: flex; flex-direction: column; gap: 18px; box-shadow: 0 0 0 1px var(--line), 0 10px 30px -22px rgba(0,0,0,.3); transition: opacity .3s; }
   .sc-top { display: flex; justify-content: space-between; align-items: center; }
   .sc-n { font-size: 15px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--primary); }
@@ -247,7 +247,7 @@
   .sc-tip { display: flex; gap: 12px; align-items: flex-start; background: var(--sun-soft); border-radius: 16px; padding: 14px; font-size: 18px; line-height: 1.35; }
   .sc-tip svg { flex: none; width: 28px; height: 28px; color: #B58900; }
   .sc-tip b { display: block; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: #7A5A00; margin-bottom: 2px; }
-  .got { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 0; border-radius: 12px; padding: 18px; cursor: pointer;
+  .got { margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 0; border-radius: 12px; padding: 18px; cursor: pointer;
     font-size: 19px; font-weight: 600; background: var(--primary); color: #fff; box-shadow: 0 8px 20px -8px rgba(0,149,246,.45); transition: transform .12s var(--ease), background .2s; }
   .got:active { transform: scale(.97); }
   .got svg { width: 22px; height: 22px; }
