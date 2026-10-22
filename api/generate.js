@@ -100,18 +100,20 @@ ${who(b)}Business: "${b.business}"
 Their answers: ${JSON.stringify(b.answers)}
 They picked this video: ${JSON.stringify(b.idea)}
 
-Write the shot list in the order they film them. Match the effort level of the idea: "Quick" means 2 or 3 clips, "Easy" means 3 or 4 clips, "Bit more" means 4 to 6 clips. Keep every clip dead simple. One thing to film per clip. For each clip:
+Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 or 4, "Bit more" means 4 or 5.
+
+For each shot:
 - style: Selfie, POV or 3rd person
-- film: what to point the phone at. One or two short sentences.
-- hold: how to hold the phone and for how long. Say to hold it still. Say to film with the phone upright.
-- talk: if they talk in this clip, what to talk about in one short sentence, like "Tell them what the car came in for". Do not script it. They know their work best and will say it their own way. If they do not talk, use an empty string.
-- example: if they talk, one short example line to get them started, in plain first person words. If they do not talk, use an empty string.
-- seconds: how long this clip is in the final video
+- shot: what to grab, in 12 words or less. Loose and simple, like "Close up of the foam sliding off the client's car". No camera directions.
+- talk: only if talking fits this shot, one short line on what to talk about, like "What the car came in for". Do not script it. Otherwise an empty string.
+- example: only if talk is used, one short example line in plain first person words. Otherwise an empty string.
+
+Also give one short "tip" for the whole video, like "Grab a few extra close ups, they always come in handy."
 
 Then give pointers for the Instagram Edits app. Not step by step. What feel of music to pick, what text to put on screen, and one or two tips. One short sentence each.
 
 JSON shape:
-{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","film":"...","hold":"...","talk":"...","example":"...","seconds":5}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
+{"title":"...","seconds":30,"tip":"...","clips":[{"n":1,"style":"POV","shot":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
 `,
 };
 

@@ -173,6 +173,9 @@
     box-shadow: 0 1px 2px rgba(21,23,46,.06), 0 8px 24px -16px rgba(21,23,46,.25); transition: opacity .3s, transform .3s var(--ease); animation: fadeUp .4s var(--ease) both; }
   .clip-head { display: flex; align-items: center; gap: 12px; }
   .num { flex: none; width: 40px; height: 40px; border-radius: 13px; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 20px; transition: background .25s; }
+  .shot { font-size: 20px; font-weight: 700; line-height: 1.3; }
+  .howto { background: var(--card); border-radius: 18px; padding: 14px 16px; font-size: 16px; color: var(--muted); box-shadow: inset 0 0 0 2px var(--line); }
+  .howto b { color: var(--ink); }
   .lab { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
   .say { background: var(--sun-soft); border-radius: 14px; padding: 12px 14px; font-size: 19px; font-weight: 700; position: relative; }
   .say::before { content: "\201C"; font-family: var(--display); font-size: 40px; line-height: 1; position: absolute; left: 10px; top: 4px; color: var(--sun); }
@@ -448,9 +451,9 @@
     setTimeout(() => {
       if (ready) { p.then((d) => { S.shot = d; S.done = {}; go(ShotScreen, { fade: true }); }); return; }
       loadingScreen({
-        title: "Writing your shot list",
-        sub: "Every clip, in order, with what to say.",
-        steps: ["Picking each shot", "Writing what to say", "Adding tips for the Edits app"],
+        title: "Putting your shot ideas together",
+        sub: "A few shots to grab and some ideas to talk about.",
+        steps: ["Picking the key shots", "Adding a few talking ideas", "Adding tips for the Edits app"],
         task: () => fetchShot(idea),
         done: (d) => { S.shot = d; S.done = {}; go(ShotScreen, { replace: true, fade: true }); },
         keepHistory: true,
@@ -461,14 +464,14 @@
   function ShotScreen(el) {
     const s = S.shot || {};
     const clips = s.clips || [];
-    const total = clips.reduce((a, c) => a + (Number(c.seconds) || 0), 0) || s.seconds || 30;
+    const total = s.seconds || (S.idea && S.idea.seconds) || 30;
     bar({ back: true, reset: true });
     el.innerHTML =
       '<div class="hero"><span class="eyebrow" style="color:var(--sun)">Let\'s film it</span>' +
       "<h1>" + esc(s.title || (S.idea && S.idea.title)) + "</h1>" +
-      '<div class="row"><div><b>' + clips.length + "</b>clips</div><div><b>" + total + '</b>seconds</div><div><b id="cnt">0</b>filmed</div></div>' +
+      '<div class="row"><div><b>' + clips.length + "</b>shots</div><div><b>" + total + '</b>seconds</div><div><b id="cnt">0</b>got</div></div>' +
       '<div class="meter"><i id="meter"></i></div></div>' +
-      '<p class="sub">Film them in this order. Phone upright. Hold it still.</p>' +
+      '<div class="howto"><b>These are ideas, not rules.</b> Grab these shots, then film anything else that looks good. Phone upright, hold it still for a few seconds each time.' + (s.tip ? "<br><br>" + esc(s.tip) : "") + "</div>" +
       '<div class="clips" id="clips"></div><div id="partySlot"></div><div class="edit" id="edit"></div>';
     const list = el.querySelector("#clips");
     const update = () => {
@@ -477,7 +480,7 @@
       el.querySelector("#meter").style.width = (clips.length ? (n / clips.length) * 100 : 0) + "%";
       const slot = el.querySelector("#partySlot");
       if (n === clips.length && clips.length && !slot.firstChild) {
-        slot.innerHTML = '<div class="party"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><div><b>All filmed. Nice work' + (first() ? " " + esc(first()) : "") + ".</b>Now open the Edits app and drop your clips in, in order.</div></div>";
+        slot.innerHTML = '<div class="party"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><div><b>All done. Nice work' + (first() ? " " + esc(first()) : "") + ".</b>Now open the Edits app and drop your clips in, in order.</div></div>";
         buzz([10, 40, 10]);
         setTimeout(() => slot.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
       } else if (n < clips.length) slot.innerHTML = "";
@@ -487,14 +490,13 @@
       card.className = "clip" + (S.done[i] ? " done" : "");
       card.style.animationDelay = i * 60 + "ms";
       card.innerHTML =
-        '<div class="clip-head"><div class="num">' + (i + 1) + '</div><div class="meta"><span class="tag ' + styleClass(c.style) + '">' + esc(c.style) + '</span><span class="secs">' + esc(c.seconds || 5) + " sec</span></div></div>" +
-        '<div><div class="lab">Film this</div><p>' + esc(c.film) + "</p></div>" +
-        '<div><div class="lab">How to hold it</div><p>' + esc(c.hold) + "</p></div>" +
+        '<div class="clip-head"><div class="num">' + (i + 1) + '</div><div class="meta"><span class="tag ' + styleClass(c.style) + '">' + esc(c.style) + "</span></div></div>" +
+        '<p class="shot">' + esc(c.shot || c.film || "") + "</p>" +
         (talkOf(c) ? '<div><div class="lab">Talk about</div><p>' + esc(talkOf(c)) + "</p>" +
-          (exOf(c) ? '<div class="say"><small>For example</small><span>' + esc(exOf(c)) + '</span></div><p class="own">Say it your own way. You know this stuff best.</p>' : "") + "</div>" : "") +
-        '<button class="done-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Mark as filmed</span></button>';
+          (exOf(c) ? '<div class="say"><small>For example</small><span>' + esc(exOf(c)) + '</span></div><p class="own">Use your own words. You know this better than anyone.</p>' : "") + "</div>" : "") +
+        '<button class="done-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Tap when you have it</span></button>';
       const btn = card.querySelector(".done-btn");
-      const paint = () => { card.classList.toggle("done", !!S.done[i]); btn.querySelector("span").textContent = S.done[i] ? "Filmed" : "Mark as filmed"; };
+      const paint = () => { card.classList.toggle("done", !!S.done[i]); btn.querySelector("span").textContent = S.done[i] ? "Got it" : "Tap when you have it"; };
       btn.onclick = () => {
         buzz(12);
         S.done[i] = !S.done[i]; paint(); update();
