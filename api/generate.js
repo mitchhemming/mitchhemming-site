@@ -134,10 +134,10 @@ For each shot:
 - talk: only if talking fits this shot, one short line on what to talk about, like "What the car came in for". Do not script it. Otherwise an empty string.
 - example: only if talk is used, one short example line in plain first person words. Otherwise an empty string.
 
-Then give pointers for the Instagram Edits app. Not step by step. What feel of music to pick, what text to put on screen, and one or two tips. One short sentence each.
+Then give pointers for the Instagram Edits app. Not step by step. What text to put on screen, and one or two tips. Do not suggest music. One short sentence each.
 
 JSON shape:
-{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","more":[],"shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
+{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","more":[],"shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"text":"...","tips":["...","..."]}}
 `,
 };
 
