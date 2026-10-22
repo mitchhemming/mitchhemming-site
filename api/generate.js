@@ -30,6 +30,22 @@ How you must write:
 const who = (b) => (b.name ? `The owner's first name is ${String(b.name).slice(0, 40)}.\n` : "");
 
 const PROMPTS = {
+  research: (b) => `
+The owner said their business does this: "${b.business}"
+
+You are researching short video formats that have done well on Instagram Reels and TikTok for this exact kind of business. Think about the videos in this category that got lots of views, saves and shares over the past few years. Not general tips. Real formats people in this industry use again and again because they work.
+
+List 10 formats. Each one must be specific to this business, not something any business could post. Mix satisfying process videos, before and after, talking tips, behind the scenes, and customer moments.
+
+For each format:
+- name: 2 to 5 words
+- what: what happens in the video, one short sentence
+- why: why people stop and watch, one short sentence
+
+JSON shape:
+{"formats":[{"name":"...","what":"...","why":"..."}]}
+`,
+
   questions: (b) => `
 ${who(b)}The owner said their business does this: "${b.business}"
 
@@ -43,7 +59,7 @@ Rules for the questions:
 
 Rules for the answers:
 - 2 to 4 answers per question.
-- Every answer must be clearly different from the others. Never give two answers that mean nearly the same thing. If two answers are close, merge them into one broader answer.
+- Every answer must be clearly different from the others. Never give two answers that mean nearly the same thing. If two answers are close, merge them into one broader answer. For example "My garage" and "Shop or bay" are too close, so use "My shop or garage".
 - Keep answers to 1 to 4 words. Plain words a customer would say.
 - Cover the common cases so most people can tap one without thinking. Broad is better than confusing.
 - Do not add "Not sure" or "All of the above". Multi select handles that.
@@ -56,10 +72,10 @@ JSON shape:
 ${who(b)}Business: "${b.business}"
 Their answers: ${JSON.stringify(b.answers)}
 
-Give 6 video ideas that fit this exact business and these exact answers. Each idea is one video of 15 to 45 seconds. Mix the three filming styles. Make them specific to this business, not generic. Use the words their customers would use. Every idea must be possible with what they told you. If they said they film alone, do not need anyone else in the shot.
+${b.formats && b.formats.length ? "Formats that have done well for this kind of business:\n" + JSON.stringify(b.formats).slice(0, 4000) + "\nBuild every idea on one of these formats. Pick the 6 that best fit their answers.\n\n" : ""}Give 6 video ideas that fit this exact business and these exact answers. Each idea is one video of 15 to 45 seconds. Mix the three filming styles. Make them specific to this business, not generic. Use the words their customers would use. Every idea must be possible with what they told you. If they said they film alone, do not need anyone else in the shot.
 
 JSON shape:
-{"ideas":[{"id":"i1","title":"3 to 5 words","line":"one short sentence saying what the video shows","style":"Selfie" | "POV" | "3rd person" | "Mix","seconds":30}]}
+{"ideas":[{"id":"i1","title":"3 to 5 words","line":"one short sentence saying what the video shows","why":"one short sentence on why people watch this kind of video","style":"Selfie" | "POV" | "3rd person" | "Mix","seconds":30}]}
 `,
 
   shotlist: (b) => `
