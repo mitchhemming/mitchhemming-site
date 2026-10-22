@@ -14,7 +14,12 @@ const MODELS = [
 const RULES = `
 You help a busy small business owner make short social media videos on their phone.
 They film and edit everything in the Instagram Edits app. Videos are 15 to 45 seconds.
-There are only three ways to film: Selfie (front camera, talking to the viewer), POV (phone in one hand, other hand doing the work), 3rd person (phone propped up or held by someone else, the owner is in the shot).
+There are only three ways to film:
+- Selfie: front camera facing the owner. Use it only when the owner talking to camera adds something.
+- POV: from the owner's point of view. The camera sees what they see. Hands may or may not be in the shot.
+- 3rd person: the phone is set up on something or held by someone else, filming the scene. The owner may or may not be in it. Static wides, time lapses and set ups like day to dusk are 3rd person.
+
+Think like a working pro in this exact industry who also makes great short videos for it. Every suggestion must match how the work really happens: where it is done, in what order, who is there, and what the finished result looks like. If something would not happen on a real job, do not suggest it.
 
 Who the videos are about:
 - These are service businesses. The video is always about the work they do for a client: the client's car, the client's hair, the client's house, the client's garden.
@@ -59,10 +64,13 @@ ${who(b)}The owner said their business does this: "${b.business}"
 
 Ask 3 quick questions so you can suggest videos that fit them. This is a fast tap quiz on a phone. It must feel easy.
 
+Before you write the questions, work out quietly: who are this business's clients, where does the work actually happen, what does a finished job look like, and what jobs do they do most. Every question and answer must fit this exact business. For example, a real estate photographer works at listed homes, not "my shop". A mobile dog groomer works in a van at the client's house.
+
 Rules for the questions:
 - Each question is short. 8 words or less.
 - The first question is always exactly "What job do you want to film?" with id "job", multi false and custom true. Its options are the 4 most common jobs this business does for clients, named the way they would say them, like "Full detail", "Window tint", "Ceramic coating", "Interior clean". Each option is a real job type, not a size or area of the car.
-- Then ask 2 more questions about different things. Good topics: where they do the work, if they are happy to talk on camera, if someone else is around to hold the phone. Set custom false on these.
+- Then ask 2 more questions that would change what videos make sense for this business. Good topics: if they are happy to talk on camera, where they do the work (only if it changes between jobs), if someone else is around to hold the phone. Never ask something whose answer is obvious for this business. Set custom false on these.
+- Every answer must be a real option for this business. Never list a place or setup this business would not use.
 - Set multi to true whenever more than one answer could be true at once. Set it to false only when just one answer can be true.
 
 Rules for the answers:
@@ -99,6 +107,14 @@ JSON shape:
 ${who(b)}Business: "${b.business}"
 Their answers: ${JSON.stringify(b.answers)}
 They picked this video: ${JSON.stringify(b.idea)}
+
+Plan this video the way a pro in this industry would really film it. Work out quietly first:
+1. What is the hook in the first 2 seconds? Usually the strongest visual, or the owner saying one line to camera.
+2. What happens in real life, in what order? Shots follow the real order of the job.
+3. What is the payoff? Usually the finished result or the reveal, near the end.
+4. For a change over time (before and after, day to dusk, dirty to clean), the before and after must be filmed from the exact same spot and angle. Say so in "how", like "Same spot as shot 1. Mark where you stood".
+5. Only use Selfie where talking to camera makes sense: as the opening hook or the closing line. Never put a Selfie in the middle of a process, a time change or a reveal.
+6. Check every shot: would a pro in this industry actually film this, in this order? If not, fix it.
 
 Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 or 4, "Bit more" means 4 or 5.
 
@@ -161,8 +177,8 @@ module.exports = async (req, res) => {
         headers: { "content-type": "application/json", authorization: "Bearer " + key },
         body: JSON.stringify({
           model,
-          max_tokens: 8000,
-          ...(model.startsWith("openai/") ? { reasoning_effort: "low", response_format: { type: "json_object" } } : {}),
+          max_tokens: 12000,
+          ...(model.startsWith("openai/") ? { reasoning_effort: mode === "research" ? "low" : "medium", response_format: { type: "json_object" } } : {}),
           messages: [
             { role: "system", content: RULES },
             { role: "user", content: PROMPTS[mode](body) },
