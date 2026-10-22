@@ -221,7 +221,8 @@
   .dots { display: flex; gap: 6px; } .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); } .dots i.on { background: var(--ig); width: 22px; border-radius: 99px; }
   .sc-style { display: flex; flex-direction: column; gap: 2px; border-radius: 16px; padding: 12px 14px; background: var(--primary-soft); color: var(--primary); }
   .sc-style b { font-family: var(--display); font-size: 22px; font-weight: 800; }
-  .sc-style span { font-size: 16px; }
+  .sc-style .sc-help { font-size: 16px; }
+  .sc-style .sc-howto { margin-top: 8px; padding-top: 8px; border-top: 1px solid currentColor; border-top-color: color-mix(in srgb, currentColor 25%, transparent); font-size: 19px; font-weight: 700; color: var(--ink); line-height: 1.35; }
   .sc-style.selfie { background: var(--selfie); color: var(--selfie-ink); } .sc-style.pov { background: var(--pov); color: var(--pov-ink); }
   .sc-style.third { background: var(--third); color: var(--third-ink); } .sc-style.mix { background: var(--mix); color: var(--mix-ink); }
   .sc-lab { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
@@ -669,10 +670,9 @@
         '<div class="sc-top"><span class="sc-n">Shot ' + (i + 1) + " of " + clips.length + '</span><span class="dots">' +
           clips.map((_, k) => '<i class="' + (k === i ? "on" : "") + '"></i>').join("") + "</span></div>" +
         (i === 0 ? '<div class="musthave"><b>Your must have shots</b>Film these, then grab extra any time something looks good. More footage gives you more to pick from.</div>' : "") +
-        '<div class="sc-style ' + sc + '"><b>' + esc(c.style) + "</b><span>" + esc(STYLE_HELP[sc] || "") + "</span></div>" +
-        '<div class="sc-block"><div class="sc-lab">What to film</div><p class="sc-what">' + esc(c.shot || c.film || "") + "</p>" +
-          "</div>" +
-        (c.how || c.hold ? '<div class="sc-block"><div class="sc-lab">How to film it</div><p class="sc-how">' + esc(c.how || c.hold) + "</p></div>" : "") +
+        '<div class="sc-block"><div class="sc-lab">What to film</div><p class="sc-what">' + esc(c.shot || c.film || "") + "</p></div>" +
+        '<div class="sc-style ' + sc + '"><b>' + esc(c.style) + '</b><span class="sc-help">' + esc(STYLE_HELP[sc] || "") + "</span>" +
+          (c.how || c.hold ? '<span class="sc-howto">' + esc(c.how || c.hold) + "</span>" : "") + "</div>" +
         (talkOf(c) ? '<div class="sc-talk"><div class="sc-lab">Talk about</div><p class="sc-how">' + esc(talkOf(c)) + "</p>" +
           (exOf(c) ? '<p class="sc-eg">For example: <i>' + esc(exOf(c)) + "</i></p>" : "") + '<p class="sc-own">Use your own words. You know this better than anyone.</p></div>' : "") +
         (Array.isArray(c.more) && c.more.length ? '<div class="more-angles"><button class="ma-btn" aria-expanded="false"><span><b>Want a longer video?</b>Tap for extra angles you can add</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>' +
