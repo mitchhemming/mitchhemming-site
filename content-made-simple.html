@@ -176,7 +176,10 @@
   .lab { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
   .say { background: var(--sun-soft); border-radius: 14px; padding: 12px 14px; font-size: 19px; font-weight: 700; position: relative; }
   .say::before { content: "\201C"; font-family: var(--display); font-size: 40px; line-height: 1; position: absolute; left: 10px; top: 4px; color: var(--sun); }
-  .say span { display: block; padding-left: 18px; }
+  .say { margin-top: 8px; font-weight: 400; }
+  .say small { display: block; padding-left: 18px; font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #7A5A00; }
+  .say span { display: block; padding-left: 18px; font-style: italic; }
+  .own { font-size: 15px; color: var(--muted); margin-top: 6px; }
   .done-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 0; border-radius: 14px; padding: 14px; cursor: pointer; font-weight: 700; font-size: 17px;
     background: var(--bg); color: var(--ink); transition: transform .12s var(--ease), background .2s, color .2s; }
   .done-btn:active { transform: scale(.97); }
@@ -241,6 +244,8 @@
   const first = () => (S.name ? S.name.split(" ")[0] : "");
   const toast = (msg) => { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1800); };
   const lvlClass = (l) => { const s = String(l || "").toLowerCase(); return s.startsWith("quick") ? "q" : s.startsWith("easy") ? "e" : "b"; };
+  const talkOf = (c) => String(c.talk || (c.say ? "Talk to the camera" : "") || "").trim();
+  const exOf = (c) => String(c.example || c.say || "").trim();
   const styleClass = (st) => { const s = String(st || "").toLowerCase(); if (s.startsWith("self")) return "selfie"; if (s.startsWith("pov")) return "pov"; if (s.startsWith("3") || s.startsWith("third")) return "third"; if (s.startsWith("mix")) return "mix"; return ""; };
 
   // ---------- navigation ----------
@@ -485,7 +490,8 @@
         '<div class="clip-head"><div class="num">' + (i + 1) + '</div><div class="meta"><span class="tag ' + styleClass(c.style) + '">' + esc(c.style) + '</span><span class="secs">' + esc(c.seconds || 5) + " sec</span></div></div>" +
         '<div><div class="lab">Film this</div><p>' + esc(c.film) + "</p></div>" +
         '<div><div class="lab">How to hold it</div><p>' + esc(c.hold) + "</p></div>" +
-        (c.say && String(c.say).trim() ? '<div><div class="lab">Say this</div><div class="say"><span>' + esc(c.say) + "</span></div></div>" : "") +
+        (talkOf(c) ? '<div><div class="lab">Talk about</div><p>' + esc(talkOf(c)) + "</p>" +
+          (exOf(c) ? '<div class="say"><small>For example</small><span>' + esc(exOf(c)) + '</span></div><p class="own">Say it your own way. You know this stuff best.</p>' : "") + "</div>" : "") +
         '<button class="done-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Mark as filmed</span></button>';
       const btn = card.querySelector(".done-btn");
       const paint = () => { card.classList.toggle("done", !!S.done[i]); btn.querySelector("span").textContent = S.done[i] ? "Filmed" : "Mark as filmed"; };

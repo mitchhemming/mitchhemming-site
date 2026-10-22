@@ -104,13 +104,14 @@ Write the shot list in the order they film them. Match the effort level of the i
 - style: Selfie, POV or 3rd person
 - film: what to point the phone at. One or two short sentences.
 - hold: how to hold the phone and for how long. Say to hold it still. Say to film with the phone upright.
-- say: if they talk in this clip, the exact words to say. Short, natural, first person, like they would really talk. If they do not talk, use an empty string.
+- talk: if they talk in this clip, what to talk about in one short sentence, like "Tell them what the car came in for". Do not script it. They know their work best and will say it their own way. If they do not talk, use an empty string.
+- example: if they talk, one short example line to get them started, in plain first person words. If they do not talk, use an empty string.
 - seconds: how long this clip is in the final video
 
 Then give pointers for the Instagram Edits app. Not step by step. What feel of music to pick, what text to put on screen, and one or two tips. One short sentence each.
 
 JSON shape:
-{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","film":"...","hold":"...","say":"...","seconds":5}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
+{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","film":"...","hold":"...","talk":"...","example":"...","seconds":5}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
 `,
 };
 
