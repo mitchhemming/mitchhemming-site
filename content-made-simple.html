@@ -299,9 +299,11 @@
   const ICON_TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   const ICON_GO = '<svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
 
-  let S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {} };
+  let S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {}, shots: {}, view: "" };
   try { const saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved) S = Object.assign(S, saved); } catch {}
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ name: S.name, business: S.business, questions: S.questions, answers: S.answers, ideas: S.ideas, formats: S.formats })); } catch {} };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({ name: S.name, business: S.business, questions: S.questions, answers: S.answers, ideas: S.ideas, formats: S.formats,
+    view: S.view, qi: S.qi, jobOnly: S.jobOnly, idea: S.idea, shot: S.shot, done: S.done, shots: S.shots })); } catch {} };
+  const setView = (v, extra) => { S.view = v; Object.assign(S, extra || {}); save(); };
 
   let researchP = Promise.resolve();
   const cache = {};       // idea id -> shot list promise
@@ -355,7 +357,7 @@
   window.addEventListener("scroll", closePop, { passive: true });
   function restart() {
     try { localStorage.removeItem(KEY); } catch {}
-    S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {} };
+    S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {}, shots: {}, view: "" };
     for (const k in cache) delete cache[k];
     history = []; current = null;
     go(NameScreen, { fade: true });
@@ -408,6 +410,7 @@
 
   // ---------- screens ----------
   function NameScreen(el) {
+    setView("name");
     bar({ progress: 1 / setupTotal() });
     el.innerHTML =
       '<span class="eyebrow">Content Made Simple</span>' +
@@ -425,6 +428,7 @@
   }
 
   function BizScreen(el) {
+    setView("biz");
     bar({ progress: 2 / setupTotal(), back: true });
     el.innerHTML =
       '<span class="eyebrow">Nice to meet you, ' + esc(first()) + "</span>" +
@@ -454,6 +458,7 @@
   }
 
   function loadQuestions() {
+    setView("loadq");
     loadingScreen({
       title: "Getting to know your business",
       steps: ["Reading what you do", "Looking at videos that work in your industry", "Working out a few quick questions"],
@@ -473,6 +478,7 @@
 
   function qScreen(i, jobOnly) {
     return function QuestionScreen(el) {
+      setView("q", { qi: i, jobOnly: !!jobOnly });
       const q = S.questions[i];
       bar(jobOnly ? { back: true } : { progress: (3 + i) / setupTotal(), back: true });
       const picked = new Set([].concat(S.answers[q.text] || []));
@@ -533,17 +539,19 @@
   }
 
   function loadIdeas() {
+    setView("loadi");
     for (const k in cache) delete cache[k];
     loadingScreen({
       title: jobAnswer() ? "Creating " + jobAnswer().toLowerCase() + " video ideas" : "Creating video ideas for you",
       sub: first() ? "Hang tight " + first() + ", this takes a few seconds." : "This takes a few seconds.",
       steps: ["Looking at your answers", "Matching you with videos that already work", "Writing 3 ideas you can film this week"],
       task: () => researchP.then(() => api({ mode: "ideas", name: S.name, business: S.business, answers: S.answers, formats: S.formats })),
-      done: (d) => { S.ideas = tagIds((d.ideas || []).slice(0, 3)); save(); history = []; go(IdeasScreen, { replace: true, fade: true }); },
+      done: (d) => { S.ideas = tagIds((d.ideas || []).slice(0, 3)); S.shots = {}; save(); history = []; go(IdeasScreen, { replace: true, fade: true }); },
     });
   }
 
   function IdeasScreen(el) {
+    setView("ideas");
     bar({ title: S.business ? "" : "", reset: true });
     el.innerHTML =
       '<span class="eyebrow">Your ideas</span>' +
@@ -612,14 +620,18 @@
     next(); next();
   }
   function fetchShot(idea) {
+    if (!cache[idea.id] && S.shots && S.shots[idea.id]) cache[idea.id] = Promise.resolve(S.shots[idea.id]);
     if (!cache[idea.id]) {
-      cache[idea.id] = api({ mode: "shotlist", name: S.name, business: S.business, answers: S.answers, idea }).catch((e) => { delete cache[idea.id]; throw e; });
+      cache[idea.id] = api({ mode: "shotlist", business: S.business, answers: S.answers, idea })
+        .then((d) => { S.shots = S.shots || {}; S.shots[idea.id] = d; save(); return d; })
+        .catch((e) => { delete cache[idea.id]; throw e; });
     }
     return cache[idea.id];
   }
 
   function openShot(idea) {
     S.idea = idea;
+    setView("loads");
     let ready = false;
     const p = fetchShot(idea);
     p.then(() => { ready = true; }).catch(() => {});
@@ -644,6 +656,7 @@
     mix: "A mix of styles.",
   };
   function ShotScreen(el) {
+    setView("shot");
     const s = S.shot || {};
     const clips = s.clips || [];
     document.documentElement.classList.add("snap");
@@ -697,7 +710,7 @@
       paint();
       btn.onclick = () => {
         buzz(12);
-        S.done[i] = true; paint(); paintEnd();
+        S.done[i] = true; save(); paint(); paintEnd();
         if (allDone()) buzz([10, 40, 10]);
         setTimeout(() => arts[i + 1].scrollIntoView({ behavior: "smooth", block: "start" }), 180);
       };
@@ -753,26 +766,53 @@
     go(run, opts);
   }
 
+  // Track when the phone leaves the page, so a cut off request can be retried quietly.
+  let hiddenAt = 0;
+  document.addEventListener("visibilitychange", () => { if (document.hidden) hiddenAt = Date.now(); });
+  const whenVisible = () => document.hidden ? new Promise((r) => {
+    const f = () => { if (!document.hidden) { document.removeEventListener("visibilitychange", f); setTimeout(r, 300); } };
+    document.addEventListener("visibilitychange", f);
+  }) : Promise.resolve();
+
   async function api(payload) {
-    let r;
-    try {
-      r = await fetch("/api/generate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
-    } catch { throw new Error("Looks like your signal dropped. Check it and try again."); }
-    const data = await r.json().catch(() => ({}));
-    if (!r.ok) throw new Error(data.error === "no_key" ? "This page is not switched on yet. Let Mitch know." : "Something got stuck on our end. Give it another go.");
-    return data;
+    let lastErr;
+    for (let attempt = 0; attempt < 4; attempt++) {
+      await whenVisible();
+      const startedAt = Date.now();
+      try {
+        const r = await fetch("/api/generate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload), keepalive: false });
+        const data = await r.json().catch(() => null);
+        if (r.ok && data) return data;
+        if (data && data.error === "no_key") throw Object.assign(new Error("This page is not switched on yet. Let Mitch know."), { final: true });
+        lastErr = new Error("Something got stuck on our end. Give it another go.");
+        if (r.status === 400) break;
+      } catch (e) {
+        if (e.final) throw e;
+        lastErr = new Error("Looks like your signal dropped. Check it and try again.");
+      }
+      // Cut off by switching apps, or a hiccup: wait, then try again.
+      const wasAway = hiddenAt >= startedAt || document.hidden;
+      if (!wasAway && attempt >= 1) break;
+      await new Promise((r) => setTimeout(r, wasAway ? 200 : 1200));
+    }
+    throw lastErr;
   }
 
   // ---------- start ----------
   if (/[?&](new|reset|restart)\b/.test(location.search)) {
     try { localStorage.removeItem(KEY); } catch {}
-    S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {} };
+    S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {}, shots: {}, view: "" };
     try { window.history.replaceState(null, "", location.pathname); } catch {}
   }
-  if (S.name && S.business && S.ideas && S.ideas.length) {
-    go(IdeasScreen, { fade: true });
-    setTimeout(() => toast("Welcome back " + first()), 400);
-  } else if (S.name) go(BizScreen, { fade: true });
+  const hasIdeas = S.name && S.business && S.ideas && S.ideas.length;
+  const v = S.view;
+  if (v === "shot" && S.shot) { if (hasIdeas) current = IdeasScreen; go(ShotScreen, { fade: true }); }
+  else if (v === "loads" && S.idea && hasIdeas) { current = IdeasScreen; openShot(S.idea); }
+  else if (v === "loadi" && S.business && S.questions.length) loadIdeas();
+  else if (v === "q" && S.questions.length && S.questions[S.qi || 0]) go(qScreen(S.qi || 0, S.jobOnly), { fade: true });
+  else if (v === "loadq" && S.business) loadQuestions();
+  else if (hasIdeas) { go(IdeasScreen, { fade: true }); setTimeout(() => toast("Welcome back " + first()), 400); }
+  else if (S.name) go(BizScreen, { fade: true });
   else go(NameScreen, { fade: true });
 })();
 </script>
