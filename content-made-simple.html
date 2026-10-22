@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="theme-color" content="#f6f3ee">
+<title>Content Made Simple</title>
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+  /* Layout: one column, one thing on screen at a time, big tap targets. */
+  :root {
+    --bg: #f6f3ee;
+    --card: #ffffff;
+    --ink: #1c1a17;
+    --muted: #6b655c;
+    --line: #e3ded5;
+    --accent: #1f5f4a;
+    --accent-ink: #ffffff;
+    --soft: #e8efe9;
+    --pill-selfie: #fde7d2;
+    --pill-pov: #dbe9f6;
+    --pill-third: #e9e2f6;
+    --font: "Atkinson Hyperlegible", -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font); }
+  body {
+    font-size: 18px; line-height: 1.5;
+    padding-left: max(18px, env(safe-area-inset-left, 0px));
+    padding-right: max(18px, env(safe-area-inset-right, 0px));
+    padding-block: max(18px, env(safe-area-inset-top, 0px)) max(32px, env(safe-area-inset-bottom, 0px));
+    min-height: 100%;
+  }
+  main { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .brand { font-weight: 700; font-size: 15px; letter-spacing: .02em; color: var(--muted); text-transform: uppercase; }
+  .link { background: none; border: 0; color: var(--muted); font: inherit; font-size: 15px; text-decoration: underline; padding: 6px 0; cursor: pointer; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 8px 0 0; text-wrap: balance; }
+  p { margin: 0; }
+  .hint { color: var(--muted); font-size: 16px; }
+  textarea, input[type=text] {
+    width: 100%; font: inherit; font-size: 19px; padding: 14px; border: 2px solid var(--line); border-radius: 12px;
+    background: var(--card); color: var(--ink); resize: none;
+  }
+  textarea:focus, input:focus { outline: 3px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+  .btn {
+    display: block; width: 100%; font: inherit; font-size: 19px; font-weight: 700; padding: 16px 18px;
+    border-radius: 14px; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; text-align: center;
+  }
+  .btn.alt { background: var(--card); color: var(--ink); border-color: var(--line); font-weight: 400; text-align: left; }
+  .btn.alt:active, .btn.alt[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .stack { display: flex; flex-direction: column; gap: 10px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .idea { display: flex; flex-direction: column; gap: 6px; text-align: left; cursor: pointer; width: 100%; font: inherit; color: var(--ink); }
+  .idea:active { background: var(--soft); }
+  .idea .t { font-weight: 700; font-size: 19px; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .pill { font-size: 13px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--soft); }
+  .pill.selfie { background: var(--pill-selfie); }
+  .pill.pov { background: var(--pill-pov); }
+  .pill.third, .pill.thirdperson { background: var(--pill-third); }
+  .secs { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .clip { display: grid; grid-template-columns: 40px 1fr; gap: 12px; }
+  .clip .num { width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; display: grid; place-items: center; font-size: 18px; }
+  .clip.done { opacity: .45; }
+  .clip .body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .label { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  .say { background: var(--soft); border-left: 4px solid var(--accent); padding: 10px 12px; border-radius: 0 10px 10px 0; font-size: 19px; }
+  .check { display: flex; align-items: center; gap: 10px; font-size: 16px; color: var(--muted); margin-top: 4px; }
+  .check input { width: 24px; height: 24px; accent-color: var(--accent); }
+  .edit li { margin: 4px 0; }
+  .edit ul { padding-left: 20px; margin: 4px 0 0; }
+  .loading { display: flex; align-items: center; gap: 12px; color: var(--muted); padding: 24px 0; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); animation: pulse 1s infinite ease-in-out; }
+  @keyframes pulse { 0%,100% { transform: scale(.6); opacity: .4 } 50% { transform: scale(1); opacity: 1 } }
+  @media (prefers-reduced-motion: reduce) { .dot { animation: none; } }
+  .err { background: #fbe9e7; border: 1px solid #f0c7c1; border-radius: 12px; padding: 14px; }
+  .progress { font-size: 14px; color: var(--muted); }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <span class="brand">Content Made Simple</span>
+    <button class="link" id="resetBtn" hidden>Start again</button>
+  </div>
+
+  <!-- 1. Business -->
+  <section id="sBiz" class="stack">
+    <h1>What does your business do?</h1>
+    <p class="hint">Say it the way you would say it to a customer.</p>
+    <textarea id="bizInput" rows="3" placeholder="We detail cars, do window tint and paint protection"></textarea>
+    <button class="btn" id="bizNext">Next</button>
+  </section>
+
+  <!-- 2. Questions -->
+  <section id="sQ" class="stack" hidden>
+    <p class="progress" id="qProg"></p>
+    <h1 id="qText"></h1>
+    <div class="stack" id="qOpts"></div>
+    <input type="text" id="qOther" placeholder="Or type your own answer">
+    <button class="btn" id="qOtherBtn">Use my answer</button>
+  </section>
+
+  <!-- 3. Ideas -->
+  <section id="sIdeas" class="stack" hidden>
+    <h1>Pick a video to make</h1>
+    <p class="hint">Tap one. You will get a shot list.</p>
+    <div class="stack" id="ideaList"></div>
+    <button class="btn alt" id="moreIdeas">Show me different ideas</button>
+  </section>
+
+  <!-- 4. Shot list -->
+  <section id="sShot" class="stack" hidden>
+    <button class="link" id="backIdeas" style="text-align:left">Back to ideas</button>
+    <h1 id="shotTitle"></h1>
+    <p class="hint" id="shotMeta"></p>
+    <p class="hint">Film the clips in this order. Phone upright. Hold still. Tick each one when it is done.</p>
+    <div class="stack" id="clipList"></div>
+    <div class="card edit" id="editBox"></div>
+    <button class="btn" id="anotherBtn">Make another video</button>
+  </section>
+
+  <div class="loading" id="loading" hidden><span class="dot"></span><span id="loadText">Thinking</span></div>
+  <div class="err" id="err" hidden>
+    <p id="errText">Something went wrong.</p>
+    <button class="link" id="retryBtn">Tap to try again</button>
+  </div>
+</main>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const KEY = "cms_v1";
+  let state = { business: "", questions: [], answers: {}, qIndex: 0, ideas: [], idea: null, shot: null };
+  let lastAction = null;
+
+  try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s && s.business) state = Object.assign(state, s); } catch {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify({ business: state.business, answers: state.answers, ideas: state.ideas })); } catch {} }
+
+  const sections = ["sBiz", "sQ", "sIdeas", "sShot"];
+  function show(id) {
+    sections.forEach((s) => { $(s).hidden = s !== id; });
+    $("resetBtn").hidden = id === "sBiz";
+    $("err").hidden = true;
+    window.scrollTo(0, 0);
+  }
+  function loading(on, text) {
+    $("loading").hidden = !on;
+    $("loadText").textContent = text || "Thinking";
+    sections.forEach((s) => { if (on) $(s).hidden = true; });
+  }
+  function fail(msg, retry) {
+    loading(false);
+    $("errText").textContent = msg;
+    $("err").hidden = false;
+    lastAction = retry;
+  }
+
+  async function ask(payload) {
+    const r = await fetch("/api/generate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      if (data.error === "no_key") throw new Error("This page is not switched on yet. Tell Mitch.");
+      throw new Error("Could not get an answer. Check your signal and try again.");
+    }
+    return data;
+  }
+
+  function pillClass(style) {
+    const s = String(style || "").toLowerCase();
+    if (s.startsWith("self")) return "selfie";
+    if (s.startsWith("pov")) return "pov";
+    if (s.startsWith("3") || s.startsWith("third")) return "third";
+    return "";
+  }
+
+  // Step 1
+  $("bizInput").value = state.business || "";
+  $("bizNext").onclick = async () => {
+    const b = $("bizInput").value.trim();
+    if (b.length < 3) { $("bizInput").focus(); return; }
+    state.business = b; state.answers = {}; state.ideas = []; state.qIndex = 0;
+    await getQuestions();
+  };
+  async function getQuestions() {
+    loading(true, "Working out what to ask you");
+    try {
+      const d = await ask({ mode: "questions", business: state.business });
+      state.questions = (d.questions || []).slice(0, 4);
+      loading(false);
+      if (!state.questions.length) return getIdeas();
+      renderQ();
+    } catch (e) { fail(e.message, getQuestions); }
+  }
+
+  // Step 2
+  function renderQ() {
+    const q = state.questions[state.qIndex];
+    $("qProg").textContent = "Question " + (state.qIndex + 1) + " of " + state.questions.length;
+    $("qText").textContent = q.text;
+    const box = $("qOpts"); box.innerHTML = "";
+    (q.options || []).forEach((o) => {
+      const b = document.createElement("button");
+      b.className = "btn alt"; b.textContent = o;
+      b.onclick = () => answer(q, o);
+      box.appendChild(b);
+    });
+    $("qOther").value = "";
+    show("sQ");
+  }
+  $("qOtherBtn").onclick = () => { const v = $("qOther").value.trim(); if (v) answer(state.questions[state.qIndex], v); };
+  function answer(q, val) {
+    state.answers[q.text] = val;
+    state.qIndex++;
+    if (state.qIndex < state.questions.length) renderQ(); else getIdeas();
+  }
+
+  // Step 3
+  async function getIdeas() {
+    loading(true, "Coming up with video ideas");
+    try {
+      const d = await ask({ mode: "ideas", business: state.business, answers: state.answers });
+      state.ideas = d.ideas || [];
+      save();
+      loading(false);
+      renderIdeas();
+    } catch (e) { fail(e.message, getIdeas); }
+  }
+  function renderIdeas() {
+    const list = $("ideaList"); list.innerHTML = "";
+    state.ideas.forEach((i) => {
+      const b = document.createElement("button");
+      b.className = "card idea";
+      b.innerHTML = '<div class="row"><span class="pill ' + pillClass(i.style) + '"></span><span class="secs"></span></div><div class="t"></div><div class="hint"></div>';
+      b.querySelector(".pill").textContent = i.style || "";
+      b.querySelector(".secs").textContent = (i.seconds || 30) + " sec";
+      b.querySelector(".t").textContent = i.title || "";
+      b.querySelector(".hint").textContent = i.line || "";
+      b.onclick = () => getShot(i);
+      list.appendChild(b);
+    });
+    show("sIdeas");
+  }
+  $("moreIdeas").onclick = getIdeas;
+
+  // Step 4
+  async function getShot(idea) {
+    state.idea = idea;
+    loading(true, "Writing your shot list");
+    try {
+      const d = await ask({ mode: "shotlist", business: state.business, answers: state.answers, idea });
+      state.shot = d;
+      loading(false);
+      renderShot();
+    } catch (e) { fail(e.message, () => getShot(idea)); }
+  }
+  function renderShot() {
+    const s = state.shot;
+    $("shotTitle").textContent = s.title || state.idea.title;
+    const total = (s.clips || []).reduce((a, c) => a + (Number(c.seconds) || 0), 0) || s.seconds || 30;
+    $("shotMeta").textContent = (s.clips || []).length + " clips. About " + total + " seconds in total.";
+    const list = $("clipList"); list.innerHTML = "";
+    (s.clips || []).forEach((c, idx) => {
+      const el = document.createElement("div");
+      el.className = "card clip";
+      el.innerHTML =
+        '<div class="num"></div><div class="body">' +
+        '<div class="row"><span class="pill"></span><span class="secs"></span></div>' +
+        '<div><div class="label">Film this</div><p class="film"></p></div>' +
+        '<div><div class="label">Hold it</div><p class="hold"></p></div>' +
+        '<div class="sayWrap"><div class="label">Say this</div><p class="say"></p></div>' +
+        '<label class="check"><input type="checkbox"> Done</label></div>';
+      el.querySelector(".num").textContent = c.n || idx + 1;
+      const pill = el.querySelector(".pill"); pill.textContent = c.style || ""; pill.classList.add(pillClass(c.style));
+      el.querySelector(".secs").textContent = (c.seconds || 5) + " sec";
+      el.querySelector(".film").textContent = c.film || "";
+      el.querySelector(".hold").textContent = c.hold || "";
+      if (c.say && c.say.trim()) el.querySelector(".say").textContent = c.say; else el.querySelector(".sayWrap").hidden = true;
+      el.querySelector("input").onchange = (e) => el.classList.toggle("done", e.target.checked);
+      list.appendChild(el);
+    });
+    const e = s.edit || {};
+    const box = $("editBox"); box.innerHTML = '<div class="label">In the Edits app</div>';
+    const add = (lab, val) => { if (!val) return; const p = document.createElement("p"); p.innerHTML = "<b></b> "; p.querySelector("b").textContent = lab + ":"; p.appendChild(document.createTextNode(val)); box.appendChild(p); };
+    add("Music", e.music); add("Text on screen", e.text);
+    if (Array.isArray(e.tips) && e.tips.length) { const ul = document.createElement("ul"); e.tips.forEach((t) => { const li = document.createElement("li"); li.textContent = t; ul.appendChild(li); }); box.appendChild(ul); }
+    show("sShot");
+  }
+  $("backIdeas").onclick = () => show("sIdeas");
+  $("anotherBtn").onclick = () => show("sIdeas");
+
+  // Reset and retry
+  $("resetBtn").onclick = () => { try { localStorage.removeItem(KEY); } catch {} state = { business: "", questions: [], answers: {}, qIndex: 0, ideas: [], idea: null, shot: null }; $("bizInput").value = ""; show("sBiz"); };
+  $("retryBtn").onclick = () => { $("err").hidden = true; if (lastAction) lastAction(); };
+
+  // Returning user goes straight to their ideas
+  if (state.business && state.ideas && state.ideas.length) renderIdeas(); else show("sBiz");
+})();
+</script>
+</body>
+</html>
