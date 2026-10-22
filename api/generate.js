@@ -34,7 +34,8 @@ How you must write:
 - Always reply with valid JSON only. No text before or after the JSON. No markdown fences.
 `;
 
-const who = (b) => (b.name ? `The owner's first name is ${String(b.name).slice(0, 40)}.\n` : "");
+// The owner's name is only used by the page for greetings. It is never sent to the model.
+const who = () => "";
 
 const PROMPTS = {
   research: (b) => `
