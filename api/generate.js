@@ -118,7 +118,9 @@ JSON shape:
 function clean(s) {
   if (typeof s !== "string") return s;
   return s
-    .replace(/[—–]/g, ",")
+    .replace(/[‘’ʼ]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/\s*[—–]\s*/g, ", ")
     .replace(/(\w)-(\w)/g, "$1 $2")
     .replace(/\s+,/g, ",")
     .replace(/ +/g, " ")
