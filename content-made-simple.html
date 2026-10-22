@@ -244,7 +244,10 @@
   .takes span { font-size: 16px; color: #D6D9F0; }
   .sc-how { font-size: 21px; line-height: 1.35; font-weight: 700; }
   .sc-talk { border-left: 4px solid var(--primary); padding-left: 14px; display: flex; flex-direction: column; gap: 6px; }
-  .sc-eg { font-size: 18px; } .sc-own { font-size: 15px; color: var(--muted); }
+  .sc-talkline { font-size: 22px; font-weight: 800; line-height: 1.25; letter-spacing: -.01em; }
+  .sc-eg-box { background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .sc-eg-box b { font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .sc-eg { font-size: 19px; font-style: italic; line-height: 1.35; } .sc-own { font-size: 15px; color: var(--muted); }
   .sc-tip { display: flex; gap: 12px; align-items: flex-start; background: var(--sun-soft); border-radius: 16px; padding: 14px; font-size: 18px; line-height: 1.35; }
   .sc-tip svg { flex: none; width: 28px; height: 28px; color: #B58900; }
   .sc-tip b { display: block; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: #7A5A00; margin-bottom: 2px; }
@@ -673,8 +676,9 @@
         '<div class="sc-block"><div class="sc-lab">What to film</div><p class="sc-what">' + esc(c.shot || c.film || "") + "</p></div>" +
         '<div class="sc-style ' + sc + '"><b>' + esc(c.style) + '</b><span class="sc-help">' + esc(STYLE_HELP[sc] || "") + "</span>" +
           (c.how || c.hold ? '<span class="sc-howto">' + esc(c.how || c.hold) + "</span>" : "") + "</div>" +
-        (talkOf(c) ? '<div class="sc-talk"><div class="sc-lab">Talk about</div><p class="sc-how">' + esc(talkOf(c)) + "</p>" +
-          (exOf(c) ? '<p class="sc-eg">For example: <i>' + esc(exOf(c)) + "</i></p>" : "") + '<p class="sc-own">Use your own words. You know this better than anyone.</p></div>' : "") +
+        (talkOf(c) ? '<div class="sc-block"><div class="sc-lab">Talk about</div><p class="sc-talkline">' + esc(talkOf(c)) + "</p></div>" +
+          '<div class="sc-eg-box">' + (exOf(c) ? '<b>For example</b><p class="sc-eg">' + esc(exOf(c)) + "</p>" : "") +
+          '<p class="sc-own">Use your own words. You know this better than anyone.</p></div>' : "") +
         (Array.isArray(c.more) && c.more.length ? '<div class="more-angles"><button class="ma-btn" aria-expanded="false"><span><b>Want a longer video?</b>Tap for extra angles you can add</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>' +
           '<div class="ma-list" hidden><ul>' + c.more.map((m) => "<li>" + esc(m) + "</li>").join("") + '</ul><p class="sc-own">Optional. Short clips of 2 to 4 seconds each. Skip these to keep it short.</p></div></div>' : "") +
         (c.tip ? '<div class="sc-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><div><b>Tip</b>' + esc(c.tip) + "</div></div>" : "") +
