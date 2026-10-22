@@ -148,6 +148,8 @@
   .idea .t { font-family: var(--display); font-weight: 800; font-size: 21px; line-height: 1.15; }
   .idea .l { color: var(--muted); font-size: 16px; }
   .idea .why { font-size: 15px; color: var(--third-ink); background: var(--third); border-radius: 10px; padding: 6px 10px; align-self: flex-start; }
+  .lvl { font-size: 13px; font-weight: 700; padding: 5px 10px; border-radius: 99px; background: var(--sun-soft); color: #7A5A00; }
+  .lvl.q::before { content: "\25CF  "; } .lvl.e::before { content: "\25CF\25CF  "; } .lvl.b::before { content: "\25CF\25CF\25CF  "; }
   .idea .go { width: 28px; height: 28px; color: var(--primary); }
   .meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
   .tag { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 10px; border-radius: 99px; background: var(--primary-soft); color: var(--primary); }
@@ -238,6 +240,7 @@
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const first = () => (S.name ? S.name.split(" ")[0] : "");
   const toast = (msg) => { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1800); };
+  const lvlClass = (l) => { const s = String(l || "").toLowerCase(); return s.startsWith("quick") ? "q" : s.startsWith("easy") ? "e" : "b"; };
   const styleClass = (st) => { const s = String(st || "").toLowerCase(); if (s.startsWith("self")) return "selfie"; if (s.startsWith("pov")) return "pov"; if (s.startsWith("3") || s.startsWith("third")) return "third"; if (s.startsWith("mix")) return "mix"; return ""; };
 
   // ---------- navigation ----------
@@ -405,7 +408,7 @@
       b.className = "idea";
       b.style.animationDelay = n * 50 + "ms";
       b.innerHTML =
-        '<div class="body"><div class="meta"><span class="tag ' + styleClass(idea.style) + '">' + esc(idea.style) + '</span><span class="secs">' + esc(idea.seconds || 30) + " sec</span></div>" +
+        '<div class="body"><div class="meta">' + (idea.level ? '<span class="lvl ' + lvlClass(idea.level) + '">' + esc(idea.level) + "</span>" : "") + '<span class="tag ' + styleClass(idea.style) + '">' + esc(idea.style) + '</span><span class="secs">' + esc(idea.seconds || 30) + " sec</span></div>" +
         '<div class="t">' + esc(idea.title) + '</div><div class="l">' + esc(idea.line) + "</div>" + (idea.why ? '<div class="why">' + esc(idea.why) + "</div>" : "") + "</div>" + ICON_GO;
       b.onclick = () => { buzz(10); openShot(idea); };
       list.appendChild(b);
