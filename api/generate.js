@@ -4,9 +4,9 @@
 
 // Tried in order. The first one the free tier allows is used.
 const MODELS = [
+  "openai/gpt-5-mini",
   "anthropic/claude-haiku-4.5",
   "google/gemini-3.5-flash-lite",
-  "openai/gpt-5-mini",
   "google/gemini-2.5-flash-lite",
   "minimax/minimax-m3.1-flash",
 ];
@@ -110,7 +110,8 @@ module.exports = async (req, res) => {
         headers: { "content-type": "application/json", authorization: "Bearer " + key },
         body: JSON.stringify({
           model,
-          max_tokens: 1500,
+          max_tokens: 8000,
+          ...(model.startsWith("openai/") ? { reasoning_effort: "low", response_format: { type: "json_object" } } : {}),
           messages: [
             { role: "system", content: RULES },
             { role: "user", content: PROMPTS[mode](body) },
