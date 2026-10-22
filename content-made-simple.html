@@ -222,7 +222,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
     </button>
     <div id="barMid"></div>
-    <button class="icon-btn" id="menuBtn" aria-label="Start over" hidden>
+    <button class="icon-btn" id="menuBtn" aria-label="Start over" title="Start over" hidden>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
     </button>
   </header>
@@ -274,11 +274,25 @@
     fn(el);
   }
   $("backBtn").onclick = () => { buzz(); const prev = history.pop(); if (prev) go(prev, { back: true, noHistory: true }); };
-  $("menuBtn").onclick = () => { buzz(); confirmReset(); };
+  let armed = 0;
+  $("menuBtn").onclick = () => {
+    buzz();
+    if (Date.now() - armed < 2500) { armed = 0; restart(); return; }
+    armed = Date.now();
+    toast("Tap again to start over");
+  };
+  function restart() {
+    try { localStorage.removeItem(KEY); } catch {}
+    S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {} };
+    for (const k in cache) delete cache[k];
+    history = []; current = null;
+    go(NameScreen, { fade: true });
+    toast("Fresh start");
+  }
 
   function bar(opts) {
     $("backBtn").hidden = !opts.back;
-    $("menuBtn").hidden = !opts.reset;
+    $("menuBtn").hidden = false;
     const mid = $("barMid");
     if (opts.progress != null) {
       mid.innerHTML = '<div class="track"><i></i></div>';
@@ -609,6 +623,11 @@
   }
 
   // ---------- start ----------
+  if (/[?&](new|reset|restart)\b/.test(location.search)) {
+    try { localStorage.removeItem(KEY); } catch {}
+    S = { name: "", business: "", questions: [], answers: {}, ideas: [], formats: [], idea: null, shot: null, done: {} };
+    try { window.history.replaceState(null, "", location.pathname); } catch {}
+  }
   if (S.name && S.business && S.ideas && S.ideas.length) {
     go(IdeasScreen, { fade: true });
     setTimeout(() => toast("Welcome back " + first()), 400);
