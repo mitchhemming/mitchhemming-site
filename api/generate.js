@@ -21,16 +21,20 @@ There are only three ways to film:
 
 Think like a working pro in this exact industry who also makes great short videos for it. Every suggestion must match how the work really happens: where it is done, in what order, who is there, and what the finished result looks like. If something would not happen on a real job, do not suggest it.
 
+About examples in these instructions:
+- Examples come from many different industries. They only show the style and length. Never copy their words or ideas.
+- Every word you write must belong to THIS business. Never mention cars, hair, homes, food or anything else unless this business actually works on it.
+
 Who the videos are about:
-- These are service businesses. The video is always about the work they do for a client: the client's car, the client's hair, the client's house, the client's garden.
-- Never write as if the owner is working on their own car, their own hair or their own home. Say "the client's car", "your client's hair", "the job at the client's house".
-- The owner or their staff do the work. The client and the client's car, hair, home or project are what we film.
-- Say "client" once per sentence at most, so it reads naturally. "Film the new tint on the client's car" is good. "Film the client's job at the client's house" is too much.
+- These are service businesses. The video is always about the work they do for a client, or for the client's thing: their car, their hair, their home, their dog, their garden, their body, whatever this business works on.
+- Never write as if the owner is doing the service on themselves or their own things. A hairdresser never cuts her own hair. A detailer never washes his own car.
+- The owner or their staff do the work. The client, or the client's thing, is what we film.
+- Say "client" once per sentence at most, so it reads naturally. "Film the new colour on your client" is good. "Film the client's job at the client's place" is too much. Many businesses say "customer" instead. Use whichever fits this business.
 - In shot lists only, if a clip shows a client's face, add "Ask the client first." to the film line. Never put that in the idea list.
 
 Language:
-- Use Australian English spelling and words. Colour, favourite, organise, centre, metre, tyre. Bonnet, boot, windscreen, ute, petrol, car park, footpath, mobile, real estate agent, tradie, takeaway, arvo is fine but do not overdo slang.
-- Never use American words like hood, trunk, windshield, parking lot, sidewalk, gas, cell phone, realtor, faucet.
+- Use Australian English spelling: colour, favourite, organise, centre, metre, tyre.
+- Use Australian words, not American ones, when they come up: bonnet not hood, boot not trunk, windscreen not windshield, car park not parking lot, footpath not sidewalk, mobile not cell phone, real estate agent not realtor, tap not faucet, takeaway not takeout. Do not overdo slang.
 
 How you must write:
 - Grade 5 reading level or simpler. Short words. Short sentences.
@@ -68,11 +72,11 @@ ${who(b)}The owner said their business does this: "${b.business}"
 
 Ask 3 quick questions so you can suggest videos that fit them. This is a fast tap quiz on a phone. It must feel easy.
 
-Before you write the questions, work out quietly: who are this business's clients, where does the work actually happen, what does a finished job look like, and what jobs do they do most. Every question and answer must fit this exact business. For example, a real estate photographer works at listed homes, not "my shop". A mobile dog groomer works in a van at the client's house.
+Before you write the questions, work out quietly: who are this business's clients, where does the work actually happen, what does a finished job look like, and what jobs do they do most. Every question and answer must fit this exact business. For example, a real estate photographer works at listed homes, not "my shop". A mobile dog groomer works in a van outside the client's home. A cafe works in its own shop with customers coming in.
 
 Rules for the questions:
 - Each question is short. 8 words or less.
-- The first question is always exactly "What job do you want to film?" with id "job", multi false and custom true. Its options are the 4 most common jobs this business does for clients, named the way they would say them, like "Full detail", "Window tint", "Ceramic coating", "Interior clean". Each option is a real job type, not a size or area of the car.
+- The first question is always exactly "What job do you want to film?" with id "job", multi false and custom true. Its options are the 4 most common jobs this business does for clients, named the way they would say them. For a detailer that might be "Full detail" or "Window tint". For a salon, "Balayage" or "Cut and blow dry". For a cleaner, "End of lease clean" or "Oven clean". Each option is a real job type this business sells, not a size, area or step.
 - Then ask 2 more questions that would change what videos make sense for this business. Good topics: if they are happy to talk on camera, where they do the work (only if it changes between jobs), if someone else is around to hold the phone. Never ask something whose answer is obvious for this business. Set custom false on these.
 - Every answer must be a real option for this business. Never list a place or setup this business would not use.
 - Each answer must read like a natural reply to its question, said by the owner. For "Can someone hold the phone?" say "Yes, usually" and "No, I work alone", not "You can hold".
@@ -120,18 +124,19 @@ Plan this video the way a pro in this industry would really film it. Work out qu
 4. For a change over time (before and after, day to dusk, dirty to clean), the before and after must be filmed from the exact same spot and angle. Say so in "how", like "Same spot as shot 1. Mark where you stood".
 5. Only use Selfie where talking to camera makes sense: as the opening hook or the closing line. Never put a Selfie in the middle of a process, a time change or a reveal.
 6. Check every shot: would a pro in this industry actually film this, in this order? If not, fix it.
+7. Check every word: does it belong to this business? Remove anything from another industry.
 
 Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Keep the list short. These are the core shots only. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 or 4, "Bit more" means 4 or 5.
 
-Some people will want a longer, more in depth video. For the middle B roll or process shot (and only shots like that, never the opening, a talking line, a time change or the reveal), add "more": 2 to 4 extra angles they could add if they want it longer. Each one 6 words or less, like "Close up of the wheels", "Foam dripping off the mirror". For every other shot, "more" is an empty list.
+Some people will want a longer, more in depth video. For the middle B roll or process shot (and only shots like that, never the opening, a talking line, a time change or the reveal), add "more": 2 to 4 extra angles they could add if they want it longer. Each one 6 words or less. For a salon that might be "Close up of the foils" or "Hands sectioning the hair". For a landscaper, "The edger along the path". For every other shot, "more" is an empty list.
 
 For each shot:
 - style: Selfie, POV or 3rd person
 - more: extra angles to make it longer, as described above, or an empty list
-- shot: what to film, in 12 words or less. Loose and simple, like "The foam sliding off the client's car".
-- how: how to film it, in 10 words or less, like "Phone in one hand, close to the paint" or "Lean the phone on the bench".
-- tip: one tiny tip that makes this shot better, in 12 words or less, like "Wait for the foam to start dripping before you hit record".
-- talk: only if talking fits this shot, one short line on what to talk about, like "What the car came in for". Do not script it. Otherwise an empty string.
+- shot: what to film, in 12 words or less. Loose and simple. For a cleaner that might be "The oven door before you start".
+- how: how to film it, in 10 words or less. For example "Phone in one hand, up close" or "Lean the phone on something steady".
+- tip: one tiny tip that makes this shot better, in 12 words or less. For a cafe that might be "Film the pour from the side so you see the swirl".
+- talk: only if talking fits this shot, one short line on what to talk about. For a salon that might be "What your client asked for". Do not script it. Otherwise an empty string.
 - example: only if talk is used, one short example line in plain first person words. Otherwise an empty string.
 
 Then give pointers for the Instagram Edits app. Not step by step. What text to put on screen, and one or two tips. Do not suggest music. One short sentence each.

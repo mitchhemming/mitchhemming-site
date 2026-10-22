@@ -525,7 +525,7 @@
       if (q.custom) {
         const wrap = document.createElement("div");
         wrap.className = "custom";
-        wrap.innerHTML = '<div class="lab">Or type your own</div><input class="field" id="customIn" enterkeyhint="next" placeholder="e.g. Headlight restore">';
+        wrap.innerHTML = '<div class="lab">Or type your own</div><input class="field" id="customIn" enterkeyhint="next" placeholder="Type the job you are doing">';
         box.after(wrap);
         const ci = wrap.querySelector("input");
         const prev = S.answers[q.text];
