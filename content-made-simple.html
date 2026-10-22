@@ -249,6 +249,15 @@
   .pop::before { content: ""; position: absolute; top: -6px; right: 16px; width: 12px; height: 12px; background: var(--ink); transform: rotate(45deg); border-radius: 2px; }
   .pop svg { width: 18px; height: 18px; color: var(--sun); }
   .pop:active { transform: scale(.96); }
+  .more { margin-top: 6px; background: var(--card); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 14px;
+    box-shadow: inset 0 0 0 2px var(--primary-soft); border: 2px dashed var(--line); }
+  .more b { display: block; font-family: var(--display); font-size: 21px; font-weight: 800; }
+  .more span { color: var(--muted); font-size: 17px; }
+  .cta.thinking { display: flex; align-items: center; justify-content: center; gap: 10px; opacity: 1; background: var(--primary); }
+  .cta.thinking:disabled { opacity: 1; }
+  .dots3 { display: inline-flex; gap: 5px; } .dots3 i { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: bob 1s infinite var(--ease); }
+  .dots3 i:nth-child(2) { animation-delay: .15s; } .dots3 i:nth-child(3) { animation-delay: .3s; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(-5px); opacity: 1; } }
   :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
@@ -293,6 +302,7 @@
   const toast = (msg) => { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1800); };
   const jobIndex = () => S.questions.findIndex((q) => q.id === "job" || /what job/i.test(q.text || ""));
   const jobAnswer = () => { const i = jobIndex(); return i >= 0 ? S.answers[S.questions[i].text] : ""; };
+  const tagIds = (arr) => arr.map((x, k) => Object.assign({}, x, { id: "i" + Date.now().toString(36) + k }));
   const lvlClass = (l) => { const s = String(l || "").toLowerCase(); return s.startsWith("quick") ? "q" : s.startsWith("easy") ? "e" : "b"; };
   const talkOf = (c) => String(c.talk || (c.say ? "Talk to the camera" : "") || "").trim();
   const exOf = (c) => String(c.example || c.say || "").trim();
@@ -515,9 +525,9 @@
     loadingScreen({
       title: jobAnswer() ? "Creating " + jobAnswer().toLowerCase() + " video ideas" : "Creating video ideas for you",
       sub: first() ? "Hang tight " + first() + ", this takes a few seconds." : "This takes a few seconds.",
-      steps: ["Looking at your answers", "Matching you with videos that already work", "Writing 6 ideas you can film this week"],
+      steps: ["Looking at your answers", "Matching you with videos that already work", "Writing 3 ideas you can film this week"],
       task: () => researchP.then(() => api({ mode: "ideas", name: S.name, business: S.business, answers: S.answers, formats: S.formats })),
-      done: (d) => { S.ideas = (d.ideas || []).slice(0, 6); save(); history = []; go(IdeasScreen, { replace: true, fade: true }); },
+      done: (d) => { S.ideas = tagIds((d.ideas || []).slice(0, 3)); save(); history = []; go(IdeasScreen, { replace: true, fade: true }); },
     });
   }
 
@@ -532,17 +542,50 @@
     const jc = el.querySelector("#jobChip");
     if (jc) jc.onclick = () => { buzz(); const ji = jobIndex(); if (ji >= 0) go(qScreen(ji, true)); };
     const list = el.querySelector("#ideas");
-    S.ideas.forEach((idea, n) => {
+    const card = (idea, n) => {
       const b = document.createElement("button");
       b.className = "idea";
-      b.style.animationDelay = n * 50 + "ms";
+      b.style.animationDelay = n * 70 + "ms";
       b.innerHTML =
         '<div class="body"><div class="meta">' + (idea.level ? '<span class="lvl ' + lvlClass(idea.level) + '">' + esc(idea.level) + "</span>" : "") + '<span class="tag ' + styleClass(idea.style) + '">' + esc(idea.style) + '</span><span class="secs">' + esc(idea.seconds || 30) + " sec</span></div>" +
         '<div class="t">' + esc(idea.title) + '</div><div class="l">' + esc(idea.line) + "</div>" + (idea.why ? '<div class="why">' + esc(idea.why) + "</div>" : "") + "</div>" + ICON_GO;
       b.onclick = () => { buzz(10); openShot(idea); };
-      list.appendChild(b);
-    });
-    setCta("Give me different ideas", () => loadIdeas(), { ghost: true });
+      return b;
+    };
+    S.ideas.forEach((idea, n) => list.appendChild(card(idea, n)));
+
+    const more = document.createElement("div");
+    more.className = "more";
+    const job = jobAnswer();
+    more.innerHTML = '<div><b>Want more ideas?</b><span>I will think up 3 new ' + (job ? esc(job.toLowerCase()) + " " : "") + "videos for you.</span></div>" +
+      '<button class="cta" id="moreBtn">Show me 3 more</button>';
+    el.appendChild(more);
+    const mb = more.querySelector("#moreBtn");
+    let busy = false;
+    mb.onclick = () => {
+      if (busy) return;
+      busy = true; buzz(10);
+      mb.disabled = true; mb.classList.add("thinking");
+      mb.innerHTML = '<span class="dots3"><i></i><i></i><i></i></span>Thinking up 3 more';
+      const token = loadToken;
+      researchP.then(() => api({ mode: "ideas", business: S.business, answers: S.answers, formats: S.formats, avoid: S.ideas.map((x) => x.title) }))
+        .then((d) => {
+          if (token !== loadToken) return;
+          const fresh = tagIds((d.ideas || []).slice(0, 3));
+          S.ideas = S.ideas.concat(fresh); save();
+          const firstNew = card(fresh[0], 0);
+          fresh.forEach((idea, n) => list.appendChild(n === 0 ? firstNew : card(idea, n)));
+          setTimeout(() => firstNew.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
+          buzz([8, 30, 8]);
+          fresh.forEach((idea) => fetchShot(idea).catch(() => {}));
+        })
+        .catch(() => { if (token === loadToken) toast("That did not load. Try again."); })
+        .finally(() => {
+          busy = false; if (token !== loadToken) return;
+          mb.disabled = false; mb.classList.remove("thinking"); mb.textContent = "Show me 3 more";
+        });
+    };
+    setCta(null);
     prefetch();
   }
 
