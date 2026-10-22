@@ -367,7 +367,13 @@
       bar(jobOnly ? { back: true } : { progress: (3 + i) / setupTotal(), back: true });
       const picked = new Set([].concat(S.answers[q.text] || []));
       el.innerHTML =
-        '<span class="eyebrow">' + (jobOnly ? "Next video" : "Question " + (i + 1) + " of " + S.questions.length) + "</span>" +
+        '<span class="eyebrow">' + (function () {
+          if (jobOnly) return "Next video";
+          const isJob = q.id === "job" || /what job/i.test(q.text || "");
+          if (isJob) return "Your video";
+          const rest = S.questions.filter((x) => !(x.id === "job" || /what job/i.test(x.text || "")));
+          return "Quick question " + (rest.indexOf(q) + 1) + " of " + rest.length;
+        })() + "</span>" +
         "<h1>" + esc(q.text) + "</h1>" +
         (q.multi ? '<span class="hint-pill">Pick as many as you like</span>' : "") +
         '<div class="opts" id="opts"></div>';
