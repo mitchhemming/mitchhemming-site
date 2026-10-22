@@ -1,7 +1,8 @@
 // Serverless function: calls the model and returns strict JSON for the Content Made Simple page.
-// Needs ANTHROPIC_API_KEY set in the Vercel project environment.
+// Runs through Vercel AI Gateway. On Vercel it signs in with the project's OIDC token, so no key is needed.
+// AI_GATEWAY_API_KEY is used instead if it is set.
 
-const MODEL = "claude-sonnet-5-5";
+const MODEL = "anthropic/claude-haiku-5.5";
 
 const RULES = `
 You help a busy small business owner make short social media videos on their phone.
@@ -85,7 +86,7 @@ module.exports = async (req, res) => {
   res.setHeader("X-Robots-Tag", "noindex, nofollow");
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
 
-  const key = process.env.ANTHROPIC_API_KEY;
+  const key = process.env.AI_GATEWAY_API_KEY || req.headers["x-vercel-oidc-token"] || process.env.VERCEL_OIDC_TOKEN;
   if (!key) return res.status(500).json({ error: "no_key" });
 
   let body = req.body;
@@ -95,23 +96,21 @@ module.exports = async (req, res) => {
   if (!body.business || String(body.business).length > 300) return res.status(400).json({ error: "bad_business" });
 
   try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
+    const r = await fetch("https://ai-gateway.vercel.sh/v1/chat/completions", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": key,
-        "anthropic-version": "2023-06-01",
-      },
+      headers: { "content-type": "application/json", authorization: "Bearer " + key },
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 1500,
-        system: RULES,
-        messages: [{ role: "user", content: PROMPTS[mode](body) }],
+        messages: [
+          { role: "system", content: RULES },
+          { role: "user", content: PROMPTS[mode](body) },
+        ],
       }),
     });
     const data = await r.json();
     if (!r.ok) return res.status(502).json({ error: "model", detail: data?.error?.message || r.status });
-    let text = (data.content || []).map((c) => c.text || "").join("").trim();
+    let text = String(data?.choices?.[0]?.message?.content || "").trim();
     text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
     const start = text.indexOf("{");
     const end = text.lastIndexOf("}");
