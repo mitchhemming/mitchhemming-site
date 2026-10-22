@@ -28,6 +28,10 @@ Who the videos are about:
 - Say "client" once per sentence at most, so it reads naturally. "Film the new tint on the client's car" is good. "Film the client's job at the client's house" is too much.
 - In shot lists only, if a clip shows a client's face, add "Ask the client first." to the film line. Never put that in the idea list.
 
+Language:
+- Use Australian English spelling and words. Colour, favourite, organise, centre, metre, tyre. Bonnet, boot, windscreen, ute, petrol, car park, footpath, mobile, real estate agent, tradie, takeaway, arvo is fine but do not overdo slang.
+- Never use American words like hood, trunk, windshield, parking lot, sidewalk, gas, cell phone, realtor, faucet.
+
 How you must write:
 - Grade 5 reading level or simpler. Short words. Short sentences.
 - Warm and friendly, like a mate who knows video helping them out. Never stiff, never salesy.
@@ -117,11 +121,14 @@ Plan this video the way a pro in this industry would really film it. Work out qu
 5. Only use Selfie where talking to camera makes sense: as the opening hook or the closing line. Never put a Selfie in the middle of a process, a time change or a reveal.
 6. Check every shot: would a pro in this industry actually film this, in this order? If not, fix it.
 
-Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 or 4, "Bit more" means 4 or 5.
+Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 to 5, "Bit more" means 4 to 7.
+
+Some shots are really a set of short clips: B roll, a process, a walk through or tour, details around a space. For those, set "clips" to how many short clips to grab (3 to 8) and start the shot with "Grab", like "Grab 5 short clips of the foam, wheels and rinse". For a single moment, like a reveal, a talking line or a time change, set "clips" to 1.
 
 For each shot:
 - style: Selfie, POV or 3rd person
-- shot: what to film, in 10 words or less. Loose and simple, like "The foam sliding off the client's car".
+- clips: how many short clips to grab for this shot, 1 to 8
+- shot: what to film, in 12 words or less. Loose and simple, like "The foam sliding off the client's car".
 - how: how to film it, in 10 words or less, like "Phone in one hand, close to the paint" or "Lean the phone on the bench".
 - tip: one tiny tip that makes this shot better, in 12 words or less, like "Wait for the foam to start dripping before you hit record".
 - talk: only if talking fits this shot, one short line on what to talk about, like "What the car came in for". Do not script it. Otherwise an empty string.
@@ -130,7 +137,7 @@ For each shot:
 Then give pointers for the Instagram Edits app. Not step by step. What feel of music to pick, what text to put on screen, and one or two tips. One short sentence each.
 
 JSON shape:
-{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
+{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","clips":1,"shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
 `,
 };
 
