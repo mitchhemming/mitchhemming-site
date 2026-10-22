@@ -104,16 +104,16 @@ Give a short list of shot ideas for this video. These are suggestions, not a scr
 
 For each shot:
 - style: Selfie, POV or 3rd person
-- shot: what to grab, in 12 words or less. Loose and simple, like "Close up of the foam sliding off the client's car". No camera directions.
+- shot: what to film, in 10 words or less. Loose and simple, like "The foam sliding off the client's car".
+- how: how to film it, in 10 words or less, like "Phone in one hand, close to the paint" or "Lean the phone on the bench".
+- tip: one tiny tip that makes this shot better, in 12 words or less, like "Wait for the foam to start dripping before you hit record".
 - talk: only if talking fits this shot, one short line on what to talk about, like "What the car came in for". Do not script it. Otherwise an empty string.
 - example: only if talk is used, one short example line in plain first person words. Otherwise an empty string.
-
-Also give one short "tip" for the whole video, like "Grab a few extra close ups, they always come in handy."
 
 Then give pointers for the Instagram Edits app. Not step by step. What feel of music to pick, what text to put on screen, and one or two tips. One short sentence each.
 
 JSON shape:
-{"title":"...","seconds":30,"tip":"...","clips":[{"n":1,"style":"POV","shot":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
+{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
 `,
 };
 

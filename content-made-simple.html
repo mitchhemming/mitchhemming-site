@@ -211,6 +211,35 @@
     background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 99px; font-size: 16px; font-weight: 700; z-index: 40; transition: all .3s var(--ease); pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%); }
 
+
+  /* Shot cards: one shot per screen, snap as you scroll */
+  html.snap { scroll-snap-type: y proximity; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 72px); }
+  .screen.shots { gap: 16px; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .sc { scroll-snap-align: start; min-height: calc(100svh - 96px - env(safe-area-inset-top, 0px)); background: var(--card); border-radius: 26px; padding: 22px 20px;
+    display: flex; flex-direction: column; gap: 18px; box-shadow: 0 1px 2px rgba(21,23,46,.06), 0 14px 34px -20px rgba(21,23,46,.35); transition: opacity .3s; }
+  .sc-top { display: flex; justify-content: space-between; align-items: center; }
+  .sc-n { font-size: 15px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--primary); }
+  .dots { display: flex; gap: 6px; } .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); } .dots i.on { background: var(--primary); width: 22px; border-radius: 99px; }
+  .sc-style { display: flex; flex-direction: column; gap: 2px; border-radius: 16px; padding: 12px 14px; background: var(--primary-soft); color: var(--primary); }
+  .sc-style b { font-family: var(--display); font-size: 22px; font-weight: 800; }
+  .sc-style span { font-size: 16px; }
+  .sc-style.selfie { background: var(--selfie); color: var(--selfie-ink); } .sc-style.pov { background: var(--pov); color: var(--pov-ink); }
+  .sc-style.third { background: var(--third); color: var(--third-ink); } .sc-style.mix { background: var(--mix); color: var(--mix-ink); }
+  .sc-lab { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .sc-what { font-family: var(--display); font-weight: 800; font-size: 28px; line-height: 1.15; text-wrap: balance; }
+  .sc-how { font-size: 21px; line-height: 1.35; font-weight: 700; }
+  .sc-talk { border-left: 4px solid var(--primary); padding-left: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .sc-eg { font-size: 18px; } .sc-own { font-size: 15px; color: var(--muted); }
+  .sc-tip { display: flex; gap: 12px; align-items: flex-start; background: var(--sun-soft); border-radius: 16px; padding: 14px; font-size: 18px; line-height: 1.35; }
+  .sc-tip svg { flex: none; width: 28px; height: 28px; color: #B58900; }
+  .sc-tip b { display: block; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: #7A5A00; margin-bottom: 2px; }
+  .got { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; border: 0; border-radius: 18px; padding: 18px; cursor: pointer;
+    font-size: 19px; font-weight: 700; background: var(--primary); color: #fff; box-shadow: 0 8px 20px -8px rgba(58,79,247,.6); transition: transform .12s var(--ease), background .2s; }
+  .got:active { transform: scale(.97); }
+  .got svg { width: 22px; height: 22px; }
+  .sc.done .got { background: var(--good); box-shadow: none; }
+  .sc-end h1 { font-size: 32px; }
+  .sc-end .cta { margin-top: auto; }
   :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
@@ -266,6 +295,7 @@
     if (current && !opts.replace && !opts.noHistory) history.push(current);
     current = fn;
     loadToken++;
+    document.documentElement.classList.remove("snap");
     stage.innerHTML = "";
     const el = document.createElement("section");
     el.className = "screen" + (opts.back ? " back" : opts.fade ? " fade" : "");
@@ -508,61 +538,61 @@
     }, 30);
   }
 
+  const STYLE_HELP = {
+    selfie: "Front camera. You are in the shot.",
+    pov: "Your view. Your hands in the shot.",
+    third: "Phone leaning on something. You are in the shot.",
+    mix: "A mix of styles.",
+  };
   function ShotScreen(el) {
     const s = S.shot || {};
     const clips = s.clips || [];
-    const total = s.seconds || (S.idea && S.idea.seconds) || 30;
-    bar({ back: true, reset: true });
-    el.innerHTML =
-      '<div class="hero"><span class="eyebrow" style="color:var(--sun)">Let\'s film it</span>' +
-      "<h1>" + esc(s.title || (S.idea && S.idea.title)) + "</h1>" +
-      '<div class="row"><div><b>' + clips.length + "</b>shots</div><div><b>" + total + '</b>seconds</div><div><b id="cnt">0</b>got</div></div>' +
-      '<div class="meter"><i id="meter"></i></div></div>' +
-      '<div class="howto"><b>These are ideas, not rules.</b> Grab these shots, then film anything else that looks good. Phone upright, hold it still for a few seconds each time.' + (s.tip ? "<br><br>" + esc(s.tip) : "") + "</div>" +
-      '<div class="clips" id="clips"></div><div id="partySlot"></div><div class="edit" id="edit"></div>';
-    const list = el.querySelector("#clips");
-    const update = () => {
-      const n = clips.filter((_, i) => S.done[i]).length;
-      el.querySelector("#cnt").textContent = n;
-      el.querySelector("#meter").style.width = (clips.length ? (n / clips.length) * 100 : 0) + "%";
-      const slot = el.querySelector("#partySlot");
-      if (n === clips.length && clips.length && !slot.firstChild) {
-        slot.innerHTML = '<div class="party"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><div><b>All done. Nice work' + (first() ? " " + esc(first()) : "") + ".</b>Now open the Edits app and drop your clips in, in order.</div></div>";
-        buzz([10, 40, 10]);
-        setTimeout(() => slot.scrollIntoView({ behavior: "smooth", block: "center" }), 150);
-      } else if (n < clips.length) slot.innerHTML = "";
-    };
-    clips.forEach((c, i) => {
-      const card = document.createElement("div");
-      card.className = "clip" + (S.done[i] ? " done" : "");
-      card.style.animationDelay = i * 60 + "ms";
-      card.innerHTML =
-        '<div class="clip-head"><div class="num">' + (i + 1) + '</div><div class="meta"><span class="tag ' + styleClass(c.style) + '">' + esc(c.style) + "</span></div></div>" +
-        '<p class="shot">' + esc(c.shot || c.film || "") + "</p>" +
-        (talkOf(c) ? '<div><div class="lab">Talk about</div><p>' + esc(talkOf(c)) + "</p>" +
-          (exOf(c) ? '<div class="say"><small>For example</small><span>' + esc(exOf(c)) + '</span></div><p class="own">Use your own words. You know this better than anyone.</p>' : "") + "</div>" : "") +
-        '<button class="done-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Tap when you have it</span></button>';
-      const btn = card.querySelector(".done-btn");
-      const paint = () => { card.classList.toggle("done", !!S.done[i]); btn.querySelector("span").textContent = S.done[i] ? "Got it" : "Tap when you have it"; };
+    document.documentElement.classList.add("snap");
+    bar({ back: true, title: s.title || (S.idea && S.idea.title) });
+    setCta(null);
+    el.classList.add("shots");
+    const cards = clips.map((c, i) => {
+      const sc = styleClass(c.style);
+      return '<article class="sc" data-i="' + i + '">' +
+        '<div class="sc-top"><span class="sc-n">Shot ' + (i + 1) + " of " + clips.length + '</span><span class="dots">' +
+          clips.map((_, k) => '<i class="' + (k === i ? "on" : "") + '"></i>').join("") + "</span></div>" +
+        '<div class="sc-style ' + sc + '"><b>' + esc(c.style) + "</b><span>" + esc(STYLE_HELP[sc] || "") + "</span></div>" +
+        '<div class="sc-block"><div class="sc-lab">What to film</div><p class="sc-what">' + esc(c.shot || c.film || "") + "</p></div>" +
+        (c.how || c.hold ? '<div class="sc-block"><div class="sc-lab">How to film it</div><p class="sc-how">' + esc(c.how || c.hold) + "</p></div>" : "") +
+        (talkOf(c) ? '<div class="sc-talk"><div class="sc-lab">Talk about</div><p class="sc-how">' + esc(talkOf(c)) + "</p>" +
+          (exOf(c) ? '<p class="sc-eg">For example: <i>' + esc(exOf(c)) + "</i></p>" : "") + '<p class="sc-own">Use your own words. You know this better than anyone.</p></div>' : "") +
+        (c.tip ? '<div class="sc-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><div><b>Tip</b>' + esc(c.tip) + "</div></div>" : "") +
+        '<button class="got"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Got it</span></button>' +
+        "</article>";
+    }).join("");
+    const e = s.edit || {};
+    el.innerHTML = cards +
+      '<article class="sc sc-end" id="endCard">' +
+        '<div class="sc-top"><span class="sc-n">Last step</span></div>' +
+        '<h1 id="endTitle">Now put it together</h1>' +
+        '<p class="sc-how">Open the Edits app and add your shots in order.</p>' +
+        (e.music ? '<div class="sc-block"><div class="sc-lab">Music</div><p class="sc-how">' + esc(e.music) + "</p></div>" : "") +
+        (e.text ? '<div class="sc-block"><div class="sc-lab">Text on screen</div><p class="sc-how">' + esc(e.text) + "</p></div>" : "") +
+        (Array.isArray(e.tips) && e.tips.length ? '<div class="sc-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><div><b>Tips</b>' + e.tips.map(esc).join("<br>") + "</div></div>" : "") +
+        '<button class="cta" id="againBtn">Pick another video</button>' +
+      "</article>";
+    const arts = [...el.querySelectorAll(".sc")];
+    const allDone = () => clips.length && clips.every((_, i) => S.done[i]);
+    const paintEnd = () => { el.querySelector("#endTitle").textContent = allDone() ? "All shot. Nice work" + (first() ? " " + first() : "") + "." : "Now put it together"; };
+    clips.forEach((_, i) => {
+      const card = arts[i], btn = card.querySelector(".got");
+      const paint = () => { card.classList.toggle("done", !!S.done[i]); btn.querySelector("span").textContent = S.done[i] ? "Got it" : "Got it, next shot"; };
+      if (i === clips.length - 1) btn.querySelector("span").textContent = "Got it";
+      paint();
       btn.onclick = () => {
         buzz(12);
-        S.done[i] = !S.done[i]; paint(); update();
-        if (S.done[i] && i + 1 < clips.length && !S.done[i + 1]) {
-          const nxt = list.children[i + 1];
-          setTimeout(() => nxt && nxt.scrollIntoView({ behavior: "smooth", block: "start" }), 220);
-        }
+        S.done[i] = true; paint(); paintEnd();
+        if (allDone()) buzz([10, 40, 10]);
+        setTimeout(() => arts[i + 1].scrollIntoView({ behavior: "smooth", block: "start" }), 180);
       };
-      paint();
-      list.appendChild(card);
     });
-    const e = s.edit || {};
-    const ed = el.querySelector("#edit");
-    ed.innerHTML = "<h2>In the Edits app</h2>" +
-      (e.music ? '<div><div class="lab">Music</div><p>' + esc(e.music) + "</p></div>" : "") +
-      (e.text ? '<div><div class="lab">Text on screen</div><p>' + esc(e.text) + "</p></div>" : "") +
-      (Array.isArray(e.tips) && e.tips.length ? '<div><div class="lab">Tips</div><ul>' + e.tips.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul></div>" : "");
-    update();
-    setCta("Pick another video", () => { history = []; go(IdeasScreen, { back: true, noHistory: true }); }, { ghost: true });
+    paintEnd();
+    el.querySelector("#againBtn").onclick = () => { buzz(); document.documentElement.classList.remove("snap"); history = []; go(IdeasScreen, { back: true, noHistory: true }); };
   }
 
   function confirmReset() {
