@@ -74,6 +74,10 @@ Their answers: ${JSON.stringify(b.answers)}
 
 ${b.formats && b.formats.length ? "Formats that have done well for this kind of business:\n" + JSON.stringify(b.formats).slice(0, 4000) + "\nBuild every idea on one of these formats. Pick the 6 that best fit their answers.\n\n" : ""}Give 6 video ideas that fit this exact business and these exact answers. Each idea is one video of 15 to 45 seconds. Mix the three filming styles. Make them specific to this business, not generic. Use the words their customers would use. Every idea must be possible with what they told you. If they said they film alone, do not need anyone else in the shot.
 
+Only use the services they picked in their answers. If they picked some jobs, every idea must be about those jobs.
+Write each line talking to the owner as "you". Never use their name in the idea.
+Only say true things about how the service works. Do not invent results. If you are not sure a service does something, leave it out.
+
 Keep every idea simple. Nothing that needs planning, extra gear, actors, props, special lighting or many locations. Mix the effort level like this, in this order:
 - 3 ideas with level "Quick": 2 or 3 clips, one spot, can be filmed in under 5 minutes during a normal job.
 - 2 ideas with level "Easy": 3 or 4 clips, filmed across one job.
