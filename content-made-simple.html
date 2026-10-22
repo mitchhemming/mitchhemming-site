@@ -228,6 +228,18 @@
   .sc-style.third { background: var(--third); color: var(--third-ink); } .sc-style.mix { background: var(--mix); color: var(--mix-ink); }
   .sc-lab { font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
   .sc-what { font-family: var(--display); font-weight: 800; font-size: 28px; line-height: 1.15; text-wrap: balance; }
+  .musthave { background: var(--sun-soft); border-radius: 18px; padding: 14px 16px; font-size: 17px; line-height: 1.4; }
+  .musthave b { display: block; font-family: var(--display); font-size: 20px; font-weight: 800; margin-bottom: 2px; }
+  .more-angles { border-radius: 16px; background: var(--ink); color: #fff; overflow: hidden; }
+  .ma-btn { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; background: none; color: inherit; text-align: left; padding: 14px 16px; cursor: pointer; }
+  .ma-btn:active { opacity: .8; }
+  .ma-btn b { display: block; font-family: var(--display); font-size: 19px; font-weight: 800; color: var(--sun); }
+  .ma-btn span { font-size: 16px; color: #D6D9F0; }
+  .ma-btn svg { flex: none; width: 24px; height: 24px; color: var(--sun); transition: transform .25s var(--ease); }
+  .ma-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .ma-list { padding: 0 16px 16px; animation: fadeUp .25s var(--ease) both; }
+  .ma-list ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 18px; font-weight: 700; }
+  .ma-list .sc-own { color: #B9BCD8; margin-top: 10px; }
   .takes { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; background: var(--ink); color: #fff; border-radius: 14px; padding: 12px 14px; }
   .takes b { font-family: var(--display); font-size: 20px; font-weight: 800; color: var(--sun); }
   .takes span { font-size: 16px; color: #D6D9F0; }
@@ -645,12 +657,15 @@
       return '<article class="sc" data-i="' + i + '">' +
         '<div class="sc-top"><span class="sc-n">Shot ' + (i + 1) + " of " + clips.length + '</span><span class="dots">' +
           clips.map((_, k) => '<i class="' + (k === i ? "on" : "") + '"></i>').join("") + "</span></div>" +
+        (i === 0 ? '<div class="musthave"><b>Your must have shots</b>Film these, then grab extra any time something looks good. More footage gives you more to pick from.</div>' : "") +
         '<div class="sc-style ' + sc + '"><b>' + esc(c.style) + "</b><span>" + esc(STYLE_HELP[sc] || "") + "</span></div>" +
         '<div class="sc-block"><div class="sc-lab">What to film</div><p class="sc-what">' + esc(c.shot || c.film || "") + "</p>" +
-          (Number(c.clips) > 1 ? '<div class="takes"><b>Grab ' + Number(c.clips) + ' short clips</b><span>2 to 4 seconds each. Move around and get different angles. Grab extra, you can always cut them later.</span></div>' : "") + "</div>" +
+          "</div>" +
         (c.how || c.hold ? '<div class="sc-block"><div class="sc-lab">How to film it</div><p class="sc-how">' + esc(c.how || c.hold) + "</p></div>" : "") +
         (talkOf(c) ? '<div class="sc-talk"><div class="sc-lab">Talk about</div><p class="sc-how">' + esc(talkOf(c)) + "</p>" +
           (exOf(c) ? '<p class="sc-eg">For example: <i>' + esc(exOf(c)) + "</i></p>" : "") + '<p class="sc-own">Use your own words. You know this better than anyone.</p></div>' : "") +
+        (Array.isArray(c.more) && c.more.length ? '<div class="more-angles"><button class="ma-btn" aria-expanded="false"><span><b>Want a longer video?</b>Tap for extra angles you can add</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>' +
+          '<div class="ma-list" hidden><ul>' + c.more.map((m) => "<li>" + esc(m) + "</li>").join("") + '</ul><p class="sc-own">Optional. Short clips of 2 to 4 seconds each. Skip these to keep it short.</p></div></div>' : "") +
         (c.tip ? '<div class="sc-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><div><b>Tip</b>' + esc(c.tip) + "</div></div>" : "") +
         '<button class="got"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Got it</span></button>' +
         "</article>";
@@ -660,12 +675,20 @@
       '<article class="sc sc-end" id="endCard">' +
         '<div class="sc-top"><span class="sc-n">Last step</span></div>' +
         '<h1 id="endTitle">Now put it together</h1>' +
-        '<p class="sc-how">Open the Edits app and add your clips in order. Use your best few from each set.</p>' +
+        '<p class="sc-how">Open the Edits app and add your clips in order.</p>' +
         (e.music ? '<div class="sc-block"><div class="sc-lab">Music</div><p class="sc-how">' + esc(e.music) + "</p></div>" : "") +
         (e.text ? '<div class="sc-block"><div class="sc-lab">Text on screen</div><p class="sc-how">' + esc(e.text) + "</p></div>" : "") +
         (Array.isArray(e.tips) && e.tips.length ? '<div class="sc-tip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg><div><b>Tips</b>' + e.tips.map(esc).join("<br>") + "</div></div>" : "") +
         '<button class="cta" id="againBtn">Pick another video</button>' +
       "</article>";
+    el.querySelectorAll(".ma-btn").forEach((mbtn) => {
+      mbtn.onclick = () => {
+        buzz(8);
+        const open = mbtn.getAttribute("aria-expanded") !== "true";
+        mbtn.setAttribute("aria-expanded", open);
+        mbtn.nextElementSibling.hidden = !open;
+      };
+    });
     const arts = [...el.querySelectorAll(".sc")];
     const allDone = () => clips.length && clips.every((_, i) => S.done[i]);
     const paintEnd = () => { el.querySelector("#endTitle").textContent = allDone() ? "All shot. Nice work" + (first() ? " " + first() : "") + "." : "Now put it together"; };

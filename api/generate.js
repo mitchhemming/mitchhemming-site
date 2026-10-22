@@ -121,13 +121,13 @@ Plan this video the way a pro in this industry would really film it. Work out qu
 5. Only use Selfie where talking to camera makes sense: as the opening hook or the closing line. Never put a Selfie in the middle of a process, a time change or a reveal.
 6. Check every shot: would a pro in this industry actually film this, in this order? If not, fix it.
 
-Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 to 5, "Bit more" means 4 to 7.
+Give a short list of shot ideas for this video. These are suggestions, not a script. Leave room for them to use their own eye and film what looks good on the day. Keep the list short. These are the core shots only. Match the effort level: "Quick" means 2 or 3 shots, "Easy" means 3 or 4, "Bit more" means 4 or 5.
 
-Some shots are really a set of short clips: B roll, a process, a walk through or tour, details around a space. For those, set "clips" to how many short clips to grab (3 to 8) and start the shot with "Grab", like "Grab 5 short clips of the foam, wheels and rinse". For a single moment, like a reveal, a talking line or a time change, set "clips" to 1.
+Some people will want a longer, more in depth video. For the middle B roll or process shot (and only shots like that, never the opening, a talking line, a time change or the reveal), add "more": 2 to 4 extra angles they could add if they want it longer. Each one 6 words or less, like "Close up of the wheels", "Foam dripping off the mirror". For every other shot, "more" is an empty list.
 
 For each shot:
 - style: Selfie, POV or 3rd person
-- clips: how many short clips to grab for this shot, 1 to 8
+- more: extra angles to make it longer, as described above, or an empty list
 - shot: what to film, in 12 words or less. Loose and simple, like "The foam sliding off the client's car".
 - how: how to film it, in 10 words or less, like "Phone in one hand, close to the paint" or "Lean the phone on the bench".
 - tip: one tiny tip that makes this shot better, in 12 words or less, like "Wait for the foam to start dripping before you hit record".
@@ -137,7 +137,7 @@ For each shot:
 Then give pointers for the Instagram Edits app. Not step by step. What feel of music to pick, what text to put on screen, and one or two tips. One short sentence each.
 
 JSON shape:
-{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","clips":1,"shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
+{"title":"...","seconds":30,"clips":[{"n":1,"style":"POV","more":[],"shot":"...","how":"...","tip":"...","talk":"...","example":"..."}],"edit":{"music":"...","text":"...","tips":["...","..."]}}
 `,
 };
 
