@@ -57,12 +57,12 @@ JSON shape:
   questions: (b) => `
 ${who(b)}The owner said their business does this: "${b.business}"
 
-Ask 3 or 4 quick questions so you can suggest videos that fit them. This is a fast tap quiz on a phone. It must feel easy.
+Ask 3 quick questions so you can suggest videos that fit them. This is a fast tap quiz on a phone. It must feel easy.
 
 Rules for the questions:
 - Each question is short. 8 words or less.
-- Ask about different things. Good topics: which of their services they want more of, where they do the work, if they are happy to talk on camera, if someone else is around to hold the phone.
-- If the business offers several services, make the first question "Which jobs do you want more of?" with their services as options, and set multi to true.
+- The first question is always exactly "What job do you want to film?" with id "job", multi false and custom true. Its options are the 4 most common jobs this business does for clients, named the way they would say them, like "Full detail", "Window tint", "Ceramic coating", "Interior clean". Each option is a real job type, not a size or area of the car.
+- Then ask 2 more questions about different things. Good topics: where they do the work, if they are happy to talk on camera, if someone else is around to hold the phone. Set custom false on these.
 - Set multi to true whenever more than one answer could be true at once. Set it to false only when just one answer can be true.
 
 Rules for the answers:
@@ -73,7 +73,7 @@ Rules for the answers:
 - Do not add "Not sure" or "All of the above". Multi select handles that.
 
 JSON shape:
-{"questions":[{"id":"q1","text":"...","multi":true,"options":["...","..."]}]}
+{"questions":[{"id":"job","text":"What job do you want to film?","multi":false,"custom":true,"options":["...","...","...","..."]},{"id":"q2","text":"...","multi":false,"custom":false,"options":["...","..."]}]}
 `,
 
   ideas: (b) => `
@@ -82,7 +82,7 @@ Their answers: ${JSON.stringify(b.answers)}
 
 ${b.formats && b.formats.length ? "Formats that have done well for this kind of business:\n" + JSON.stringify(b.formats).slice(0, 4000) + "\nBuild every idea on one of these formats. Pick the 6 that best fit their answers.\n\n" : ""}Give 6 video ideas that fit this exact business and these exact answers. Each idea is one video of 15 to 45 seconds. Mix the three filming styles. Make them specific to this business, not generic. Use the words their customers would use. Every idea must be possible with what they told you. If they said they film alone, do not need anyone else in the shot.
 
-Only use the services they picked in their answers. If they picked some jobs, every idea must be about those jobs.
+The answer to "What job do you want to film?" is the job they are doing next. Every idea must be a video of that exact job.
 Write each line talking to the owner as "you". Never use their name in the idea.
 Only say true things about how the service works. Do not invent results. If you are not sure a service does something, leave it out.
 

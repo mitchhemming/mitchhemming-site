@@ -176,6 +176,13 @@
   .shot { font-size: 20px; font-weight: 700; line-height: 1.3; }
   .howto { background: var(--card); border-radius: 18px; padding: 14px 16px; font-size: 16px; color: var(--muted); box-shadow: inset 0 0 0 2px var(--line); }
   .howto b { color: var(--ink); }
+  .custom { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .jobchip { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; cursor: pointer; text-align: left;
+    background: var(--ink); color: #fff; border-radius: 18px; padding: 14px 16px; transition: transform .12s var(--ease); }
+  .jobchip:active { transform: scale(.98); }
+  .jobchip span { font-family: var(--display); font-weight: 800; font-size: 20px; }
+  .jobchip small { display: block; font-family: var(--body); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--sun); }
+  .jobchip em { font-style: normal; font-size: 15px; font-weight: 700; color: var(--sun); white-space: nowrap; }
   .lab { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
   .say { background: var(--sun-soft); border-radius: 14px; padding: 12px 14px; font-size: 19px; font-weight: 700; position: relative; }
   .say::before { content: "\201C"; font-family: var(--display); font-size: 40px; line-height: 1; position: absolute; left: 10px; top: 4px; color: var(--sun); }
@@ -228,7 +235,7 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const stage = $("stage"), dock = $("dock"), cta = $("ctaBtn");
-  const KEY = "cms_v2";
+  const KEY = "cms_v3";
   const ICON_TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   const ICON_GO = '<svg class="go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
 
@@ -246,6 +253,8 @@
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const first = () => (S.name ? S.name.split(" ")[0] : "");
   const toast = (msg) => { const t = $("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 1800); };
+  const jobIndex = () => S.questions.findIndex((q) => q.id === "job" || /what job/i.test(q.text || ""));
+  const jobAnswer = () => { const i = jobIndex(); return i >= 0 ? S.answers[S.questions[i].text] : ""; };
   const lvlClass = (l) => { const s = String(l || "").toLowerCase(); return s.startsWith("quick") ? "q" : s.startsWith("easy") ? "e" : "b"; };
   const talkOf = (c) => String(c.talk || (c.say ? "Talk to the camera" : "") || "").trim();
   const exOf = (c) => String(c.example || c.say || "").trim();
@@ -352,13 +361,13 @@
     });
   }
 
-  function qScreen(i) {
+  function qScreen(i, jobOnly) {
     return function QuestionScreen(el) {
       const q = S.questions[i];
-      bar({ progress: (3 + i) / setupTotal(), back: true });
+      bar(jobOnly ? { back: true } : { progress: (3 + i) / setupTotal(), back: true });
       const picked = new Set([].concat(S.answers[q.text] || []));
       el.innerHTML =
-        '<span class="eyebrow">Question ' + (i + 1) + " of " + S.questions.length + "</span>" +
+        '<span class="eyebrow">' + (jobOnly ? "Next video" : "Question " + (i + 1) + " of " + S.questions.length) + "</span>" +
         "<h1>" + esc(q.text) + "</h1>" +
         (q.multi ? '<span class="hint-pill">Pick as many as you like</span>' : "") +
         '<div class="opts" id="opts"></div>';
@@ -366,7 +375,7 @@
       const advance = () => {
         S.answers[q.text] = q.multi ? [...picked] : [...picked][0];
         save();
-        if (i + 1 < S.questions.length) go(qScreen(i + 1)); else loadIdeas();
+        if (!jobOnly && i + 1 < S.questions.length) go(qScreen(i + 1)); else loadIdeas();
       };
       const opts = q.options.slice();
       opts.forEach((o) => {
@@ -387,7 +396,22 @@
         };
         box.appendChild(b);
       });
-      if (q.multi) setCta("Next", advance, { disabled: picked.size === 0 });
+      if (q.custom) {
+        const wrap = document.createElement("div");
+        wrap.className = "custom";
+        wrap.innerHTML = '<div class="lab">Or type your own</div><input class="field" id="customIn" enterkeyhint="next" placeholder="e.g. Headlight restore">';
+        box.after(wrap);
+        const ci = wrap.querySelector("input");
+        const prev = S.answers[q.text];
+        if (prev && !q.options.includes(prev)) ci.value = prev;
+        const useTyped = () => { const v = ci.value.trim(); if (!v) return; picked.clear(); picked.add(v); advance(); };
+        ci.oninput = () => {
+          if (ci.value.trim()) { picked.clear(); box.querySelectorAll(".opt").forEach((x) => x.classList.remove("on")); setCta("Next", useTyped); }
+          else setCta(null);
+        };
+        ci.onkeydown = (e) => { if (e.key === "Enter") useTyped(); };
+        if (ci.value.trim()) setCta("Next", useTyped); else setCta(null);
+      } else if (q.multi) setCta("Next", advance, { disabled: picked.size === 0 });
       else setCta(null);
     };
   }
@@ -395,7 +419,7 @@
   function loadIdeas() {
     for (const k in cache) delete cache[k];
     loadingScreen({
-      title: "Creating video ideas for you",
+      title: jobAnswer() ? "Creating " + jobAnswer().toLowerCase() + " video ideas" : "Creating video ideas for you",
       sub: first() ? "Hang tight " + first() + ", this takes a few seconds." : "This takes a few seconds.",
       steps: ["Looking at your answers", "Matching you with videos that already work", "Writing 6 ideas you can film this week"],
       task: () => researchP.then(() => api({ mode: "ideas", name: S.name, business: S.business, answers: S.answers, formats: S.formats })),
@@ -408,8 +432,11 @@
     el.innerHTML =
       '<span class="eyebrow">Your ideas</span>' +
       "<h1>" + (first() ? esc(first()) + ", pick a video to make" : "Pick a video to make") + "</h1>" +
-      '<p class="sub">Tap one and I will give you the shot list.</p>' +
+      (jobAnswer() ? '<button class="jobchip" id="jobChip"><span><small>Job</small>' + esc(jobAnswer()) + '</span><em>Change job</em></button>' : "") +
+      '<p class="sub">Tap one and I will give you some shot ideas.</p>' +
       '<div class="ideas" id="ideas"></div>';
+    const jc = el.querySelector("#jobChip");
+    if (jc) jc.onclick = () => { buzz(); const ji = jobIndex(); if (ji >= 0) go(qScreen(ji, true)); };
     const list = el.querySelector("#ideas");
     S.ideas.forEach((idea, n) => {
       const b = document.createElement("button");
