@@ -2,7 +2,14 @@
 // Runs through Vercel AI Gateway. On Vercel it signs in with the project's OIDC token, so no key is needed.
 // AI_GATEWAY_API_KEY is used instead if it is set.
 
-const MODEL = "anthropic/claude-haiku-5.5";
+// Tried in order. The first one the free tier allows is used.
+const MODELS = [
+  "anthropic/claude-haiku-4.5",
+  "google/gemini-3.5-flash-lite",
+  "openai/gpt-5-mini",
+  "google/gemini-2.5-flash-lite",
+  "minimax/minimax-m3.1-flash",
+];
 
 const RULES = `
 You help a busy small business owner make short social media videos on their phone.
@@ -96,21 +103,26 @@ module.exports = async (req, res) => {
   if (!body.business || String(body.business).length > 300) return res.status(400).json({ error: "bad_business" });
 
   try {
-    const r = await fetch("https://ai-gateway.vercel.sh/v1/chat/completions", {
-      method: "POST",
-      headers: { "content-type": "application/json", authorization: "Bearer " + key },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 1500,
-        messages: [
-          { role: "system", content: RULES },
-          { role: "user", content: PROMPTS[mode](body) },
-        ],
-      }),
-    });
-    const data = await r.json();
-    if (!r.ok) return res.status(502).json({ error: "model", detail: data?.error?.message || r.status });
-    let text = String(data?.choices?.[0]?.message?.content || "").trim();
+    let text = "", used = "", lastErr = "";
+    for (const model of MODELS) {
+      const r = await fetch("https://ai-gateway.vercel.sh/v1/chat/completions", {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: "Bearer " + key },
+        body: JSON.stringify({
+          model,
+          max_tokens: 1500,
+          messages: [
+            { role: "system", content: RULES },
+            { role: "user", content: PROMPTS[mode](body) },
+          ],
+        }),
+      });
+      const data = await r.json().catch(() => ({}));
+      if (r.ok) { text = String(data?.choices?.[0]?.message?.content || "").trim(); used = model; break; }
+      lastErr = data?.error?.message || String(r.status);
+    }
+    if (!used) return res.status(502).json({ error: "model", detail: lastErr });
+    res.setHeader("X-Model", used);
     text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
     const start = text.indexOf("{");
     const end = text.lastIndexOf("}");
