@@ -66,6 +66,8 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 .feature h2 { margin-top: 10px; font-family: var(--fh); font-weight: 700; font-size: 30px; line-height: 1.05; letter-spacing: .01em; }
 .feature p { margin: 12px auto 0; max-width: 380px; color: var(--w70); font-size: 15px; line-height: 1.55; }
 .feature .btn { display: inline-block; margin-top: 20px; background: var(--lime); color: #111214; border-radius: 8px; padding: 13px 22px; font-weight: 600; font-size: 15px; }
+.ul { position: relative; display: inline-block; white-space: nowrap; z-index: 0; }
+.ul-svg { position: absolute; left: -3%; bottom: -.1em; width: 106%; height: .24em; color: var(--lime); pointer-events: none; z-index: -1; }
 .label { margin-top: 36px; text-align: center; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--w45); font-weight: 600; }
 
 /* companies */
@@ -119,7 +121,7 @@ footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: va
 
   <a class="feature" href="https://freedomthroughretainers.com" target="_blank" rel="noopener">
     <div class="feature-tag">For photographers &amp; videographers</div>
-    <h2>Cover your fixed costs with retainers in 90 days.</h2>
+    <h2>Cover your fixed costs with retainers in <span class="ul">90 days<svg class="ul-svg" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 40 6, 90 5, 197 8" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg></span>.</h2>
     <p>Freedom Through Retainers&trade; is my 90 day 1 on 1 program. Start by working out your number with the free retainer calculator.</p>
     <span class="btn">Use the free calculator <span aria-hidden="true">→</span></span>
   </a>
