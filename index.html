@@ -58,14 +58,22 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 .role { margin-top: 8px; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--w45); font-weight: 600; }
 .bio { margin: 14px auto 0; max-width: 400px; color: var(--w70); font-size: 15.5px; line-height: 1.6; }
 
+/* FTR feature */
+.feature { display: block; margin-top: 40px; background: var(--s1); border: 1px solid var(--line2); border-radius: 14px; padding: 28px 24px 24px; text-align: center; box-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 12px 32px rgba(0,0,0,.4); transition: border-color .2s, transform .15s; }
+.feature:hover { border-color: var(--w45); transform: translateY(-1px); }
+.feature-tag { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--w45); font-weight: 600; }
+.feature h2 { margin-top: 10px; font-family: var(--fh); font-weight: 700; font-size: 30px; line-height: 1.05; letter-spacing: .01em; }
+.feature p { margin: 12px auto 0; max-width: 380px; color: var(--w70); font-size: 15px; line-height: 1.55; }
+.feature .btn { display: inline-block; margin-top: 20px; background: var(--w); color: var(--bg); border-radius: 8px; padding: 13px 22px; font-weight: 600; font-size: 15px; }
+.label { margin-top: 36px; text-align: center; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--w45); font-weight: 600; }
+
 /* companies */
-.cards { margin-top: 40px; display: grid; gap: 12px; }
+.cards { margin-top: 12px; display: grid; gap: 12px; }
 .card { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 18px; background: var(--s1); border: 1px solid var(--line); border-radius: 12px; padding: 20px 20px; box-shadow: 0 1px 0 rgba(255,255,255,.04) inset, 0 8px 24px rgba(0,0,0,.35); transition: border-color .2s, background .2s, transform .15s; }
 .card:hover { border-color: var(--line2); background: var(--s2); transform: translateY(-1px); }
 .card .logo { display: flex; align-items: center; justify-content: center; height: 40px; }
 .card .logo img { max-height: 30px; width: auto; }
 .card .logo img.one { max-height: 15px; }
-.card .logo .ftr { font-family: var(--fh); font-weight: 700; font-size: 30px; letter-spacing: .06em; line-height: 1; }
 .card .txt { min-width: 0; }
 .card .txt strong { display: block; font-weight: 600; font-size: 15px; line-height: 1.2; }
 .card .txt span { display: block; color: var(--w45); font-size: 13.5px; margin-top: 3px; line-height: 1.4; }
@@ -108,20 +116,18 @@ footer { text-align: center; padding: 24px 20px 32px; font-size: 12px; color: va
     <p class="bio">15+ years shooting automotive and real estate.<br>Freelancer turned media company owner.<br>Helping photographers and videographers replace the hustle with retainers.</p>
   </section>
 
+  <a class="feature" href="https://freedomthroughretainers.com" target="_blank" rel="noopener">
+    <div class="feature-tag">For photographers &amp; videographers</div>
+    <h2>Cover your fixed costs with retainers in 90 days.</h2>
+    <p>Freedom Through Retainers&trade; is my 90-day 1-on-1 program. Start by working out your number with the free retainer calculator.</p>
+    <span class="btn">Use the free calculator <span aria-hidden="true">→</span></span>
+  </a>
+
+  <div class="label">My media company</div>
   <section class="cards">
-    <a class="card" href="https://freedomthroughretainers.com" target="_blank" rel="noopener">
-      <div class="logo"><span class="ftr">FTR</span></div>
-      <div class="txt"><strong>Free Retainer Calculator</strong><span>See how many retainers it takes to cover your fixed costs. Freedom Through Retainers&trade;</span></div>
-      <span class="arrow">→</span>
-    </a>
-    <a class="card" href="https://consistentcreative.com" target="_blank" rel="noopener">
-      <div class="logo"><img src="cc-wordmark.png" alt="Consistent Creative" width="1200" height="331"></div>
-      <div class="txt"><strong>Consistent Creative</strong><span>Business education for photographers and videographers.</span></div>
-      <span class="arrow">→</span>
-    </a>
     <a class="card" href="https://aventus.au" target="_blank" rel="noopener">
       <div class="logo"><img class="one" src="aventus-wordmark.png" alt="Aventus Media" width="1200" height="194"></div>
-      <div class="txt"><strong>Aventus Media</strong><span>Photo and video production for the automotive &amp; real estate industry.</span></div>
+      <div class="txt"><strong>Aventus Media</strong><span>The photo and video production company I built and run, serving automotive and real estate.</span></div>
       <span class="arrow">→</span>
     </a>
   </section>
