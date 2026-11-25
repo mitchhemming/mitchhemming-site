@@ -96,8 +96,8 @@
     if(!d.name||!d.business||!d.message){m.className='msg';m.textContent='Please fill in your name, business and what you need.';return;}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){m.className='msg';m.textContent='Enter a valid email.';return;}
     var btn=f.querySelector('button[type=submit]');btn.disabled=true;m.className='msg';m.textContent='Sending…';
-    // Sends straight to Mitch's inbox via FormSubmit. Swap the address for the FormSubmit alias once activated.
-    fetch('https://formsubmit.co/ajax/mitch@aventusmedia.com.au',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+    // Sends straight to Mitch's inbox via FormSubmit. Uses the FormSubmit alias so the inbox address stays private.
+    fetch('https://formsubmit.co/ajax/072ec12d5cb5b89841ad46ea09253674',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
       _subject:'Work with me enquiry: '+d.business+' ('+d.name+')',_replyto:d.email,_template:'table',_captcha:'false',_honey:d.company_site,
       'Name':d.name,'Email':d.email,'Business':d.business,'Website / IG':d.link||'-','Needs help with':d.services.join(', ')||'-',"What's taking up too much time":d.message
     })})
