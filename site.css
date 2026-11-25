@@ -31,6 +31,9 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 
 .bio span { display: block; text-wrap: balance; }
 
+.cred { margin: 14px auto 0; display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line2); border-radius: 999px; padding: 6px 14px; font-size: 13px; color: var(--w70); }
+.cred-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
+
 /* cards */
 .feature { display: block; margin-top: 16px; background: var(--s1); border: 1px solid var(--line2); border-radius: 14px; padding: 28px 24px 24px; text-align: center; box-shadow: 0 1px 0 rgba(255,255,255,.05) inset, 0 12px 32px rgba(0,0,0,.4); }
 .profile + .feature { margin-top: 40px; }
