@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work with me | Mitch Hemming</title>
+<meta name="description" content="Hire Mitch Hemming to build branding, marketing and AI systems into your business.">
+<meta name="theme-color" content="#0f0f10">
+<meta property="og:title" content="Work with me | Mitch Hemming">
+<meta property="og:description" content="Branding, marketing and AI systems built into your business.">
+<meta property="og:image" content="https://mitchhemming.com/mitch.jpg">
+<link rel="canonical" href="https://mitchhemming.com/work">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<main>
+  <section class="profile">
+    <div class="avatar"><img src="mitch.jpg" alt="Mitch Hemming" width="800" height="800"></div>
+    <h1 class="name">Mitch Hemming</h1>
+    <p class="bio">15 years running a media company.<br>Now building with AI.<br>Helping business owners do the same.</p>
+  </section>
+
+  <section class="feature">
+    <div id="enq-wrap">
+      <div class="feature-tag">Work with me</div>
+      <h2>Tell me about your business.</h2>
+      <p>A few quick details and I'll get back to you within 2 business days.</p>
+
+      <form class="enq" id="enq" novalidate>
+        <div class="field">
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input type="email" id="f-email" name="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="f-biz">Business name</label>
+          <input type="text" id="f-biz" name="business" autocomplete="organization" required>
+        </div>
+        <div class="field">
+          <label for="f-site">Website or Instagram <span class="opt">(optional)</span></label>
+          <input type="text" id="f-site" name="link" placeholder="yourbusiness.com or @handle">
+        </div>
+        <fieldset class="field">
+          <legend>What do you need help with?</legend>
+          <div class="checks">
+            <label><input type="checkbox" name="services" value="Website">Website</label>
+            <label><input type="checkbox" name="services" value="Landing pages">Landing pages</label>
+            <label><input type="checkbox" name="services" value="Branding">Branding</label>
+            <label><input type="checkbox" name="services" value="AI agents">AI agents</label>
+            <label><input type="checkbox" name="services" value="Automations">Automations</label>
+            <label><input type="checkbox" name="services" value="AI video editors">AI video editors</label>
+            <label><input type="checkbox" name="services" value="Client portals">Client portals</label>
+            <label><input type="checkbox" name="services" value="Quote & pricing pages">Quote &amp; pricing pages</label>
+            <label><input type="checkbox" name="services" value="Content systems">Content systems</label>
+            <label><input type="checkbox" name="services" value="Not sure yet">Not sure yet</label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="f-msg">What's taking up too much of your time?</label>
+          <textarea id="f-msg" name="message" placeholder="Tell me what you do and where you're stuck." required></textarea>
+        </div>
+        <input class="hp" type="text" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="btn">Send enquiry</button>
+        <div class="msg" id="enq-msg" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="enq-done" id="enq-done" hidden>
+      <div class="feature-tag">Sent</div>
+      <h2>Thanks, I've got it.</h2>
+      <p>I'll read through it and get back to you within 2 business days.</p>
+    </div>
+  </section>
+
+  <div style="text-align:center"><a class="back" href="/">← Back</a></div>
+</main>
+<footer>© 2026 Consistent Creative Pty Ltd</footer>
+<script>
+(function(){
+  var f=document.getElementById('enq'),m=document.getElementById('enq-msg');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var d={
+      name:f.name.value.trim(),email:f.email.value.trim(),business:f.business.value.trim(),
+      link:f.link.value.trim(),message:f.message.value.trim(),company_site:f.company_site.value,
+      services:[].map.call(f.querySelectorAll('input[name=services]:checked'),function(i){return i.value;})
+    };
+    if(!d.name||!d.business||!d.message){m.className='msg';m.textContent='Please fill in your name, business and what you need.';return;}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email)){m.className='msg';m.textContent='Enter a valid email.';return;}
+    var btn=f.querySelector('button[type=submit]');btn.disabled=true;m.className='msg';m.textContent='Sending…';
+    fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+    .then(function(r){
+      if(r.ok){document.getElementById('enq-wrap').hidden=true;document.getElementById('enq-done').hidden=false;window.scrollTo({top:0,behavior:'smooth'});}
+      else{throw 0;}
+    }).catch(function(){m.className='msg';m.textContent='Something went wrong. Try again, or DM me on Instagram.';btn.disabled=false;});
+  });
+})();
+</script>
+</body>
+</html>
