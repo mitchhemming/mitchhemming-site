@@ -1,12 +1,11 @@
-// Work with me enquiries. Emails each enquiry through Resend.
-// Needs these Vercel environment variables:
-//   RESEND_API_KEY  the Resend API key
-//   ENQUIRY_TO      where enquiries are sent (your inbox)
-//   ENQUIRY_FROM    optional sender, e.g. "Mitch Hemming <hello@mhemming.com>" once the domain is verified in Resend.
-//                   Until then Resend's test sender is used, which can only send to the Resend account owner's email.
+// Work with me enquiries. Forwards each enquiry to Mitch's inbox through FormSubmit (formsubmit.co).
+// Sent from the server so the inbox address never appears in the page.
+// The first enquiry triggers a one-time FormSubmit activation email; click it and every enquiry after arrives normally.
+// ENQUIRY_TO in Vercel overrides the default inbox.
+
+const TO = process.env.ENQUIRY_TO || "mitch@aventusmedia.com.au";
 
 const clip = (v, n) => (typeof v === "string" ? v.trim().slice(0, n) : "");
-const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 async function readJson(req) {
   if (req.body && typeof req.body === "object") return req.body;
@@ -37,34 +36,38 @@ module.exports = async (req, res) => {
   // Always lands in the Vercel function logs as a backup.
   console.log("enquiry", JSON.stringify(d));
 
-  const key = process.env.RESEND_API_KEY, to = process.env.ENQUIRY_TO;
-  if (!key || !to) { console.error("enquiry email not configured"); res.statusCode = 503; return res.end(); }
-
-  const rows = [
-    ["Name", d.name], ["Email", d.email], ["Business", d.business],
-    ["Website / IG", d.link || "-"], ["Needs", d.services.join(", ") || "-"],
-  ];
-  const html =
-    `<h2>New work with me enquiry</h2><table cellpadding="6">` +
-    rows.map(([k, v]) => `<tr><td><b>${k}</b></td><td>${esc(v)}</td></tr>`).join("") +
-    `</table><p><b>What's taking up too much time</b></p><p>${esc(d.message).replace(/\n/g, "<br>")}</p>`;
-
   try {
-    const r = await fetch("https://api.resend.com/emails", {
+    const r = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(TO)}`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Origin: "https://mitchhemming.com",
+        Referer: "https://mitchhemming.com/work",
+      },
       body: JSON.stringify({
-        from: process.env.ENQUIRY_FROM || "Work with me <onboarding@resend.dev>",
-        to: to.split(",").map((s) => s.trim()),
-        reply_to: d.email,
-        subject: `Enquiry: ${d.business} (${d.name})`,
-        html,
+        _subject: `Work with me enquiry: ${d.business} (${d.name})`,
+        _replyto: d.email,
+        _template: "table",
+        _captcha: "false",
+        Name: d.name,
+        Email: d.email,
+        Business: d.business,
+        "Website / IG": d.link || "-",
+        "Needs help with": d.services.join(", ") || "-",
+        "What's taking up too much time": d.message,
       }),
     });
-    if (!r.ok) { console.error("resend", r.status, (await r.text()).slice(0, 300)); res.statusCode = 502; return res.end(); }
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || String(j.success) === "false") {
+      console.error("formsubmit", r.status, JSON.stringify(j).slice(0, 300));
+      // Before activation FormSubmit replies that it needs confirming. The enquiry is still in the logs.
+      if (/activat/i.test(JSON.stringify(j))) { res.statusCode = 204; return res.end(); }
+      res.statusCode = 502; return res.end();
+    }
     res.statusCode = 204; res.end();
   } catch (e) {
-    console.error("resend failed", e && e.message);
+    console.error("formsubmit failed", e && e.message);
     res.statusCode = 502; res.end();
   }
 };
