@@ -38,6 +38,8 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 .btn { display: inline-block; margin-top: 20px; background: var(--lime); color: #111214; border: 0; border-radius: 8px; padding: 13px 22px; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; transition: transform .15s, opacity .2s; }
 .btn:hover { transform: translateY(-1px); }
 .btn:disabled { opacity: .6; cursor: default; transform: none; }
+.h-split { white-space: nowrap; }
+@media (max-width: 380px) { .h-split { font-size: 26px !important; } }
 .ul { position: relative; display: inline-block; white-space: nowrap; z-index: 0; }
 .ul-svg { position: absolute; left: -3%; bottom: -.1em; width: 106%; height: .24em; color: var(--lime); pointer-events: none; z-index: -1; }
 
