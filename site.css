@@ -66,7 +66,8 @@ main { width: 100%; max-width: 520px; margin: 0 auto; padding: 56px 20px 40px; f
 /* toolkit */
 .toolkit { margin: 16px auto 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; text-align: center; }
 .toolkit-label { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--w45); font-weight: 600; }
-.toolkit ul { list-style: none; margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; font-size: 14px; color: var(--w70); }
+.toolkit ul { list-style: none; margin-top: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.toolkit li { border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; font-size: 12.5px; color: var(--w70); }
 
 /* socials */
 .socials { margin-top: 32px; display: flex; justify-content: center; gap: 12px; }
