@@ -72,6 +72,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .rv nav{animation-delay:.08s}
 @media (prefers-reduced-motion:reduce){.rv .reveal{opacity:1 !important;transform:none !important;transition:none !important}.rv .top-bar,.rv nav{animation:none}}
 .pol{transition:transform .35s cubic-bezier(.16,1,.3,1);will-change:translate,rotate}.pol:hover{z-index:5 !important;transform:rotate(0deg) scale(1.04) !important}@media (max-width:900px){.pstack{max-width:290px !important}.pstack figcaption{font-size:20px !important}}.tl{position:relative;padding-left:40px}.tl-track{position:absolute;left:11px;top:44px;bottom:60px;width:2px;background:#E8DFD1;border-radius:2px;overflow:hidden}.tl-fill{position:absolute;inset:0;background:#C9431C;transform-origin:top;transform:scaleY(var(--p,0))}.tl-item{position:relative}.tl-item::before{content:'';position:absolute;left:-37px;top:35px;width:14px;height:14px;border-radius:50%;background:#FBF6EE;border:2px solid #E8DFD1;transition:background .5s,border-color .5s,transform .5s;z-index:1}.tl-item.lit::before{background:#C9431C;border-color:#C9431C;transform:scale(1.1)}@media (max-width:600px){.tl{padding-left:32px}.tl-track{left:7px}.tl-item::before{left:-33px}}
+.pick{min-height:52px;padding:10px 14px;border:1.5px solid #E2D8C6;border-radius:14px;background:#FBF6EE;color:#14213D;font-family:Figtree,sans-serif;font-weight:700;font-size:15px;line-height:1.25;cursor:pointer;transition:background .2s,border-color .2s,color .2s}.pick:hover{border-color:#C9431C}.pick[aria-pressed="true"]{background:#14213D;border-color:#14213D;color:#fff}@media (max-width:480px){#chat .two{grid-template-columns:1fr !important}}
 </style>
 
 </head>
@@ -350,9 +351,32 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <details><summary>How much does it cost?</summary><p>The AI Lab is a one time payment of $495 AUD, and waitlist members get the founding price. Working with me starts from $2,200 AUD per month. After a chat, I'll give you a clear scope and price for your business.</p></details>
 </div>
 <div style="margin-top: clamp(56px, 8vw, 80px); text-align: center">
-<p style="margin: 0 auto 8px; max-width: 560px; font-size: clamp(18px, 2.2vw, 20px); color: #14213D">Thanks for reading this far. Whether you learn it yourself or have me build it, I'd love to help you do AI properly.</p>
-<p aria-label="Mitch Hemming" style="margin: 8px 0 0; font-family: 'Ms Madi', cursive; font-weight: 400; font-size: clamp(64px, 8vw, 92px); line-height: 1.1; color: #14213D; transform: rotate(-5deg)">Mitch Hemming</p>
-<svg aria-hidden="true" width="240" height="20" viewBox="0 0 260 22" fill="none" stroke="#14213D" stroke-width="2" stroke-linecap="round" style="display: block; margin: -6px auto 0; transform: rotate(-3deg)"><path d="M6 14C60 4 140 2 254 10"/></svg>
+<button type="button" id="chat-toggle" aria-expanded="false" aria-controls="chat" class="btn" style="display: inline-flex; align-items: center; justify-content: center; min-height: 54px; margin: 0 0 clamp(40px, 6vw, 56px); padding: 0 30px; border: none; border-radius: 999px; background: #C9431C; color: #ffffff; font-family: Figtree, sans-serif; font-weight: 700; font-size: 16px; cursor: pointer">Let's have a chat</button>
+<div id="chat" hidden style="max-width: 540px; margin: -16px auto clamp(40px, 6vw, 56px); padding: clamp(20px, 4vw, 28px); background: #ffffff; border: 1px solid #ECE6DC; border-radius: 20px; box-shadow: 0 16px 40px rgba(20,33,61,0.08); text-align: left">
+<p style="margin: 0 0 12px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 20px; color: #14213D">What are you after?</p>
+<div class="picks" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+<button type="button" class="pick" id="pick-lab" aria-pressed="false">Join The AI Lab waitlist</button>
+<button type="button" class="pick" id="pick-work" aria-pressed="false">AI built for you</button>
+</div>
+<form id="c-lab" novalidate hidden style="margin-top: 18px; display: grid; gap: 12px">
+<p style="margin: 0; font-size: 15px; color: #475069">Get first access, the founding price and exclusive bonuses when the next intake opens.</p>
+<div><label for="c-wl" style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px">Email</label><input id="c-wl" name="email" type="email" autocomplete="email" placeholder="you@business.com" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; border: 1px solid #E2D8C6; border-radius: 12px; background: #FBF6EE; font: inherit; font-size: 16px; color: #14213D"></div>
+<div><button type="submit" style="min-height: 52px; padding: 0 28px; border: none; border-radius: 999px; background: #C9431C; color: #ffffff; font-family: Figtree, sans-serif; font-weight: 700; font-size: 16px; cursor: pointer">Save my spot</button></div>
+<p class="c-msg" aria-live="polite" style="margin: 0; font-size: 15px; font-weight: 600; color: #C9431C"></p>
+</form>
+<form id="c-work" novalidate hidden style="margin-top: 18px; display: grid; gap: 12px">
+<div class="two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"><div><label for="c-name" style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px">Your name</label><input id="c-name" name="name" autocomplete="name" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; border: 1px solid #E2D8C6; border-radius: 12px; background: #FBF6EE; font: inherit; font-size: 16px; color: #14213D"></div><div><label for="c-email" style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px">Email</label><input id="c-email" name="email" type="email" autocomplete="email" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; border: 1px solid #E2D8C6; border-radius: 12px; background: #FBF6EE; font: inherit; font-size: 16px; color: #14213D"></div></div>
+<div class="two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"><div><label for="c-biz" style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px">Business name</label><input id="c-biz" name="business" autocomplete="organization" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; border: 1px solid #E2D8C6; border-radius: 12px; background: #FBF6EE; font: inherit; font-size: 16px; color: #14213D"></div><div><label for="c-site" style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px">Website or Instagram <span style="font-weight: 400; color: #475069">(optional)</span></label><input id="c-site" name="link" placeholder="yourbusiness.com or @handle" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; border: 1px solid #E2D8C6; border-radius: 12px; background: #FBF6EE; font: inherit; font-size: 16px; color: #14213D"></div></div>
+<fieldset style="margin: 0; padding: 0; border: none"><legend style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px; margin-bottom: 8px">What could I help with?</legend><div style="display: flex; flex-wrap: wrap; gap: 8px"><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Website" style="accent-color: #C9431C; width: 17px; height: 17px">Website</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Landing pages" style="accent-color: #C9431C; width: 17px; height: 17px">Landing pages</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Branding" style="accent-color: #C9431C; width: 17px; height: 17px">Branding</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="AI agents" style="accent-color: #C9431C; width: 17px; height: 17px">AI agents</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Automations" style="accent-color: #C9431C; width: 17px; height: 17px">Automations</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="AI video editors" style="accent-color: #C9431C; width: 17px; height: 17px">AI video editors</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Client portals" style="accent-color: #C9431C; width: 17px; height: 17px">Client portals</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Quote and pricing pages" style="accent-color: #C9431C; width: 17px; height: 17px">Quote and pricing pages</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Content systems" style="accent-color: #C9431C; width: 17px; height: 17px">Content systems</label><label style="display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 12px; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 14px; cursor: pointer"><input type="checkbox" name="services" value="Not sure yet" style="accent-color: #C9431C; width: 17px; height: 17px">Not sure yet</label></div></fieldset>
+<input type="text" name="company_site" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0">
+<div><label for="c-msg" style="display: block; margin: 0 0 6px; font-weight: 700; font-size: 15px">What's doing your head in right now?</label><textarea id="c-msg" name="message" rows="4" placeholder="Tell me what you do and where you're stuck" style="width: 100%; box-sizing: border-box; min-height: 50px; padding: 12px 16px; border: 1px solid #E2D8C6; border-radius: 12px; background: #FBF6EE; font: inherit; font-size: 16px; color: #14213D; resize: vertical"></textarea></div>
+<div><button type="submit" style="min-height: 52px; padding: 0 28px; border: none; border-radius: 999px; background: #C9431C; color: #ffffff; font-family: Figtree, sans-serif; font-weight: 700; font-size: 16px; cursor: pointer">Send it to me</button></div>
+<p class="c-msg" aria-live="polite" style="margin: 0; font-size: 15px; font-weight: 600; color: #C9431C"></p>
+</form>
+</div>
+<p style="margin: 0 auto clamp(28px, 4vw, 40px); max-width: 560px; font-size: clamp(18px, 2.2vw, 20px); color: #14213D">Thanks for reading this far. Whether you learn it yourself or have me build it, I'd love to help you do AI properly.</p>
+<p aria-label="Mitch Hemming" style="margin: 8px 0 0; font-family: 'Ms Madi', cursive; font-weight: 400; font-size: clamp(46px, 5.5vw, 64px); line-height: 1.1; color: #14213D; transform: rotate(-5deg)">Mitch Hemming</p>
+<svg aria-hidden="true" width="170" height="14" viewBox="0 0 260 22" fill="none" stroke="#14213D" stroke-width="2" stroke-linecap="round" style="display: block; margin: -6px auto 0; transform: rotate(-3deg)"><path d="M6 14C60 4 140 2 254 10"/></svg>
 </div>
 </section>
 
@@ -381,7 +405,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   // Scroll reveal: every block fades up, staggered when several enter together
   try{
     if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-      var skip=function(el){return el.closest('nav,#site-menu,.top-bar,[aria-hidden="true"]');};
+      var skip=function(el){return el.closest('nav,#site-menu,.top-bar,#chat,[aria-hidden="true"]');};
       var ATOM='li,details,figure,form,.hero-row,.creds,.tools-row,.glance > div';
       try{document.querySelector('div:has(> h3)');ATOM+=',div:has(> h3),div:has(> span + span)';}catch(_){}
       var atoms=[].slice.call(document.body.querySelectorAll(ATOM)).filter(function(el){return !skip(el);});
@@ -427,6 +451,38 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
     function req(){if(!raf)raf=requestAnimationFrame(tick);}
     addEventListener('scroll',req,{passive:true});addEventListener('resize',req,{passive:true});tick();
   }catch(e){}
+
+  // Sign off chat: choose waitlist or build enquiry
+  (function(){
+    var t=document.getElementById('chat-toggle'),box=document.getElementById('chat');
+    if(!t||!box)return;
+    var pl=document.getElementById('pick-lab'),pw=document.getElementById('pick-work'),fl=document.getElementById('c-lab'),fw=document.getElementById('c-work');
+    var RX=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    t.addEventListener('click',function(){var o=box.hidden;box.hidden=!o;t.setAttribute('aria-expanded',o);t.textContent=o?'Close':"Let's have a chat";});
+    function pick(m){pl.setAttribute('aria-pressed',m==='lab');pw.setAttribute('aria-pressed',m==='work');fl.hidden=m!=='lab';fw.hidden=m!=='work';var f=m==='lab'?fl:fw;f.querySelector('input').focus({preventScroll:true});}
+    pl.addEventListener('click',function(){pick('lab');});pw.addEventListener('click',function(){pick('work');});
+    fl.addEventListener('submit',function(e){
+      e.preventDefault();var msg=fl.querySelector('.c-msg'),btn=fl.querySelector('button[type=submit]'),email=fl.email.value.trim();
+      if(!RX.test(email)){msg.textContent='Enter a valid email.';return;}
+      btn.disabled=true;msg.textContent='One sec...';
+      fetch('https://app.kit.com/forms/10146119/subscriptions',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email_address:email})})
+      .then(function(r){if(!r.ok)throw 0;fl.email.disabled=true;btn.textContent="You're on the list";msg.style.color='#14213D';msg.textContent='Check your inbox to confirm.';})
+      .catch(function(){msg.textContent='Something went wrong. Try again.';btn.disabled=false;});
+    });
+    fw.addEventListener('submit',function(e){
+      e.preventDefault();var msg=fw.querySelector('.c-msg'),btn=fw.querySelector('button[type=submit]');
+      var d={name:fw.name.value.trim(),email:fw.email.value.trim(),business:fw.business.value.trim(),link:fw.link.value.trim(),message:fw.message.value.trim(),hp:fw.company_site.value,services:[].map.call(fw.querySelectorAll('input[name=services]:checked'),function(i){return i.value;})};
+      if(!d.name||!d.business||!d.message){msg.textContent='Please fill in your name, business and what you need.';return;}
+      if(!RX.test(d.email)){msg.textContent='Enter a valid email.';return;}
+      btn.disabled=true;msg.textContent='Sending...';
+      fetch('https://formsubmit.co/ajax/072ec12d5cb5b89841ad46ea09253674',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+        _subject:'AI built for you enquiry: '+d.business+' ('+d.name+')',_replyto:d.email,_template:'table',_captcha:'false',_honey:d.hp,
+        'Name':d.name,'Email':d.email,'Business':d.business,'Website / IG':d.link||'Not given','Needs help with':d.services.join(', ')||'Not given',"What's taking up too much time":d.message})})
+      .then(function(r){return r.json();})
+      .then(function(j){if(String(j.success)!=='true')throw 0;btn.textContent='Sent';msg.style.color='#14213D';msg.textContent="Thanks, I've got it. I'll be in touch soon.";[].forEach.call(fw.elements,function(el){el.disabled=true;});})
+      .catch(function(){msg.textContent='Something went wrong. Try again, or DM me on Instagram.';btn.disabled=false;});
+    });
+  })();
 
   // Mobile menu
   var mb=document.getElementById('menu-btn'),menu=document.getElementById('site-menu');
