@@ -35,10 +35,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .mq{animation:mq 40s linear infinite}
 .tools-mask{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .tools-track{animation:mq 32s linear infinite}.tools-mask:hover .tools-track{animation-play-state:paused}
-.rv .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
-.rv .reveal.in{opacity:1;transform:none}
-.rv li.reveal:nth-child(2){transition-delay:.06s}.rv li.reveal:nth-child(3){transition-delay:.12s}.rv li.reveal:nth-child(4){transition-delay:.18s}.rv li.reveal:nth-child(5){transition-delay:.24s}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq,.tools-track{animation:none}.rv .reveal{opacity:1;transform:none;transition:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.mq,.tools-track{animation:none}}
 .soc{transition:color .2s ease,background-color .2s ease}.soc:hover{color:#C9431C !important;background:#FBF6EE}
 .desk-links a.nl{padding:0}.desk-links a.nl::after{display:none}
 .glance{grid-template-columns:repeat(4,minmax(0,1fr))}.glance>div{padding:4px 22px !important}.glance>div:first-child{padding-left:0 !important}.glance>div:last-child{padding-right:0 !important}.glance>div+div{border-left:1px solid #E2D8C6}
@@ -60,13 +57,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 @media (max-width:600px){.tools-row{gap:14px !important}.br-sm{display:inline}.cred{flex-direction:column;gap:6px !important}.creds{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:18px !important;width:100%;font-size:13px !important;line-height:1.35}.creds li{padding:12px 8px !important;display:flex;align-items:center;justify-content:center;text-align:center}.hero-row{flex-direction:column}.hero-row h1{text-align:center !important}.hero-img{width:132px !important;height:132px !important}.stack-sm>*{flex:1 1 100% !important;text-align:center}.hide-sm{display:none !important}.center-sm{justify-content:center !important;text-align:center}}
 [hidden]{display:none !important}
 #enq input:focus,#enq textarea:focus{outline:2px solid #FFB199;outline-offset:1px}
+.rv .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);will-change:opacity,transform}
+.rv .reveal.in{opacity:1;transform:none}
+@keyframes navIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.rv .top-bar,.rv nav{animation:navIn .7s cubic-bezier(.16,1,.3,1) both}
+.rv nav{animation-delay:.08s}
+@media (prefers-reduced-motion:reduce){.rv .reveal{opacity:1 !important;transform:none !important;transition:none !important}.rv .top-bar,.rv nav{animation:none}}
 </style>
 
 </head>
 <body>
 <div style="background: #ffffff; color: #14213D; font-family: Figtree, sans-serif; font-size: clamp(17px, 1.6vw, 18px); line-height: 1.65; overflow-wrap: break-word">
 
-<a href="#learn" style="display: block; background: #14213D; color: #FBF6EE; text-align: center; text-decoration: none; padding: 12px 20px; font-size: 15px; font-weight: 600"><strong style="font-weight: 800">The AI Lab</strong> <span style="font-weight: 400">· 30 Day Intensive</span> <span aria-hidden="true" style="margin: 0 4px">→</span> <span style="text-decoration: underline">Join The Waitlist</span></a>
+<a href="#learn" class="top-bar" style="display: block; background: #14213D; color: #FBF6EE; text-align: center; text-decoration: none; padding: 12px 20px; font-size: 15px; font-weight: 600"><strong style="font-weight: 800">The AI Lab</strong> <span style="font-weight: 400">· 30 Day Intensive</span> <span aria-hidden="true" style="margin: 0 4px">→</span> <span style="text-decoration: underline">Join The Waitlist</span></a>
 
 <nav aria-label="Main" style="position: relative; z-index: 10">
 <div style="max-width: 1120px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between">
@@ -90,12 +93,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 </nav>
 
 <header id="about" style="max-width: 1120px; margin: 0 auto; padding: clamp(32px, 6vw, 72px) 20px clamp(40px, 5vw, 64px); scroll-margin-top: 12px; text-align: center">
-<div class="hero-row reveal" style="display: flex; gap: clamp(20px, 3vw, 36px); align-items: center; justify-content: center; margin-bottom: clamp(28px, 4vw, 40px)">
+<div class="hero-row" style="display: flex; gap: clamp(20px, 3vw, 36px); align-items: center; justify-content: center; margin-bottom: clamp(28px, 4vw, 40px)">
 <img class="hero-img" src="/mitch-hemming-v5.jpg" alt="Mitch Hemming" width="190" height="190" style="flex: 0 0 auto; width: calc(var(--h) * 3.15); height: calc(var(--h) * 3.15); object-fit: cover; border-radius: 22px; display: block">
 <h1 style="margin: 0; text-align: left; font-family: Gabarito, sans-serif; font-weight: 800; font-size: var(--h); line-height: 1.05; letter-spacing: -1px">Hey, I'm Mitch.<br><span style="color: #C9431C">I help businesses<br>put AI to work.</span></h1>
 </div>
-<p class="reveal" style="margin: 0 auto 28px; max-width: 560px; font-size: clamp(18px, 2.3vw, 21px); line-height: 1.5; color: #475069">I design and build AI systems around how your business works and train your team to run them.</p>
-<ul class="creds reveal" style="margin: 0 auto; padding: 0; list-style: none; display: inline-flex; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 15px; font-weight: 600">
+<p style="margin: 0 auto 28px; max-width: 560px; font-size: clamp(18px, 2.3vw, 21px); line-height: 1.5; color: #475069">I design and build AI systems around how your business works and train your team to run them.</p>
+<ul class="creds" style="margin: 0 auto; padding: 0; list-style: none; display: inline-flex; border: 1px solid #E2D8C6; border-radius: 999px; background: #FBF6EE; font-size: 15px; font-weight: 600">
 <li style="padding: 12px 22px"><span class="cred" style="display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9431C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><span>15 years working <br class="br-sm">with businesses</span></span></li>
 <li style="padding: 12px 22px; border-left: 1px solid #E2D8C6"><span class="cred" style="display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9431C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg><span>Content, branding, websites and systems</span></span></li>
 <li style="padding: 12px 22px; border-left: 1px solid #E2D8C6"><span class="cred" style="display: inline-flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9431C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg><span>Anthropic (Claude) Academy certified</span></span></li>
@@ -106,23 +109,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <section id="values" style="background: #FBF6EE; padding: clamp(56px, 8vw, 96px) 20px clamp(64px, 10vw, 120px); margin-top: 0; scroll-margin-top: 12px">
 <div style="max-width: 1120px; margin: 0 auto; position: relative">
 <p style="margin: 0 0 10px; font-family: Caveat, cursive; font-weight: 700; font-size: clamp(30px, 3.4vw, 38px); line-height: 1; color: #C9431C; transform: rotate(-2deg); transform-origin: left center">What I Believe</p>
-<h2 class="reveal" style="margin: 0 0 20px; max-width: 860px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(40px, 7vw, 72px); line-height: 1.02; letter-spacing: -1px">People first.<br>AI second.</h2>
+<h2 style="margin: 0 0 20px; max-width: 860px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(40px, 7vw, 72px); line-height: 1.02; letter-spacing: -1px">People first.<br>AI second.</h2>
 
 <p style="margin: 0 0 48px; max-width: 660px; font-size: clamp(18px, 2.4vw, 21px); color: #475069">These are the rules I run my own business by. If they don't sit right with you, we're probably not a great fit. And that's ok.</p>
 <ol style="margin: 0; padding: 0; list-style: none">
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
 <p aria-hidden="true" style="flex: 0 0 80px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: #C9431C">01</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 30px); line-height: 1.2">AI should make your team better, not smaller.</h3><p style="margin: 0; font-size: clamp(17px, 2vw, 19px); color: #475069; max-width: 680px">I use AI to give the people you already have more time and headspace for the work they're good at. Not to replace them.</p></div>
 </li>
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
 <p aria-hidden="true" style="flex: 0 0 80px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: #C9431C">02</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 30px); line-height: 1.2">Treat AI like a new team member.</h3><p style="margin: 0; font-size: clamp(17px, 2vw, 19px); color: #475069; max-width: 680px">Brief it clearly, check its work and keep a person in charge. It's a tool you manage, not something you hand the keys to.</p></div>
 </li>
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
 <p aria-hidden="true" style="flex: 0 0 80px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: #C9431C">03</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 30px); line-height: 1.2">Good results still need a human.</h3><p style="margin: 0; font-size: clamp(17px, 2vw, 19px); color: #475069; max-width: 680px">AI on its own looks like AI. It takes business sense, design sense and an understanding of people to make it feel real.</p></div>
 </li>
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 32px 0; border-top: 1px solid #E2D8C6">
 <p aria-hidden="true" style="flex: 0 0 80px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 40px; line-height: 1; color: #C9431C">04</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(24px, 3vw, 30px); line-height: 1.2">You should own it.</h3><p style="margin: 0; font-size: clamp(17px, 2vw, 19px); color: #475069; max-width: 680px">I teach you how everything works, so you're never locked in to me or to any one tool.</p></div>
 </li>
@@ -144,28 +147,28 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <section id="story" style="max-width: 1120px; margin: 0 auto; padding: clamp(80px, 12vw, 140px) 20px 0; scroll-margin-top: 12px; position: relative">
 <p style="margin: 0 0 10px; font-family: Caveat, cursive; font-weight: 700; font-size: clamp(30px, 3.4vw, 38px); line-height: 1; color: #C9431C; transform: rotate(-2deg); transform-origin: left center">My Story</p>
-<h2 class="reveal" style="margin: 0 0 12px; max-width: none; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1">15 years helping businesses stand out.</h2>
-<p class="reveal" style="margin: 0 0 40px; max-width: none; font-size: clamp(18px, 2.2vw, 20px); color: #475069">Now I help them save time with AI, using everything I've learned along the way.</p>
+<h2 style="margin: 0 0 12px; max-width: none; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1">15 years helping businesses stand out.</h2>
+<p style="margin: 0 0 40px; max-width: none; font-size: clamp(18px, 2.2vw, 20px); color: #475069">Now I help them save time with AI, using everything I've learned along the way.</p>
 
 <ol style="margin: 0 0 24px; padding: 0; list-style: none">
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2011</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Freelance photographer</h3><p style="margin: 0; color: #475069; max-width: 640px">Shooting cars and homes for dealerships and real estate agents. I learned the craft, built a client base and developed an understanding of what businesses need.</p></div>
 </li>
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2019</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Media agency</h3><p style="margin: 0; color: #475069; max-width: 640px">I built a strong network and client base, then turned it into a media agency with a full team, producing photo and video for automotive and real estate brands across Australia.</p></div>
 </li>
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2023</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Ads, websites and pages</h3><p style="margin: 0; color: #475069; max-width: 640px">Clients needed more than content. We added Meta ad campaigns, websites, Shopify stores and lead generation landing pages to multiply how our content performed.</p></div>
 </li>
-<li class="reveal" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2025</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">AI inside the agency</h3><p style="margin: 0; color: #475069; max-width: 640px">We built our own AI enhancement tools and brought AI into how the agency runs. This provided more value to our clients and made our team more efficient.</p></div>
 </li>
 </ol>
-<div class="reveal" style="padding: 28px 0; border-top: 1px solid #ECE6DC; border-bottom: 1px solid #ECE6DC; display: flex; flex-wrap: wrap; gap: 8px 40px">
+<div style="padding: 28px 0; border-top: 1px solid #ECE6DC; border-bottom: 1px solid #ECE6DC; display: flex; flex-wrap: wrap; gap: 8px 40px">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">Today</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Implementing and teaching AI</h3><p style="margin: 0 0 14px; color: #475069; max-width: 640px">Everything I've learned across media, advertising and web now goes into AI. I set up AI systems in businesses and teach owners and their teams how to run them. Certified through Anthropic Academy, and specialised in Claude and the apps and plugins that go with it.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 20px; font-weight: 700"><a href="#learn" style="color: #C9431C">The AI Lab ↓</a><a href="#work" style="color: #C9431C">Work With Mitch ↓</a></div></div>
@@ -176,8 +179,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <div style="display: flex; flex-wrap: wrap; gap: clamp(32px, 5vw, 64px); align-items: center">
 <div style="flex: 999 1 480px; min-width: 0">
 <p style="margin: 0 0 10px; font-family: Caveat, cursive; font-weight: 700; color: #C9431C; font-size: clamp(30px, 3.4vw, 38px); line-height: 1; transform: rotate(-2deg); transform-origin: left center">How it started</p>
-<h2 class="reveal" style="margin: 0 0 24px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 46px); line-height: 1.1">I didn't get it right straight away.</h2>
-<div class="reveal" style="font-size: clamp(18px, 2.2vw, 20px); line-height: 1.7; color: #14213D">
+<h2 style="margin: 0 0 24px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 46px); line-height: 1.1">I didn't get it right straight away.</h2>
+<div style="font-size: clamp(18px, 2.2vw, 20px); line-height: 1.7; color: #14213D">
 <p style="margin: 0 0 18px">When I first introduced AI into my agency, it was for photo and video editing. It revolutionised how efficiently we worked. AI handled the slow, repetitive parts, so my team could spend their time on the creative work that actually matters.</p>
 <p style="margin: 0 0 18px">Then something I didn't expect happened. Our clients started asking how we were doing it. They wanted to learn too.</p>
 <p style="margin: 0 0 18px">So we started working with them to bring AI into different parts of their businesses, from content and marketing to admin and customer service.</p>
@@ -185,7 +188,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <p style="margin: 0; color: #475069">Outside of work, I'm a dad of two, a husband and pretty obsessed with cars.</p>
 </div>
 </div>
-<div class="reveal" style="flex: 1 1 360px; max-width: 420px; margin: 0 auto"><figure style="margin: 0; position: relative; border: 1px solid #D9CFBE; border-radius: 19px; overflow: hidden"><img src="/mitch-car-shoot.jpg" alt="Mitch standing beside a red Audi RS at a dealership shoot" width="960" height="1200" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 0"></figure></div>
+<div style="flex: 1 1 360px; max-width: 420px; margin: 0 auto"><figure style="margin: 0; position: relative; border: 1px solid #D9CFBE; border-radius: 19px; overflow: hidden"><img src="/mitch-car-shoot.jpg" alt="Mitch standing beside a red Audi RS at a dealership shoot" width="960" height="1200" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 0"></figure></div>
 </div>
 
 </section>
@@ -195,21 +198,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 <section id="learn" style="padding: clamp(80px, 12vw, 140px) 20px; scroll-margin-top: 12px">
-<div class="reveal" style="max-width: 1120px; margin: 0 auto 6px; display: flex; flex-direction: column; align-items: center; text-align: center"><p style="margin: 0; font-family: Caveat, cursive; font-weight: 700; font-size: clamp(38px, 4.8vw, 50px); line-height: 1.05; color: #C9431C; transform: rotate(-3deg)">Want to learn AI yourself?</p><svg aria-hidden="true" width="44" height="58" viewBox="0 0 44 58" fill="none" stroke="#C9431C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin: 4px 0 0 80px"><path d="M6 4c22 6 30 22 24 46"/><path d="M22 42l8 9 8-9"/></svg></div>
-<div class="reveal" style="max-width: 1120px; margin: 0 auto; background-color: #FCE8DE; border: 2px solid #C9431C; border-radius: 32px; position: relative; overflow: hidden; padding: clamp(28px, 6vw, 72px)">
+<div style="max-width: 1120px; margin: 0 auto 6px; display: flex; flex-direction: column; align-items: center; text-align: center"><p style="margin: 0; font-family: Caveat, cursive; font-weight: 700; font-size: clamp(38px, 4.8vw, 50px); line-height: 1.05; color: #C9431C; transform: rotate(-3deg)">Want to learn AI yourself?</p><svg aria-hidden="true" width="44" height="58" viewBox="0 0 44 58" fill="none" stroke="#C9431C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin: 4px 0 0 80px"><path d="M6 4c22 6 30 22 24 46"/><path d="M22 42l8 9 8-9"/></svg></div>
+<div style="max-width: 1120px; margin: 0 auto; background-color: #FCE8DE; border: 2px solid #C9431C; border-radius: 32px; position: relative; overflow: hidden; padding: clamp(28px, 6vw, 72px)">
 <div aria-hidden="true" style="position: absolute; top: 0; right: 0; width: 320px; height: 260px; background-image: radial-gradient(circle, rgba(201,67,28,0.28) 1.4px, transparent 1.8px); background-size: 20px 20px; -webkit-mask-image: radial-gradient(ellipse at top right, #000 10%, transparent 70%); mask-image: radial-gradient(ellipse at top right, #000 10%, transparent 70%); pointer-events: none"></div>
 <div style="position: relative">
 
 <div style="max-width: 760px; margin-bottom: clamp(40px, 6vw, 56px)">
 <p style="margin: 0 0 14px; display: flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: #C9431C"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9431C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3"/><path d="M7.5 15h9"/></svg><span><strong style="font-weight: 800">The AI Lab</strong> <span style="font-weight: 500">by Mitch</span></span></p>
-<h2 class="reveal" style="margin: 0 0 18px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(38px, 6vw, 60px); line-height: 1.04; letter-spacing: -0.5px; color: #14213D">Learn to build real AI systems in 30 days.</h2>
+<h2 style="margin: 0 0 18px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(38px, 6vw, 60px); line-height: 1.04; letter-spacing: -0.5px; color: #14213D">Learn to build real AI systems in 30 days.</h2>
 <p style="margin: 0; font-size: clamp(19px, 2.4vw, 22px); font-weight: 500; line-height: 1.55; color: #14213D">A self paced program that teaches you to build real AI systems, step by step. One short lesson and one build each day, using the same tools and process I use with clients.</p>
 </div>
 
 <p style="margin: 0 0 16px; font-weight: 700">You can use it two ways</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; margin-bottom: clamp(40px, 6vw, 56px)">
-<div class="reveal" style="background: #ffffff; border-radius: 20px; padding: clamp(24px, 4vw, 32px)"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Start an AI services business</h3><p style="margin: 0; font-size: 16px; color: #475069">Learn to design and build AI systems for other businesses, and offer them as a service of your own.</p></div>
-<div class="reveal" style="background: #ffffff; border-radius: 20px; padding: clamp(24px, 4vw, 32px)"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Do it all in your own business</h3><p style="margin: 0; font-size: 16px; color: #475069">Learn to set up and run AI across your content, marketing and admin yourself, without hiring it out.</p></div>
+<div style="background: #ffffff; border-radius: 20px; padding: clamp(24px, 4vw, 32px)"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Start an AI services business</h3><p style="margin: 0; font-size: 16px; color: #475069">Learn to design and build AI systems for other businesses, and offer them as a service of your own.</p></div>
+<div style="background: #ffffff; border-radius: 20px; padding: clamp(24px, 4vw, 32px)"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Do it all in your own business</h3><p style="margin: 0; font-size: 16px; color: #475069">Learn to set up and run AI across your content, marketing and admin yourself, without hiring it out.</p></div>
 </div>
 
 <div class="glance" style="display: grid; gap: 0; padding: clamp(20px, 3vw, 28px); background: #ffffff; border-radius: 20px; margin-bottom: clamp(40px, 6vw, 56px)">
@@ -221,9 +224,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <p style="margin: 0 0 16px; font-weight: 700">How the 30 days run</p>
 <ol style="margin: 0 0 clamp(40px, 6vw, 56px); padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px">
-<li class="reveal" style="background: #ffffff; border-radius: 20px; padding: 26px"><p style="margin: 0 0 14px"><span style="font-weight: 700; font-size: 14px; color: #C9431C; background: #FBE4DA; padding: 5px 10px; border-radius: 4px">Day 1</span></p><h4 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Get set up</h4><p style="margin: 0; font-size: 16px; color: #475069">Your tools, your workspace and how to think about AI as a new team member.</p></li>
-<li class="reveal" style="background: #ffffff; border-radius: 20px; padding: 26px"><p style="margin: 0 0 14px"><span style="font-weight: 700; font-size: 14px; color: #C9431C; background: #FBE4DA; padding: 5px 10px; border-radius: 4px">Days 2 to 7</span></p><h4 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Foundations</h4><p style="margin: 0; font-size: 16px; color: #475069">Prompting, projects and memory, checking AI's work, and getting the most from Claude and the tools around it.</p></li>
-<li class="reveal" style="background: #ffffff; border-radius: 20px; padding: 26px"><p style="margin: 0 0 14px"><span style="font-weight: 700; font-size: 14px; color: #C9431C; background: #FBE4DA; padding: 5px 10px; border-radius: 4px">Days 8 to 30</span></p><h4 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Daily builds</h4><p style="margin: 0; font-size: 16px; color: #475069">Websites and landing pages, brand assets, content systems, quote pages, client portals and automations.</p></li>
+<li style="background: #ffffff; border-radius: 20px; padding: 26px"><p style="margin: 0 0 14px"><span style="font-weight: 700; font-size: 14px; color: #C9431C; background: #FBE4DA; padding: 5px 10px; border-radius: 4px">Day 1</span></p><h4 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Get set up</h4><p style="margin: 0; font-size: 16px; color: #475069">Your tools, your workspace and how to think about AI as a new team member.</p></li>
+<li style="background: #ffffff; border-radius: 20px; padding: 26px"><p style="margin: 0 0 14px"><span style="font-weight: 700; font-size: 14px; color: #C9431C; background: #FBE4DA; padding: 5px 10px; border-radius: 4px">Days 2 to 7</span></p><h4 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Foundations</h4><p style="margin: 0; font-size: 16px; color: #475069">Prompting, projects and memory, checking AI's work, and getting the most from Claude and the tools around it.</p></li>
+<li style="background: #ffffff; border-radius: 20px; padding: 26px"><p style="margin: 0 0 14px"><span style="font-weight: 700; font-size: 14px; color: #C9431C; background: #FBE4DA; padding: 5px 10px; border-radius: 4px">Days 8 to 30</span></p><h4 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.25">Daily builds</h4><p style="margin: 0; font-size: 16px; color: #475069">Websites and landing pages, brand assets, content systems, quote pages, client portals and automations.</p></li>
 </ol>
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 24px 40px; margin-bottom: clamp(40px, 6vw, 56px); background: #ffffff; border-radius: 20px; padding: clamp(22px, 4vw, 32px)">
@@ -256,26 +259,26 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 
 <section id="work" style="padding: 0 20px clamp(80px, 12vw, 140px); scroll-margin-top: 12px">
-<div class="reveal" style="max-width: 1120px; margin: 0 auto 6px; display: flex; flex-direction: column; align-items: center; text-align: center"><p style="margin: 0; font-family: Caveat, cursive; font-weight: 700; font-size: clamp(38px, 4.8vw, 50px); line-height: 1.05; color: #C9431C; transform: rotate(-3deg)">Hire me to build your AI superpower</p><svg aria-hidden="true" width="40" height="58" viewBox="0 0 40 58" fill="none" stroke="#C9431C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin: 4px 90px 0 0"><path d="M34 4C14 14 10 30 16 50"/><path d="M8 43l8 8 7-10"/></svg></div>
-<div class="reveal" style="max-width: 1120px; margin: 0 auto; background: #14213D; color: #ffffff; border-radius: 32px; padding: clamp(28px, 6vw, 72px)">
+<div style="max-width: 1120px; margin: 0 auto 6px; display: flex; flex-direction: column; align-items: center; text-align: center"><p style="margin: 0; font-family: Caveat, cursive; font-weight: 700; font-size: clamp(38px, 4.8vw, 50px); line-height: 1.05; color: #C9431C; transform: rotate(-3deg)">Hire me to build your AI superpower</p><svg aria-hidden="true" width="40" height="58" viewBox="0 0 40 58" fill="none" stroke="#C9431C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin: 4px 90px 0 0"><path d="M34 4C14 14 10 30 16 50"/><path d="M8 43l8 8 7-10"/></svg></div>
+<div style="max-width: 1120px; margin: 0 auto; background: #14213D; color: #ffffff; border-radius: 32px; padding: clamp(28px, 6vw, 72px)">
 
 <div style="max-width: 760px; margin-bottom: clamp(40px, 6vw, 56px)">
 <p style="margin: 0 0 14px; font-weight: 700; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: #FFB199">Work with Mitch</p>
-<h2 class="reveal" style="margin: 0 0 18px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(34px, 5.5vw, 52px); line-height: 1.08">I'll set up AI in your business.</h2>
+<h2 style="margin: 0 0 18px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(34px, 5.5vw, 52px); line-height: 1.08">I'll set up AI in your business.</h2>
 <p style="margin: 0; font-size: clamp(18px, 2.2vw, 20px); color: #D5DBEA">You don't need to figure AI out on your own. I've already brought it into my own agency. Now I design and build AI systems around how your business runs, and train your team to use them with confidence.</p>
 </div>
 
 <p style="margin: 0 0 20px; font-weight: 700; color: #ffffff">Why people work with me</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 28px 36px; padding-bottom: clamp(40px, 6vw, 56px); margin-bottom: clamp(40px, 6vw, 56px); border-bottom: 1px solid #3B4B72">
-<div class="reveal" style="display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFB199" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin-top: 2px"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><div><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">15 years in business</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">I've built and run a real business with a real team. I know what owners need because I am one.</p></div></div>
-<div class="reveal" style="display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFB199" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin-top: 2px"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg><div><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">I understand high quality</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Content, branding, ads and websites are what I've done for 15 years. AI doesn't replace that eye. It needs it.</p></div></div>
-<div class="reveal" style="display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFB199" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin-top: 2px"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg><div><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Anthropic (Claude) Academy certified</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Trained in Claude and the apps and plugins around it, and using them every day in my own business.</p></div></div>
+<div style="display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFB199" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin-top: 2px"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg><div><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">15 years in business</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">I've built and run a real business with a real team. I know what owners need because I am one.</p></div></div>
+<div style="display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFB199" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin-top: 2px"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg><div><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">I understand high quality</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Content, branding, ads and websites are what I've done for 15 years. AI doesn't replace that eye. It needs it.</p></div></div>
+<div style="display: flex; gap: 16px; align-items: flex-start"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFB199" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: 0 0 auto; margin-top: 2px"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg><div><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Anthropic (Claude) Academy certified</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Trained in Claude and the apps and plugins around it, and using them every day in my own business.</p></div></div>
 </div>
 
 <p style="margin: 0 0 16px; font-weight: 700; color: #ffffff">A few things I've built</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 16px; margin-bottom: clamp(40px, 6vw, 56px)">
-<div class="reveal" style="background: #1F2E52; border-radius: 20px; padding: 26px"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">AI inside my own agency</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">We built AI into how my agency produces content. Our own AI tools enhance car and property photos and speed up video editing, so the team delivers more without longer hours. It's been a game changer.</p></div>
-<div class="reveal" style="background: #1F2E52; border-radius: 20px; padding: 26px"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">A global engineering firm</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Working with an Australian engineering and project management firm that delivers energy and resources projects around the world. I helped shape how they show up online, from the way they talk about their work to the design and build.</p></div>
+<div style="background: #1F2E52; border-radius: 20px; padding: 26px"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">AI inside my own agency</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">We built AI into how my agency produces content. Our own AI tools enhance car and property photos and speed up video editing, so the team delivers more without longer hours. It's been a game changer.</p></div>
+<div style="background: #1F2E52; border-radius: 20px; padding: 26px"><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">A global engineering firm</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Working with an Australian engineering and project management firm that delivers energy and resources projects around the world. I helped shape how they show up online, from the way they talk about their work to the design and build.</p></div>
 </div>
 
 <p style="margin: 0 0 16px; font-weight: 700; color: #ffffff">Things I can build for you</p>
@@ -283,10 +286,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <p style="margin: 0 0 16px; font-weight: 700; color: #ffffff">How it works</p>
 <ol style="margin: 0 0 clamp(40px, 6vw, 56px); padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px">
-<li class="reveal" style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">01</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Chat</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">We talk through your business and what's slowing you down.</p></li>
-<li class="reveal" style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">02</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Plan</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">I find where AI makes the biggest difference and give you a clear scope and price.</p></li>
-<li class="reveal" style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">03</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Build</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">I design and build it around how your team already works.</p></li>
-<li class="reveal" style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">04</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Train</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Your team learns to run it, with support while it settles in.</p></li>
+<li style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">01</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Chat</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">We talk through your business and what's slowing you down.</p></li>
+<li style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">02</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Plan</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">I find where AI makes the biggest difference and give you a clear scope and price.</p></li>
+<li style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">03</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Build</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">I design and build it around how your team already works.</p></li>
+<li style="border-top: 2px solid #3B4B72; padding-top: 18px"><p style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #FFB199">04</p><h3 style="margin: 0 0 8px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 21px; line-height: 1.25; color: #ffffff">Train</h3><p style="margin: 0; font-size: 16px; color: #D5DBEA">Your team learns to run it, with support while it settles in.</p></li>
 </ol>
 
 <div style="padding-top: 32px; border-top: 1px solid #3B4B72">
@@ -326,8 +329,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <section id="faq" style="max-width: 900px; margin: 0 auto; padding: 0 20px clamp(80px, 12vw, 120px); scroll-margin-top: 12px">
 <p style="margin: 0 0 10px; font-family: Caveat, cursive; font-weight: 700; color: #C9431C; font-size: clamp(30px, 3.4vw, 38px); line-height: 1; transform: rotate(-2deg); transform-origin: left center">FAQ</p>
-<h2 class="reveal" style="margin: 0 0 28px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 46px); line-height: 1.1">Things people ask me.</h2>
-<div class="faq reveal">
+<h2 style="margin: 0 0 28px; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 46px); line-height: 1.1">Things people ask me.</h2>
+<div class="faq">
 <details><summary>Do I need to be techy?</summary><p>Nope. If you can write an email, you can do this. I'll walk you through every click, and I'll explain things in plain English.</p></details>
 <details><summary>Will AI replace my staff?</summary><p>Not the way I set it up. The whole point is giving your team more time for the work they're good at. Your people stay. The boring stuff goes.</p></details>
 <details><summary>I tried ChatGPT and it was average. Why would this be different?</summary><p>Most people give AI one line and expect magic. I'll show you how to brief it properly, check its work and build it into how you actually run things. That's where it gets good.</p></details>
@@ -335,7 +338,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <details><summary>Are you in Australia?</summary><p>Yep, I'm based in South East Queensland. I work with businesses all over Australia and overseas by Zoom or phone. If you're in South East Queensland, I can also work with you in person.</p></details>
 <details><summary>How much does it cost?</summary><p>The AI Lab is a one time payment of $495 AUD, and waitlist members get the founding price. Working with me starts from $2,200 AUD per month. After a chat, I'll give you a clear scope and price for your business.</p></details>
 </div>
-<div class="reveal" style="margin-top: clamp(56px, 8vw, 80px); text-align: center">
+<div style="margin-top: clamp(56px, 8vw, 80px); text-align: center">
 <p style="margin: 0 auto 8px; max-width: 560px; font-size: clamp(18px, 2.2vw, 20px); color: #14213D">Thanks for reading this far. Whether you learn it yourself or have me build it, I'd love to help you do AI properly.</p>
 <p aria-label="Mitch Hemming" style="margin: 8px 0 0; font-family: 'Ms Madi', cursive; font-weight: 400; font-size: clamp(64px, 8vw, 92px); line-height: 1.1; color: #14213D; transform: rotate(-5deg)">Mitch Hemming</p>
 <svg aria-hidden="true" width="240" height="20" viewBox="0 0 260 22" fill="none" stroke="#14213D" stroke-width="2" stroke-linecap="round" style="display: block; margin: -6px auto 0; transform: rotate(-3deg)"><path d="M6 14C60 4 140 2 254 10"/></svg>
@@ -364,13 +367,36 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 
 <script>
 (function(){
-  // Scroll reveal
+  // Scroll reveal: every block fades up, staggered when several enter together
   try{
-    if('IntersectionObserver' in window){
+    if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+      var skip=function(el){return el.closest('nav,#site-menu,.top-bar,[aria-hidden="true"]');};
+      var ATOM='li,details,figure,form,.hero-row,.creds,.tools-row,.glance > div';
+      try{document.querySelector('div:has(> h3)');ATOM+=',div:has(> h3),div:has(> span + span)';}catch(_){}
+      var atoms=[].slice.call(document.body.querySelectorAll(ATOM)).filter(function(el){return !skip(el);});
+      atoms=atoms.filter(function(el){return !atoms.some(function(o){return o!==el&&o.contains(el);});});
+      var leaves=[].slice.call(document.body.querySelectorAll('h1,h2,h3,p,img,a.btn')).filter(function(el){
+        return !skip(el)&&!atoms.some(function(o){return o.contains(el);});});
+      var finalSet=atoms.concat(leaves);
       document.documentElement.classList.add('rv');
-      var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-      document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-      setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('in');});},1500);
+      finalSet.forEach(function(el){el.classList.add('reveal');});
+      var queue=[],timer=null;
+      function flush(){
+        queue.sort(function(a,b){return a.getBoundingClientRect().top-b.getBoundingClientRect().top||a.getBoundingClientRect().left-b.getBoundingClientRect().left;});
+        queue.forEach(function(el,i){
+          el.style.transitionDelay=Math.min(i*70,560)+'ms';
+          el.classList.add('in');
+          setTimeout(function(){el.style.transitionDelay='';},1600);
+        });
+        queue=[];timer=null;
+      }
+      var io=new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ queue.push(e.target); io.unobserve(e.target);} });
+        if(queue.length&&!timer) timer=setTimeout(flush,30);
+      },{threshold:0.06,rootMargin:'0px 0px -30px 0px'});
+      finalSet.forEach(function(el){io.observe(el);});
+      // safety: never leave anything hidden
+      setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in');});},2000);
     }
   }catch(e){document.documentElement.classList.remove('rv');}
 
