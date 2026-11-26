@@ -71,6 +71,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .rv .top-bar,.rv nav{animation:navIn .7s cubic-bezier(.16,1,.3,1) both}
 .rv nav{animation-delay:.08s}
 @media (prefers-reduced-motion:reduce){.rv .reveal{opacity:1 !important;transform:none !important;transition:none !important}.rv .top-bar,.rv nav{animation:none}}
+.pol{transition:transform .35s cubic-bezier(.16,1,.3,1);will-change:translate,rotate}.pol:hover{z-index:5 !important;transform:rotate(0deg) scale(1.04) !important}@media (max-width:900px){.pstack{max-width:290px !important}.pstack figcaption{font-size:20px !important}}.tl{position:relative;padding-left:40px}.tl-track{position:absolute;left:11px;top:44px;bottom:60px;width:2px;background:#E8DFD1;border-radius:2px;overflow:hidden}.tl-fill{position:absolute;inset:0;background:#C9431C;transform-origin:top;transform:scaleY(var(--p,0))}.tl-item{position:relative}.tl-item::before{content:'';position:absolute;left:-37px;top:35px;width:14px;height:14px;border-radius:50%;background:#FBF6EE;border:2px solid #E8DFD1;transition:background .5s,border-color .5s,transform .5s;z-index:1}.tl-item.lit::before{background:#C9431C;border-color:#C9431C;transform:scale(1.1)}@media (max-width:600px){.tl{padding-left:32px}.tl-track{left:7px}.tl-item::before{left:-33px}}
 </style>
 
 </head>
@@ -158,28 +159,30 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <h2 style="margin: 0 0 12px; max-width: none; font-family: Gabarito, sans-serif; font-weight: 800; font-size: clamp(30px, 4.6vw, 46px); line-height: 1.1">15 years helping businesses stand out.</h2>
 <p style="margin: 0 0 40px; max-width: none; font-size: clamp(18px, 2.2vw, 20px); color: #475069">Now I help them save time with AI, using everything I've learned along the way.</p>
 
-<ol style="margin: 0 0 24px; padding: 0; list-style: none">
-<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<div class="tl"><span class="tl-track" aria-hidden="true"><span class="tl-fill"></span></span>
+<ol style="margin: 0; padding: 0; list-style: none">
+<li class="tl-item" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2011</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Freelance photographer</h3><p style="margin: 0; color: #475069; max-width: 640px">Shooting cars and homes for dealerships and real estate agents. I learned the craft, built a client base and developed an understanding of what businesses need.</p></div>
 </li>
-<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li class="tl-item" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2019</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Media agency</h3><p style="margin: 0; color: #475069; max-width: 640px">I built a strong network and client base, then turned it into a media agency with a full team, producing photo and video for automotive and real estate brands across Australia.</p></div>
 </li>
-<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li class="tl-item" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2023</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Ads, websites and pages</h3><p style="margin: 0; color: #475069; max-width: 640px">Clients needed more than content. We added Meta ad campaigns, websites, Shopify stores and lead generation landing pages to multiply how our content performed.</p></div>
 </li>
-<li style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
+<li class="tl-item" style="display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 28px 0; border-top: 1px solid #ECE6DC">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">2025</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">AI inside the agency</h3><p style="margin: 0; color: #475069; max-width: 640px">We built our own AI enhancement tools and brought AI into how the agency runs. This provided more value to our clients and made our team more efficient.</p></div>
 </li>
 </ol>
-<div style="padding: 28px 0; border-top: 1px solid #ECE6DC; border-bottom: 1px solid #ECE6DC; display: flex; flex-wrap: wrap; gap: 8px 40px">
+<div class="tl-item" style="padding: 28px 0; border-top: 1px solid #ECE6DC; border-bottom: 1px solid #ECE6DC; display: flex; flex-wrap: wrap; gap: 8px 40px">
 <p style="flex: 0 0 140px; margin: 0; font-family: Gabarito, sans-serif; font-weight: 800; font-size: 26px; color: #C9431C">Today</p>
 <div style="flex: 1 1 420px; min-width: 0"><h3 style="margin: 0 0 6px; font-family: Gabarito, sans-serif; font-weight: 700; font-size: 22px">Implementing and teaching AI</h3><p style="margin: 0 0 14px; color: #475069; max-width: 640px">Everything I've learned across media, advertising and web now goes into AI. I set up AI systems in businesses and teach owners and their teams how to run them. Certified through Anthropic Academy, and specialised in Claude and the apps and plugins that go with it.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 20px; font-weight: 700"><a href="#learn" style="color: #C9431C">The AI Lab ↓</a><a href="#work" style="color: #C9431C">Work With Mitch ↓</a></div></div>
+</div>
 </div>
 </section>
 
@@ -196,7 +199,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 <p style="margin: 0; color: #475069">Outside of work, I'm a dad of two, a husband and pretty obsessed with cars.</p>
 </div>
 </div>
-<div style="flex: 1 1 360px; max-width: 420px; margin: 0 auto"><figure style="margin: 0; position: relative; border: 1px solid #D9CFBE; border-radius: 19px; overflow: hidden"><img src="/mitch-car-shoot.jpg" alt="Mitch standing beside a red Audi RS at a dealership shoot" width="960" height="1200" loading="lazy" style="display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 0"></figure></div>
+<div class="pstack" style="flex: 1 1 360px; max-width: 440px; margin: 0 auto; width: 100%">
+<div style="position: relative; width: 100%; aspect-ratio: 1 / 1.3; margin: 8px 0">
+<figure class="pol" style="position: absolute; margin: 0; background: #ffffff; padding: 12px 12px 0; border-radius: 4px; box-shadow: 0 12px 30px rgba(20,33,61,0.18); left: 1%; top: 2%; width: 47%; transform: rotate(-6deg); z-index: 1"><img src="/mitch-family.jpg" width="400" height="400" decoding="async" alt="Mitch with his family and dogs on a picnic rug" style="display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover"><figcaption style="padding: 10px 4px 14px; text-align: center; font-family: Caveat, cursive; font-weight: 700; font-size: 24px; color: #14213D">My family</figcaption></figure>
+<figure class="pol" style="position: absolute; margin: 0; background: #ffffff; padding: 12px 12px 0; border-radius: 4px; box-shadow: 0 12px 30px rgba(20,33,61,0.18); right: 1%; top: 4%; width: 45%; transform: rotate(5deg); z-index: 2"><img src="/mitch-me.jpg" width="400" height="400" decoding="async" alt="Mitch smiling at a cafe table" style="display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover"><figcaption style="padding: 10px 4px 14px; text-align: center; font-family: Caveat, cursive; font-weight: 700; font-size: 24px; color: #14213D">That's me</figcaption></figure>
+<figure class="pol" style="position: absolute; margin: 0; background: #ffffff; padding: 12px 12px 0; border-radius: 4px; box-shadow: 0 12px 30px rgba(20,33,61,0.18); left: 25%; top: 50%; width: 48%; transform: rotate(-2deg); z-index: 0"><img src="/mitch-car.jpg" width="400" height="400" decoding="async" alt="Mitch beside a red car at a shoot" style="display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover"><figcaption style="padding: 10px 4px 14px; text-align: center; font-family: Caveat, cursive; font-weight: 700; font-size: 24px; color: #14213D">My passion</figcaption></figure>
+</div>
+</div>
 </div>
 
 </section>
@@ -407,6 +416,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
       setTimeout(function(){document.querySelectorAll('.reveal:not(.in)').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight)el.classList.add('in');});},2000);
     }
   }catch(e){document.documentElement.classList.remove('rv');}
+
+  // Polaroid drift and story timeline
+  try{
+    var still=matchMedia('(prefers-reduced-motion: reduce)').matches,amp=[[-10,-16,-2.5],[12,-10,2],[-6,14,1.5]],raf=0;
+    var tl=document.querySelector('.tl'),items=tl?[].slice.call(tl.querySelectorAll('.tl-item')):[],pols=[].slice.call(document.querySelectorAll('figure.pol'));
+    function tick(){
+      raf=0;var vh=innerHeight||800;
+      if(tl){var r=tl.getBoundingClientRect(),line=vh*0.55;
+        tl.style.setProperty('--p',Math.max(0,Math.min(1,(line-r.top-44)/Math.max(1,r.height-104))).toFixed(3));
+        items.forEach(function(it){it.classList.toggle('lit',it.getBoundingClientRect().top+42<=line);});}
+      if(still||!pols.length)return;
+      var b=pols[0].parentElement.getBoundingClientRect(),t=Math.max(-1,Math.min(1,((b.top+b.height/2)-vh/2)/vh));
+      pols.forEach(function(el,i){var a=amp[i%3];el.style.translate=(a[0]*t).toFixed(1)+'px '+(a[1]*t).toFixed(1)+'px';el.style.rotate=(a[2]*t).toFixed(2)+'deg';});
+    }
+    function req(){if(!raf)raf=requestAnimationFrame(tick);}
+    addEventListener('scroll',req,{passive:true});addEventListener('resize',req,{passive:true});tick();
+  }catch(e){}
 
   // Mobile menu
   var mb=document.getElementById('menu-btn'),menu=document.getElementById('site-menu');
