@@ -34,6 +34,50 @@
       ],
       "destination": "https://mitchhemming.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "mhemming.com"
+        }
+      ],
+      "destination": "https://mitchhemming.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.mhemming.com"
+        }
+      ],
+      "destination": "https://mitchhemming.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "mhemming.com.au"
+        }
+      ],
+      "destination": "https://mitchhemming.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.mhemming.com.au"
+        }
+      ],
+      "destination": "https://mitchhemming.com/:path*",
+      "permanent": true
     }
   ],
   "headers": [
